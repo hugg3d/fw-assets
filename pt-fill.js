@@ -51,7 +51,6 @@
     "Cart": "Carrinho",
     "One size": "Tamanho único",
     "Size": "Medidas",
-    "or": "ou",
 
     // UI Fourthwall
     "Search results for": "Resultados de pesquisa para",
