@@ -400,6 +400,10 @@ body[data-no-translate-page] .gtranslate_wrapper {
    no :root acima. Verificados contra conflitos com header/footer.
    ============================================================ */
 
+/* "No badges" e' :empty + content no CSS da FW — so' CSS o resolve */
+.badges__list-items:empty::before,
+.badges__list-items:empty::after { content: "Sem emblemas" !important; }
+
 /* ::SELECTION: seleção de texto = marcador highlighter-pen (brand). */
 ::selection { background-color: var(--highlighter-pen); color: var(--redacted-black); }
 ::-moz-selection { background-color: var(--highlighter-pen); color: var(--redacted-black); }
