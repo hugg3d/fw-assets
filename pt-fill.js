@@ -5,7 +5,202 @@
     "off for Members": "de desconto para membros",
     "Free shipping when you spend": "envio grátis a partir de",
     "for everyone. Promotion auto-applied on checkout": "para todos. Promoção aplicada automaticamente no checkout",
-    
+
+    // ============================================================
+    // SUPPORTERS — FRASES
+    // TEM de ficar aqui em cima: estas frases contêm palavras que
+    // são chaves curtas mais abaixo (Free, Email, Enter, Login,
+    // Name, Message, Share, Join now). Se descessem, seriam
+    // partidas a meio antes de terem hipótese de dar match.
+    // ============================================================
+
+    // Autenticação
+    "This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply": "Este site é protegido por reCAPTCHA, aplicando-se a Política de Privacidade e os Termos de Serviço da Google",
+    "Enter your email address to reset your password": "Introduz o teu e-mail para repores a palavra-passe",
+    "An email with instructions on how to reset your password has been sent to": "Foi enviado um e-mail com instruções para repores a palavra-passe para",
+    "Email or password not recognized. Please try again": "E-mail ou palavra-passe não reconhecidos. Tenta novamente",
+    "By signing up you agree to Terms of Service": "Ao criares conta, aceitas os Termos de Serviço",
+    "Don’t have an account yet? Join now": "Ainda não tens conta? Junta-te agora",
+    "Have an account already? Login": "Já tens conta? Inicia sessão",
+    "Already a member? Login": "Já és membro? Inicia sessão",
+    "Have an account? Login": "Já tens conta? Inicia sessão",
+    "Have an account": "Já tens conta",
+    "An email has invalid format": "O formato do e-mail é inválido",
+    "This field is required": "Este campo é obrigatório",
+    "Name or username": "Nome ou nome de utilizador",
+    "Name or nickname": "Nome ou alcunha",
+    "Create your account": "Cria a tua conta",
+    "Create account": "Criar conta",
+    "Back to login": "Voltar ao início de sessão",
+    "Forgot password": "Esqueci-me da palavra-passe",
+    "Reset password": "Repor palavra-passe",
+    "Resend": "Reenviar",
+
+    // Palavra-passe
+    "You have never changed your password": "Nunca alteraste a tua palavra-passe",
+    "You have changed your password on": "Alteraste a tua palavra-passe a",
+    "Confirm new password": "Confirma a nova palavra-passe",
+    "Current password": "Palavra-passe atual",
+    "Update password": "Atualizar palavra-passe",
+    "Change password": "Alterar palavra-passe",
+    "New password": "Nova palavra-passe",
+
+    // Perfil e emblemas
+    "Your profile has been sucessfuly updated": "O teu perfil foi atualizado com sucesso",
+    "Visible to the creator and community": "Visível para o criador e para a comunidade",
+    "Hidden from your profile": "Oculto no teu perfil",
+    "Shows in your profile": "Aparece no teu perfil",
+    "Show member profile": "Ver perfil do membro",
+    "Upload new image": "Carregar nova imagem",
+    "Save changes": "Guardar alterações",
+    "Save Changes": "Guardar alterações",
+    "Your badges": "Os teus emblemas",
+    "No badges": "Sem emblemas",
+
+    // Notificações
+    "When someone replies to my comments": "Quando alguém responde aos meus comentários",
+    "When my comments get pinned": "Quando os meus comentários são fixados",
+    "Email notifications": "Notificações por e-mail",
+    "posts new content": "publica novo conteúdo",
+    "sends me a message": "me envia uma mensagem",
+
+    // Subscrição / faturação
+    "In order to remove payment method you have to cancel your subscription first, then wait for the membership period to fully expire": "Para removeres o método de pagamento tens de cancelar primeiro a subscrição e esperar que o período de subscrição termine",
+    "By subscribing, you authorize Subscription to charge you according to the terms until you cancel": "Ao subscreveres, autorizas a cobrança de acordo com os termos até cancelares",
+    "After submission, you’ll be guided through completing next steps with PayPal": "Depois de submeteres, vais ser encaminhado para concluir os passos seguintes com o PayPal",
+    "You’re currently signed up as a free account": "Neste momento tens uma conta gratuita",
+    "You don't have any payment method added": "Não tens nenhum método de pagamento adicionado",
+    "You haven't made any payments yet": "Ainda não fizeste nenhum pagamento",
+    "Removing payment method": "Remover método de pagamento",
+    "Change payment method": "Alterar método de pagamento",
+    "Payment method": "Método de pagamento",
+    "Payment history": "Histórico de pagamentos",
+    "Upgrade account": "Fazer upgrade da conta",
+    "Billing address": "Morada de faturação",
+    "Postal code": "Código postal",
+    "Charged for": "Cobrado por",
+    "Current tier": "Nível atual",
+
+    // Cancelamento
+    "Even if you cancel, you'll keep access until": "Mesmo que canceles, manténs o acesso até",
+    "If you cancel, you’ll miss posts like this": "Se cancelares, vais perder publicações como esta",
+    "Are you sure you want to cancel": "Tens a certeza que queres cancelar",
+    "Membership streak badge": "Emblema de subscrição contínua",
+    "Members-only perks": "Vantagens exclusivas para membros",
+    "Confirm cancellation": "Confirmar cancelamento",
+    "Keep my membership": "Manter a minha subscrição",
+    "You'll lose access to": "Vais perder o acesso a",
+    "Exclusive content": "Conteúdo exclusivo",
+
+    // Checkout
+    "Prices do not include tax. It's calculated at the payment step": "Os preços não incluem IVA. É calculado no passo do pagamento",
+    "The minimum price for this tier is": "O preço mínimo deste nível é",
+    "Leave a message or ask a question": "Deixa uma mensagem ou faz uma pergunta",
+    "Your payment is being processed": "O teu pagamento está a ser processado",
+    "off as long as subscription is active": "de desconto enquanto a subscrição estiver ativa",
+    "annually starting": "anualmente a partir de",
+    "Select subscription": "Escolhe a subscrição",
+    "Choose what you pay": "Escolhe quanto pagas",
+    "Leave a message": "Deixa uma mensagem",
+    "Return to": "Voltar para",
+    "Enter promo code": "Introduzir código promocional",
+    "Start free Trial": "Começar teste gratuito",
+    "Free for 7 days": "Grátis durante 7 dias",
+    "You will be charged": "Vai ser-te cobrado",
+    "It may take a while": "Pode demorar um pouco",
+    "Billed monthly": "Faturado mensalmente",
+    "billed annually": "faturado anualmente",
+    "Total to pay": "Total a pagar",
+    "Promo code": "Código promocional",
+    "Taxes/VAT": "Impostos/IVA",
+    "inc. tax/vat": "inc. impostos/IVA",
+    "Billed": "Faturado",
+
+    // Gorjetas
+    "By making this purchase you agree to Refund Policy": "Ao fazeres esta compra, aceitas a Política de Reembolso",
+    "Tips are supported in USD only": "As gorjetas só são suportadas em USD",
+    "Tips are non-refundable": "As gorjetas não são reembolsáveis",
+    "Add a tip to message": "Adicionar gorjeta à mensagem",
+    "Unlock message for": "Desbloquear mensagem de",
+    "Refund Policy": "Política de Reembolso",
+    "Terms of Service": "Termos de Serviço",
+    "Tip amount": "Valor da gorjeta",
+    "Pay & Unlock": "Pagar e Desbloquear",
+    "Unlock now": "Desbloquear agora",
+    "Add tip": "Adicionar gorjeta",
+
+    // Feed / publicações
+    "Share a preview of a locked post": "Partilha uma pré-visualização de uma publicação bloqueada",
+    "Start a conversation by sending a message below": "Começa uma conversa enviando uma mensagem abaixo",
+    "Join now to unlock exclusive": "Junta-te agora para desbloquear conteúdo exclusivo de",
+    "You haven't sent": "Ainda não enviaste nenhuma mensagem a",
+    "Unlock exclusive content": "Desbloqueia conteúdo exclusivo",
+    "Please enter a valid donation amount": "Introduz um valor de doação válido",
+    "Start with a membership tier": "Começa por escolher um nível",
+    "Hide recommendation": "Ocultar recomendação",
+    "Highlighted reply": "Resposta destacada",
+    "Share this post": "Partilha esta publicação",
+    "Hide this post": "Ocultar esta publicação",
+    "Become a member": "Torna-te membro",
+    "Write a comment": "Escreve um comentário",
+    "Write a message": "Escreve uma mensagem",
+    "Top comments": "Comentários principais",
+    "Load Replies": "Carregar respostas",
+    "Copy RSS link": "Copiar link RSS",
+    "Copy link": "Copiar link",
+    "Add emoji": "Adicionar emoji",
+    "Add image": "Adicionar imagem",
+    "New member": "Novo membro",
+    "Show more": "Ver mais",
+    "Copied": "Copiado",
+
+    // Filtros
+    "Published date": "Data de publicação",
+    "Newest to oldest": "Mais recentes primeiro",
+    "Oldest to newest": "Mais antigas primeiro",
+    "Showing posts with": "A mostrar publicações com",
+    "Showing videos with": "A mostrar vídeos com",
+    "Content missing": "Conteúdo em falta",
+    "Content type": "Tipo de conteúdo",
+    "Apply filters": "Aplicar filtros",
+    "Last 24 hours": "Últimas 24 horas",
+    "Last 30 days": "Últimos 30 dias",
+    "Last 7 days": "Últimos 7 dias",
+    "Last year": "Último ano",
+    "Clear all": "Limpar tudo",
+    "All time": "Sempre",
+
+    // Vídeos
+    "Recently uploaded": "Carregados recentemente",
+    "Recent videos": "Vídeos recentes",
+    "Video series": "Séries de vídeos",
+    "All videos": "Todos os vídeos",
+    "New video": "Novo vídeo",
+    "Watch now": "Ver agora",
+    "See all": "Ver todos",
+    "months ago": "meses",
+    "month ago": "mês",
+
+    // Vantagens (perks)
+    "Paste this link into your favorite podcast player to listen to the members only audio feed": "Cola este link no teu leitor de podcasts para ouvires o feed de áudio exclusivo para membros",
+    "You unlocked access to members-only posts for the": "Desbloqueaste o acesso às publicações exclusivas do nível",
+    "You’ll receive email updates when new posts are added": "Vais receber e-mails quando forem publicados novos conteúdos",
+    "Your members will see their private RSS link here": "Os teus membros vão ver aqui o link RSS privado",
+    "Chat on members-only Discord with other members": "Conversa com outros membros no Discord exclusivo",
+    "Access to members-only posts": "Acesso a publicações exclusivas para membros",
+    "Acess to exclusive RSS Feed": "Acesso a Feed RSS Exclusivo",
+    "Exclusive products for members": "Produtos exclusivos para membros",
+    "Discount exclusive for members": "Desconto exclusivo para membros",
+    "See the message left to you by": "Vê a mensagem que te foi deixada por",
+    "View welcome post": "Ver publicação de boas-vindas",
+    "Your welcome post": "A tua publicação de boas-vindas",
+    "Connect to Discord": "Liga ao Discord",
+    "Support & more": "Suporte e mais",
+    "View posts": "Ver publicações",
+    "Preview as": "Pré-visualizar como",
+    "Your perks": "As tuas vantagens",
+    "Shop now": "Comprar agora",
+
     // Reviews (EchoBrain)
     "Be the first one to submit a review about": "Sê o primeiro a deixar uma avaliação sobre",
     "Be the first one to ask a question about": "Sê o primeiro a deixar uma pergunta sobre",
@@ -46,7 +241,7 @@
     "Delete": "Remover",
     "Item": "Artigo",
     "items": "artigos",
-    "item": "artigo",    
+    "item": "artigo",
     "Price": "Preço (sem IVA)",
     "Cart": "Carrinho",
     "One size": "Tamanho único",
@@ -60,7 +255,7 @@
     "Members Only": "Exclusivo Membros",
     "Join now": "Junta-te agora!",
     "per year": "por ano",
-    "plus tax": "+IVA", 
+    "plus tax": "+IVA",
     "Sold Out": "Artigo Esgotado",
     "Sign in": "Iniciar sessão",
     "Sign out": "Terminar sessão",
@@ -91,14 +286,16 @@
     "Continue reading": "Continua a ler",
     "Go Back Home": "Volta ao início",
     "Account": "Conta",
-    "Login": "Inicia sessão",
+    // Alimenta o titulo da pagina E o botao. Infinitivo (nao "Inicia
+    // sessao") porque o imperativo fica estranho como titulo.
+    "Login": "Iniciar sessão",
     "Store": "Loja",
     "Home": "Início",
     "Free": "Grátis",
 
     // Supporters
     "Unlock for": "Desbloqueia por",
-  
+
     // Validação de e-mail
     "Please enter a valid email": "Insere um e-mail válido",
     "Please enter your email": "Insere o teu e-mail",
@@ -122,12 +319,17 @@
     "Accept all": "Aceitar tudo",
     "Reject all": "Rejeitar tudo",
     "Save settings": "Guardar preferências",
+    // Cabeçalhos <th> da tabela de cookies. As mesmas 4 palavras existem
+    // como data-column nas <td> (rótulos mobile) — essas são tratadas em
+    // ATTR_MAP, não aqui. "Name" fica DEPOIS de "Name or nickname"/"Name or
+    // username" (topo do ficheiro), senão partia esses campos do perfil.
     "Name": "Nome",
     "Domain": "Domínio",
     "Expiration": "Validade",
     "Description": "Descrição",
 
     // Cookie modal (camada 2)
+    "Cookie preferences": "Preferências de cookies",
     "Cookie usage": "Utilização de cookies",
     "We use cookies to enhance your browsing experience on our website. These cookies help us analyze site traffic, personalize content, and provide you with a better user experience. By continuing to use our site, you consent to the use of cookies in accordance with our Cookie Policy. For more information, please review our privacy policy": "Usamos cookies para melhorar a tua experiência de navegação no nosso site. Estes cookies ajudam-nos a analisar o tráfego, personalizar conteúdo e proporcionar-te uma melhor experiência. Ao continuares a usar o site, consentes a utilização de cookies de acordo com a nossa Política de Cookies. Para mais informação, consulta a nossa política de privacidade",
     "Strictly necessary cookies": "Cookies estritamente necessários",
@@ -136,6 +338,150 @@
     "These cookies allow the website to remember the choices you have made in the past": "Estes cookies permitem ao site lembrar as escolhas que fizeste no passado",
     "Marketing and Targeting cookies": "Cookies de marketing e segmentação",
     "These cookies collect information about how you use the website, which pages you visited and which links you clicked on. All of the data is anonymized and cannot be used to identify you": "Estes cookies recolhem informação sobre como usas o site, que páginas visitaste e em que links clicaste. Todos os dados são anonimizados e não permitem identificar-te",
+
+    // Cookie modal — coluna Descrição das tabelas.
+    // NENHUMA chave acaba em ponto final: o \b final do regex não casa
+    // depois de "." e o match falharia. O ponto fica no ecrã na mesma.
+    "Registers a unique ID for a website visitor it tracks how the visitor uses the website. The data is used for statistics": "Regista um ID único do visitante e acompanha a forma como usa o site. Os dados são usados para estatísticas",
+    "This is a cookie that is set by twitter.com. It is used for optimizing ad relevance by collecting visitor navigation data": "Cookie definido pelo twitter.com. Serve para otimizar a relevância dos anúncios, recolhendo dados de navegação do visitante",
+    "To measure and improve the performance of your advertising campaigns and to personalize the user's experience (including ads) on TikTok": "Medir e melhorar o desempenho das campanhas publicitárias e personalizar a experiência do utilizador (incluindo anúncios) no TikTok",
+    "To measure and improve the performance of your advertising campaigns and to personalize the user's experience (including ads) on Klaviyo": "Medir e melhorar o desempenho das campanhas publicitárias e personalizar a experiência do utilizador (incluindo anúncios) no Klaviyo",
+    "Identifies unique web browsers visiting Microsoft sites. These cookies are used for advertising, site analytics, and other operational purposes": "Identifica browsers únicos que visitam sites da Microsoft. Estes cookies são usados para publicidade, análise de sites e outros fins operacionais",
+    "Indicates whether MUID is transferred to ANID, a cookie used for advertising. Clarity doesn't use ANID and so this is always set to 0": "Indica se o MUID é transferido para o ANID, um cookie usado para publicidade. A Clarity não usa o ANID, por isso está sempre definido como 0",
+    "Connects multiple page views by a user into a single Clarity session recording": "Liga várias visualizações de páginas de um utilizador numa única gravação de sessão da Clarity",
+    "Identifies the first-time Clarity saw this user on any site using Clarity": "Identifica a primeira vez que a Clarity viu este utilizador num site que use Clarity",
+    "Used in synchronizing the MUID across Microsoft domains": "Sincroniza o MUID entre domínios da Microsoft",
+    "To store and track visits across websites": "Armazenar e registar visitas em vários sites",
+    "To store and track conversions": "Armazenar e registar conversões",
+
+    // Cookie modal — coluna Validade.
+    // DEPOIS das descrições: "session" partiria "session recording" do _clsk.
+    "13 months": "13 meses",
+    "12 months": "12 meses",
+    "3 months": "3 meses",
+    "2 years": "2 anos",
+    "1 day": "1 dia",
+    "persistent": "persistente",
+    "session": "sessão",
+
+    // ============================================================
+    // SUPPORTERS — PALAVRAS SOLTAS
+    // TEM de ficar no fim: são chaves de 1 palavra que apareceriam
+    // dentro de frases mais longas (Date/Search/Payment/Post...).
+    // Aqui em baixo, essas frases já foram substituídas.
+    // ============================================================
+    "Livestream": "Transmissão em direto",
+    "Membership": "Subscrição",
+    "Highlighted": "Destacado",
+    "Relevance": "Relevância",
+    "Verified": "Verificado",
+    "Featured": "Em destaque",
+    "Messages": "Mensagens",
+    "Discount": "Desconto",
+    "Continue": "Continuar",
+    "Optional": "Opcional",
+    "Earned": "Conquistado",
+    "Payment": "Pagamento",
+    "Pinned": "Fixado",
+    "Profile": "Perfil",
+    "Billing": "Faturação",
+    "Filters": "Filtros",
+    "Country": "País",
+    "Logout": "Terminar sessão",
+    "Search": "Pesquisar",
+    "Monthly": "Mensal",
+    "Annual": "Anual",
+    "yearly": "anual",
+    "year": "por ano",
+    "When": "Quando",
+    // "about" TEM de estar aqui e não junto aos vídeos: lá em cima
+    // partia "Be the first one to submit a review about" (reviews).
+    "about": "há cerca de",
+    "Amount": "Valor",
+    "Remove": "Remover",
+    "Report": "Denunciar",
+    "Return": "Voltar",
+    "Badges": "Emblemas",
+    "Change": "Alterar",
+    "Reply": "Responder",
+    "Block": "Bloquear",
+    "Perks": "Vantagens",
+    "Apply": "Aplicar",
+    "Today": "Hoje",
+    "Image": "Imagem",
+    "Video": "Vídeo",
+    "Audio": "Áudio",
+    "Share": "Partilhar",
+    "Okay": "Ok",
+    "Poll": "Sondagem",
+    "Text": "Texto",
+    "Date": "Data",
+    "Send": "Enviar",
+    "Save": "Guardar",
+    "Post": "Publicar",
+    "Back": "Voltar",
+    "Pin": "Fixar",
+    // "$10.00 + $2.30 tax". As variantes compostas ("plus tax",
+    // "inc. tax/vat", "Taxes/VAT") ja correram bem antes desta.
+    "tax": "de imposto",
+
+    // Removidas para PT ficar com a ordem correta. Ex.:
+    // "Join now to unlock exclusive <LOJA> content"
+    //   -> "Junta-te agora para desbloquear conteúdo exclusivo de <LOJA>"
+    // "You haven't sent <LOJA> any messages yet"
+    //   -> "Ainda não enviaste nenhuma mensagem a <LOJA>"
+    // "...for the "Tier 1" tier" -> "...do nível "Tier 1""
+    "any messages yet": "",
+    "content": "",
+    "tier": "",
+  };
+
+  // Atributos (não são nós de texto, logo o fillNode não lhes toca).
+  // Cobre: rótulos mobile da tabela de cookies (data-column, injetados
+  // por CSS via attr()), placeholders e labels de acessibilidade.
+  const ATTR_MAP = [
+    { sel: '[data-column]', attr: 'data-column', map: {
+      "Name": "Nome",
+      "Domain": "Domínio",
+      "Expiration": "Validade",
+      "Description": "Descrição"
+    }},
+    { sel: '[placeholder]', attr: 'placeholder', map: {
+      "Search": "Pesquisar",
+      "From": "De",
+      "To": "Até",
+      "Qty": "Qtd"
+    }},
+    { sel: '[aria-label]', attr: 'aria-label', map: {
+      "Close": "Fechar",
+      "Open": "Abrir",
+      "Search": "Pesquisar",
+      "Open menu": "Abrir menu",
+      "Close menu": "Fechar menu",
+      "Close search": "Fechar pesquisa",
+      "Become a member": "Torna-te membro",
+      "Account": "Conta",
+      "Cart": "Carrinho",
+      "Previous image": "Imagem anterior",
+      "Next image": "Imagem seguinte",
+      "Number of gifts": "Número de ofertas"
+    }},
+    { sel: '[title]', attr: 'title', map: {
+      "Your account": "A tua conta",
+      "Go to cart": "Ir para o carrinho"
+    }}
+  ];
+
+  // Texto por selector: usado quando a palavra é demasiado genérica
+  // para entrar no TRANSLATIONS global (ex.: "From"/"To" comeriam
+  // qualquer frase EM inglês que os contivesse).
+  const TEXT_BY_SELECTOR = {
+    'label[for="start_date"]': 'De',
+    'label[for="end_date"]': 'Até',
+    // Separador entre "Desbloqueia por X" e "Subscreve para aceder".
+    // Nao pode ir para o TRANSLATIONS: "or" e demasiado comum e
+    // dispararia dentro de qualquer frase EN que ainda sobrasse.
+    '.post__section--column > span': ' ou '
   };
 
   // Zonas de alta-rotacao a ignorar (mutam frequentemente sem texto traduzivel)
@@ -151,11 +497,18 @@
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
+  // A Fourthwall mistura apostrofo reto (') e curvo (’) no mesmo ecra.
+  // Tratar os dois como equivalentes evita a falha silenciosa em que a
+  // chave nao casa e uma chave curta seguinte trunca a frase.
+  function keySource(str) {
+    return escapeRegex(str).replace(/['\u2019]/g, "['\u2019]");
+  }
+
   // Regexes compilados UMA vez (evita new RegExp por nodo em cada mutacao)
   const COMPILED = Object.keys(TRANSLATIONS).map(function (en) {
-    return { re: new RegExp('\\b' + escapeRegex(en) + '\\b', 'g'), pt: TRANSLATIONS[en] };
+    return { re: new RegExp('\\b' + keySource(en) + '\\b', 'g'), pt: TRANSLATIONS[en] };
   });
-  
+
   const PRICE_SELECTORS =
     '.tile__price--original,.product-info__price--original,.featured-product-info__price--original,.cart-totals__amount--subtotal,.cart-item__price-value,.inline-image__price,.product-drawer__subtotal-value';
 
@@ -180,19 +533,57 @@
     if(!isPTActive()||!root) return;
     if(root.nodeType===Node.TEXT_NODE) root=root.parentElement;
     if(!root||root.nodeType!==Node.ELEMENT_NODE) return;
+    const SEL='.post-tile__date,.post__meta';
     const els=new Set();
-    const hit=root.closest&&root.closest('.post-tile__date');
+    const hit=root.closest&&root.closest(SEL);
     if(hit) els.add(hit);
-    if(root.querySelectorAll) root.querySelectorAll('.post-tile__date').forEach(el=>els.add(el));
+    if(root.querySelectorAll) root.querySelectorAll(SEL).forEach(el=>els.add(el));
     els.forEach(el=>{
-      if(el.dataset.ptDate) return;
+      // Sem guarda de dataset: no portal o Turbo faz morph e repunha o
+      // texto EN mantendo o atributo, o que travava a reconversao.
+      // new Date("11 de agosto de 2026") ja da Invalid Date -> sai sozinho.
       const d=new Date(el.textContent.trim());
       if(isNaN(d)) return;
       el.textContent=d.toLocaleDateString('pt-PT',{day:'numeric',month:'long',year:'numeric'});
-      el.dataset.ptDate='1';
     });
   }
-  
+
+  // Idempotente: depois de reescrito o valor já não está no mapa.
+  // Não gera loop — o observer não vigia 'attributes'.
+  function localizeAttrs(root){
+    if(!isPTActive()||!root) return;
+    if(root.nodeType===Node.TEXT_NODE) root=root.parentElement;
+    if(!root||root.nodeType!==Node.ELEMENT_NODE) return;
+    ATTR_MAP.forEach(function(cfg){
+      const els=new Set();
+      const hit=root.closest&&root.closest(cfg.sel);
+      if(hit) els.add(hit);
+      if(root.querySelectorAll) root.querySelectorAll(cfg.sel).forEach(el=>els.add(el));
+      els.forEach(el=>{
+        const pt=cfg.map[el.getAttribute(cfg.attr)];
+        if(pt) el.setAttribute(cfg.attr, pt);
+      });
+    });
+  }
+
+  function localizeBySelector(root){
+    if(!isPTActive()||!root) return;
+    if(root.nodeType===Node.TEXT_NODE) root=root.parentElement;
+    if(!root||root.nodeType!==Node.ELEMENT_NODE) return;
+    Object.keys(TEXT_BY_SELECTOR).forEach(function(sel){
+      const els=new Set();
+      const hit=root.closest&&root.closest(sel);
+      if(hit) els.add(hit);
+      if(root.querySelectorAll) root.querySelectorAll(sel).forEach(el=>els.add(el));
+      els.forEach(el=>{
+        // Sem guarda de dataset, pela mesma razao das datas: o morph do
+        // Turbo repunha o texto EN e a guarda travava a reconversao.
+        // Comparar antes de escrever ja torna isto idempotente.
+        if(el.textContent!==TEXT_BY_SELECTOR[sel]) el.textContent=TEXT_BY_SELECTOR[sel];
+      });
+    });
+  }
+
   function collectTextNodes(root, out) {
     if (root.nodeType === Node.TEXT_NODE) {
       out.push(root);
@@ -237,6 +628,14 @@
     });
   }
 
+  function processNode(node) {
+    injectTax(node);
+    localizeDates(node);
+    localizeAttrs(node);
+    localizeBySelector(node);
+    fillNode(node);
+  }
+
   // Scheduler: idle callback se disponivel, senao setTimeout
   const schedule = window.requestIdleCallback
     ? (fn) => requestIdleCallback(fn, { timeout: 500 })
@@ -250,9 +649,7 @@
   function runFull() {
     if (fullScheduled) cancel(fullScheduled);
     fullScheduled = schedule(() => {
-      injectTax(document.body);
-      localizeDates(document.body);
-      fillNode(document.body);
+      processNode(document.body);
       fullScheduled = null;
     });
   }
@@ -289,7 +686,7 @@ const observer = new MutationObserver((mutations) => {
     pending = [];
     mutScheduled = null;
     batch.forEach(node => {
-       if (node.isConnected) { injectTax(node); localizeDates(node); fillNode(node); }
+       if (node.isConnected) { processNode(node); }
     });
   });
 });
