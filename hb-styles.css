@@ -1,0 +1,425 @@
+/* ============================================================
+   HB-STYLES — CSS custom de hugobran.co, externalizado do header.
+   Servido via jsDelivr a partir de github.com/hugg3d/fw-assets
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   FONTS: aplica "auger-mono" + feature ss01 (Angular Forms).
+   O <link> do Typekit continua no header (tem de lá estar);
+   este bloco só consome a font que ele carrega.
+   ------------------------------------------------------------ */
+body {
+  --font-family-heading: "auger-mono", monospace;
+  font-feature-settings: "ss01" on !important;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-style: normal;
+  font-feature-settings: "ss01" on;
+}
+h1 { font-weight: 900; }
+h2 { font-weight: 700; }
+h3 { font-weight: 500; }
+h4 { font-weight: 400; }
+h5 { font-weight: 300; }
+h6 { font-weight: 200; }
+
+
+/* ------------------------------------------------------------
+   BRAND TOKENS: paleta oficial do brandbook (FIXA, não muda com
+   o tema). Declarada 1x; qualquer bloco custom herda via :root.
+   ------------------------------------------------------------ */
+:root {
+  /* Paleta oficial (brandbook) */
+  --digital-blue: #0031ff;
+  --verified-blue: #0066ff;
+  --ultramarine-blue: #011596;
+  --paper-white: #fdfbf1;
+  --redacted-black: #05040f;
+  --highlighter-pen: #e3ff04;
+  /* Utilitário (fora do brandbook) */
+  --paper-border: #d0c9b8;
+}
+
+
+/* ------------------------------------------------------------
+   COLOR-SCHEME: alinha widgets nativos do browser (popups de
+   select, scrollbars nativas, etc.) com o tema ativo.
+   ------------------------------------------------------------ */
+:root[data-scheme="dark"] { color-scheme: dark; }
+:root[data-scheme="light"] { color-scheme: light; }
+
+
+/* ------------------------------------------------------------
+   SCROLLBARS: theme-aware. Thumb = primary (azul brand),
+   track = background. Hover = on-background.
+   ------------------------------------------------------------ */
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-background);
+}
+/* WebKit (Chrome/Safari/Edge) */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--color-background); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 8px;
+  border: 3px solid var(--color-background);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-on-background);
+}
+::-webkit-scrollbar-corner { background: var(--color-background); }
+
+
+/* ------------------------------------------------------------
+   HEADER: blur subtil (3% opacity) + hover.
+   As vars --header-blur-* são reutilizadas pelo widget gtranslate
+   mais abaixo — se mexeres aqui, o switcher acompanha.
+   ------------------------------------------------------------ */
+.header {
+  --header-blur-amount: 24px;
+  --header-blur-opacity: 0.03;
+  border-color: transparent !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+#fw-section-header .header:hover {
+  background-color: rgba(var(--color-on-background-rgb), 0.05) !important;
+  border-color: rgba(var(--color-on-background-rgb), 0.15) !important;
+}
+
+
+/* ------------------------------------------------------------
+   GRID BG: padrão de grelha subtil (6% opacity) em toda a página.
+   ------------------------------------------------------------ */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -999;
+  background-image:
+    linear-gradient(to right, var(--color-on-background) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-on-background) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.06;
+}
+
+
+/* ------------------------------------------------------------
+   HYPERLINKS DE CONTEÚDO: verified-blue + underline.
+   Interage com o sistema .redacted (cor invertida no reveal).
+   ------------------------------------------------------------ */
+.html-formatter a {
+  color: var(--verified-blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  transition: opacity 0.2s ease, text-decoration-thickness 0.2s ease;
+}
+.html-formatter a:hover,
+.html-formatter a:focus {
+  opacity: 0.7;
+  text-decoration-thickness: 4px;
+  text-shadow: 0.02em 0 0 currentColor, -0.02em 0 0 currentColor;
+}
+.html-formatter .redacted.revealed a {
+  color: var(--color-on-primary);
+}
+@media (hover: hover) {
+  .html-formatter .redacted.revealed:hover a {
+    color: var(--verified-blue);
+  }
+}
+
+
+/* ------------------------------------------------------------
+   BACKLIGHT: gradiente radial que segue o cursor (desktop only).
+   A <div class="backlight"> e o JS do mousemove ficaram no header;
+   aqui está só a apresentação. Se este CSS não carregar, a div
+   fica simplesmente invisível — falha segura.
+   ------------------------------------------------------------ */
+.backlight {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -111;
+    pointer-events: none;
+    background: radial-gradient(
+        circle 40vw at var(--x, 50%) var(--y, 50%),
+        color-mix(in srgb, var(--color-on-background) 7%, transparent),
+        transparent 60%
+    );
+}
+@media (max-width: 768px) { .backlight { display: none; } }
+
+
+/* ------------------------------------------------------------
+   MOBILE NAV (<=639px) + LOGO via CSS mask (adapta à cor do tema).
+   ATENÇÃO: o opacity:0 da img e a máscara do ::after têm de viver
+   SEMPRE no mesmo ficheiro. Separados, um cenário de falha parcial
+   deixava o logo invisível; juntos, se este CSS não carregar, a
+   img original reaparece — falha segura.
+   URL da máscara desduplicado via custom property (era o maior
+   duplicado do header inteiro, ~1k de caracteres poupados).
+   ------------------------------------------------------------ */
+@media (max-width: 639px) {
+  .header__list.list.list--horizontal {
+    flex-wrap: nowrap !important;
+    gap: 12px !important;
+  }
+  .header__list.list.list--horizontal .list__item {
+    padding: 0 2px !important;
+  }
+}
+.header__logo {
+  position: relative;
+  display: inline-block;
+}
+.header__logo img { opacity: 0; }
+.header__logo::after {
+  --hb-logo-mask: url('https://imgproxy.fourthwall.com/vQleOA7YJKYC-7JckiqfO5FwnSAumExCO8L7n7DgFrY/w:320/sm:1/enc/3Ruo-s4A0I-i4cd-/aLFsDCCNExPJiKMT/EAgRZJLRA6VSuphr/_2USqD0oAabDLGDX/qNX_VvURttrNt0Lm/Q3zjnT9Jj5Jxg2yg/E5RODZPtGGmSvsvA/iA8U7AQc466lHXUd/jLnMU7q85RWy877k/ta1fWwtye9LYF8xn/EZzuuvcYME8DTuSE/HdjCTRxEw_yDvgGZ/EA_gwz5evVpIyFEe/wlH62VS5-3pmmvY1/7k2NNvrm6IYvYz_O/XG_ob8Uq3NgXryKt') no-repeat center / contain;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-on-background);
+  -webkit-mask: var(--hb-logo-mask);
+  mask: var(--hb-logo-mask);
+  pointer-events: none;
+}
+
+
+/* ------------------------------------------------------------
+   CHEVRONS: rodam 180° quando o dropdown está aberto
+   (hover nos menus do site).
+   ------------------------------------------------------------ */
+.header__list-item .header__link-icon svg,
+.footer__list-item .footer__link-icon svg {
+  transition: transform 0.25s ease;
+}
+.header__list-item:hover .header__link-icon svg,
+.footer__list-item:hover .footer__link-icon svg {
+  transform: rotate(180deg);
+}
+
+
+/* ------------------------------------------------------------
+   UI: botões/tabs radius 6px + badge visible@sm força display.
+   ------------------------------------------------------------ */
+.button, .tab { border-radius: 6px !important; }
+.plan-cards__card-badge.visible\@sm { display: inline-flex !important; }
+
+.plus-tax-label { font-size: 0.75em; opacity: 0.6; }
+
+
+/* ------------------------------------------------------------
+   BADGES: cor primária + heading font + radius 4px.
+   ------------------------------------------------------------ */
+.badge {
+  background-color: var(--color-primary) !important;
+  color: var(--color-on-primary) !important;
+  border-color: var(--color-primary) !important;
+  border-radius: 4px;
+  font-family: var(--font-family-heading) !important;
+}
+
+
+/* ------------------------------------------------------------
+   SWITCHER DE LÍNGUA (comportamento): desliza de baixo (sem fade),
+   sem mexer no transform do widget. Esconde enquanto o CTA sticky
+   está visível; reaparece só depois de o CTA sair.
+   (O visual do widget está mais abaixo, em GTRANSLATE.)
+   ------------------------------------------------------------ */
+.gtranslate_wrapper {
+  transition: bottom 0.3s ease 0s;
+}
+body:has(.sticky-add-to-cart.is-visible) .gtranslate_wrapper {
+  bottom: -100px;
+  pointer-events: none;
+  transition: bottom 0.3s ease 0s;
+}
+
+
+/* ------------------------------------------------------------
+   CHECKOUT P.M.: esconde o cartão do plano mensal no checkout.
+   Par do auto-click anual no script PLANOS (que ficou no header).
+   ------------------------------------------------------------ */
+.plan-cards > a:first-child {
+  display: none !important;
+}
+
+
+/* ------------------------------------------------------------
+   REDACTED: estilo "spoiler" com hover-reveal; a conversão de
+   [r]...[/r] em spans e o IntersectionObserver estão no footer.
+   ------------------------------------------------------------ */
+.redacted {
+  color: var(--color-on-background);
+  background-color: transparent;
+  padding: 0 2px;
+  border-radius: 2px;
+  cursor: help;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.redacted.revealed {
+  color: var(--color-background);
+  background-color: var(--color-primary);
+}
+@media (hover: hover) {
+  .redacted.revealed:hover {
+    color: var(--color-on-background);
+    background-color: transparent;
+  }
+}
+
+
+/* ------------------------------------------------------------
+   SCROLL REVEAL: fade-up + hover scale; a lógica JS está no footer.
+   Esconde APENAS o que o JS marcou (data-hb-sr). Conteúdo injetado
+   tarde pela FW (recent-posts, tiktoks, reviews, cookie banner)
+   nunca passa pelo JS, logo nunca é marcado, logo nunca fica preso
+   invisível.
+   ------------------------------------------------------------ */
+body.scroll-animate [data-hb-sr] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+body.scroll-animate .is-visible {
+  opacity: 1 !important;
+  transform: translateY(0);
+}
+@media (hover: hover) {
+  body.scroll-animate .tile.is-visible:hover,
+  body.scroll-animate .product-card.is-visible:hover,
+  body.scroll-animate .collection-card.is-visible:hover,
+  body.scroll-animate [class*="card"].is-visible:hover,
+  body.scroll-animate [class*="grid"] > *.is-visible:hover {
+    transform: translateY(0) scale(1.0055);
+  }
+  .button:hover, .tab:hover { transform: scale(1.02); opacity: 0.9; }
+  .button--primary:hover { color: var(--color-on-primary); }
+  .button--secondary:hover { color: var(--color-on-secondary); }
+  .button, .tab { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
+}
+
+
+/* ------------------------------------------------------------
+   GTRANSLATE (visual): widget floating-glass igual ao header
+   nativo do FW. Reutiliza --header-blur-amount + --header-blur-opacity
+   para ficar sincronizado com qualquer ajuste ao header floating.
+   Universal selector força theme-aware color (sobrepõe o color
+   inline #fdfbf1 das settings do widget no footer) — SEM este
+   bloco, o texto do switcher fica branco sobre fundo claro.
+   ------------------------------------------------------------ */
+.gtranslate_wrapper {
+  position: fixed;
+  bottom: 6px;
+  left: 6px;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+}
+.gtranslate_wrapper .gt_switcher {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  background-color: rgba(var(--color-background-rgb), var(--header-blur-opacity, 0.03)) !important;
+  border: 1px solid rgba(var(--color-on-background-rgb), var(--header-blur-opacity, 0.03)) !important;
+  border-radius: 4px;
+  padding: 4px 8px;
+  backdrop-filter: blur(var(--header-blur-amount, 24px));
+  -webkit-backdrop-filter: blur(var(--header-blur-amount, 24px));
+  filter: saturate(1.2);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.gtranslate_wrapper .gt_switcher:hover {
+  background-color: rgba(var(--color-on-background-rgb), 0.08) !important;
+  border-color: rgba(var(--color-on-background-rgb), 0.15) !important;
+}
+/* Força cor do texto em tudo (sobrepõe inline color do gtranslate).
+   Não afecta flags (img/svg com fill próprio). */
+.gtranslate_wrapper * {
+  color: var(--color-on-background) !important;
+}
+.gtranslate_wrapper .gt_switcher .gt_option {
+  font-family: inherit !important;
+  font-size: inherit !important;
+}
+.gtranslate_wrapper .gt_options {
+  background-color: rgba(var(--color-background-rgb), 0.92) !important;
+  border: 1px solid rgba(var(--color-on-background-rgb), 0.1) !important;
+  border-radius: 6px;
+  backdrop-filter: blur(var(--header-blur-amount, 24px));
+  -webkit-backdrop-filter: blur(var(--header-blur-amount, 24px));
+}
+.gtranslate_wrapper .gt_option:hover,
+.gtranslate_wrapper .gt_options a:hover {
+  background-color: rgba(var(--color-on-background-rgb), 0.01) !important;
+}
+@media (max-width: 768px) {
+  .gtranslate_wrapper {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 6px;
+    width: auto;
+    justify-content: center;
+  }
+}
+body[data-no-translate-page] .gtranslate_wrapper {
+  display: none !important;
+}
+
+
+/* ------------------------------------------------------------
+   GT ARROW: substitui a seta do gtranslate pelo chevron nativo
+   do FW (path copiado do DOM do header) via mask, pintado
+   theme-aware. Rotação 180 horária a combinar com os chevrons
+   do site. SVG desduplicado via custom property.
+   ------------------------------------------------------------ */
+.gtranslate_wrapper .gt_switcher .gt_selected a::after {
+  --hb-gt-chevron: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M6.683 11.634.436 4.494l1.128-.988 6.248 7.14a.25.25 0 0 0 .376 0l6.248-7.14 1.128.988-6.247 7.14a1.75 1.75 0 0 1-2.634 0Z'/></svg>") no-repeat 50% / 9px;
+  background-image: none !important;
+  background-color: var(--color-on-background);
+  mask: var(--hb-gt-chevron);
+  -webkit-mask: var(--hb-gt-chevron);
+}
+.gtranslate_wrapper .gt_switcher .gt_selected a.open::after {
+  transform: rotate(180deg) !important;
+}
+
+
+/* ============================================================
+   BRAND POLISH (todos CSS, sem JS). Dependem dos BRAND TOKENS
+   no :root acima. Verificados contra conflitos com header/footer.
+   ============================================================ */
+
+/* ::SELECTION: seleção de texto = marcador highlighter-pen (brand). */
+::selection { background-color: var(--highlighter-pen); color: var(--redacted-black); }
+::-moz-selection { background-color: var(--highlighter-pen); color: var(--redacted-black); }
+
+/* FOCUS RING: anel verified-blue no foco por teclado (a11y + "verificado"). */
+:focus-visible { outline: 2px solid var(--verified-blue); outline-offset: 2px; }
+
+/* CARET: cursor de escrita digital nos campos de texto. */
+input, textarea, [contenteditable] { caret-color: var(--color-primary); }
+
+/* CARET PISCANTE: cursor decorativo. Cor = primary do tema (azul light /
+   amarelo dark). Dentro do terminal usa verified-blue p/ se ver nos 2 painéis. */
+.hb-caret {
+  display: inline-block;
+  width: 4px;
+  height: 1.1em;
+  margin-left: 3px;
+  vertical-align: -0.18em;
+  background-color: var(--color-primary);
+  animation: hb-caret-blink 1.05s steps(1, end) infinite;
+}
+.hb-terminal .hb-caret { background-color: var(--verified-blue); }
+@keyframes hb-caret-blink { 50% { opacity: 0; } }
