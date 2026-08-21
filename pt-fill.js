@@ -20,8 +20,12 @@
     "An email with instructions on how to reset your password has been sent to": "Foi enviado um e-mail com instruções para repores a palavra-passe para",
     "Email or password not recognized. Please try again": "E-mail ou palavra-passe não reconhecidos. Tenta novamente",
     "By signing up you agree to Terms of Service": "Ao criares conta, aceitas os Termos de Serviço",
+    // O link "Terms of Service" e um no separado — fragmento para esse caso
+    "By signing up you agree to": "Ao criares conta, aceitas os",
     "Don’t have an account yet? Join now": "Ainda não tens conta? Junta-te agora",
     "Have an account already? Login": "Já tens conta? Inicia sessão",
+    // Idem para o link "Login": sem isto sobrava "Já tens conta already?"
+    "Have an account already": "Já tens conta",
     "Already a member? Login": "Já és membro? Inicia sessão",
     "Have an account? Login": "Já tens conta? Inicia sessão",
     "Have an account": "Já tens conta",
@@ -37,6 +41,12 @@
     "Resend": "Reenviar",
 
     // Palavra-passe
+    // "Enter password" TEM de vir antes de "Enter" (bloco da pagina de
+    // password), senao dava "Entrar password".
+    "To save your changes, please enter your password": "Para guardares as alterações, introduz a tua palavra-passe",
+    "Enter password": "Introduz a palavra-passe",
+    "Did you mean": "Será que quiseste dizer",
+    "Update email": "Atualizar e-mail",
     "You have never changed your password": "Nunca alteraste a tua palavra-passe",
     "You have changed your password on": "Alteraste a tua palavra-passe a",
     "Confirm new password": "Confirma a nova palavra-passe",
@@ -71,8 +81,13 @@
     "You’re currently signed up as a free account": "Neste momento tens uma conta gratuita",
     "You don't have any payment method added": "Não tens nenhum método de pagamento adicionado",
     "You haven't made any payments yet": "Ainda não fizeste nenhum pagamento",
+    // "Remove payment method" TEM de vir antes de "Remove" (bloco das
+    // palavras soltas), senao dava "Remover payment method".
+    "Remove payment method": "Remover método de pagamento",
     "Removing payment method": "Remover método de pagamento",
     "Change payment method": "Alterar método de pagamento",
+    "Next payment of": "Próximo pagamento de",
+    "scheduled on": "agendado para",
     "Payment method": "Método de pagamento",
     "Payment history": "Histórico de pagamentos",
     "Upgrade account": "Fazer upgrade da conta",
@@ -98,6 +113,9 @@
     "Leave a message or ask a question": "Deixa uma mensagem ou faz uma pergunta",
     "Your payment is being processed": "O teu pagamento está a ser processado",
     "off as long as subscription is active": "de desconto enquanto a subscrição estiver ativa",
+    // Badge "25% off" do checkout. TEM de vir depois da frase acima,
+    // que tambem contem "off" e seria partida por este fragmento.
+    "% off": "% de desconto",
     "annually starting": "anualmente a partir de",
     "Select subscription": "Escolhe a subscrição",
     "Choose what you pay": "Escolhe quanto pagas",
@@ -118,8 +136,14 @@
 
     // Gorjetas
     "By making this purchase you agree to Refund Policy": "Ao fazeres esta compra, aceitas a Política de Reembolso",
+    // O link "Refund Policy" e um no de texto separado, por isso a frase
+    // inteira acima nunca casa no modal. Este fragmento cobre esse caso.
+    "By making this purchase you agree to": "Ao fazeres esta compra, aceitas a",
     "Tips are supported in USD only": "As gorjetas só são suportadas em USD",
     "Tips are non-refundable": "As gorjetas não são reembolsáveis",
+    "By sending this tip you agree to our": "Ao enviares esta gorjeta, aceitas a nossa",
+    "Send a message with tip": "Enviar mensagem com gorjeta",
+    "Send message": "Enviar mensagem",
     "Add a tip to message": "Adicionar gorjeta à mensagem",
     "Unlock message for": "Desbloquear mensagem de",
     "Refund Policy": "Política de Reembolso",
@@ -145,7 +169,23 @@
     "Write a comment": "Escreve um comentário",
     "Write a message": "Escreve uma mensagem",
     "Top comments": "Comentários principais",
+    // Ordenacao dos comentarios. "Newest comments" TEM de vir antes de
+    // "Newest" (bloco das palavras soltas).
+    "Newest comments": "Comentários mais recentes",
+    "Most relevant": "Mais relevantes",
+    "Load replies": "Carregar respostas",
     "Load Replies": "Carregar respostas",
+    "Read more": "Ler mais",
+    "Add spoiler": "Adicionar spoiler",
+    "Remove spoiler": "Remover spoiler",
+    // Modal de denuncia / bloqueio de comentarios
+    "You will not see any comments from": "Não vais ver mais comentários de",
+    "Expressess intentions of self-harm or suicide": "Expressa intenções de automutilação ou suicídio",
+    "Suspicious or spam": "Suspeito ou spam",
+    "Abusive or harmful": "Abusivo ou prejudicial",
+    "Something else": "Outro motivo",
+    "Report comment": "Denunciar comentário",
+    "Submit report": "Enviar denúncia",
     "Copy RSS link": "Copiar link RSS",
     "Copy link": "Copiar link",
     "Add emoji": "Adicionar emoji",
@@ -156,8 +196,15 @@
 
     // Filtros
     "Published date": "Data de publicação",
+    // O BOTAO do sorter parte isto em 2 nos de texto com &nbsp; no meio
+    // ("Newest&nbsp;<span>to oldest</span>"), por isso a frase inteira so
+    // casa no dropdown. Os fragmentos "Newest"/"to oldest" estao no bloco
+    // das palavras soltas e cobrem o botao, incluindo mobile (onde o span
+    // esta escondido e so sobra "Newest").
     "Newest to oldest": "Mais recentes primeiro",
     "Oldest to newest": "Mais antigas primeiro",
+    "Continue playing": "Continuar a reproduzir",
+    "See history": "Ver histórico",
     "Showing posts with": "A mostrar publicações com",
     "Showing videos with": "A mostrar vídeos com",
     "Content missing": "Conteúdo em falta",
@@ -178,8 +225,6 @@
     "New video": "Novo vídeo",
     "Watch now": "Ver agora",
     "See all": "Ver todos",
-    "months ago": "meses",
-    "month ago": "mês",
 
     // Vantagens (perks)
     "Paste this link into your favorite podcast player to listen to the members only audio feed": "Cola este link no teu leitor de podcasts para ouvires o feed de áudio exclusivo para membros",
@@ -372,6 +417,12 @@
     // ============================================================
     "Livestream": "Transmissão em direto",
     "Membership": "Subscrição",
+    // Depois de "Join for free to access" (bloco de navegacao), senao
+    // dava "Junta-te grátis to access".
+    "Join for free": "Junta-te grátis",
+    // Depois de "Payment history" e "See history", que sao chaves
+    // completas la em cima.
+    "History": "Histórico",
     "Highlighted": "Destacado",
     "Relevance": "Relevância",
     "Verified": "Verificado",
@@ -394,9 +445,13 @@
     "yearly": "anual",
     "year": "por ano",
     "When": "Quando",
-    // "about" TEM de estar aqui e não junto aos vídeos: lá em cima
-    // partia "Be the first one to submit a review about" (reviews).
-    "about": "há cerca de",
+    // Fragmentos do BOTAO do sorter (ver nota no bloco dos filtros).
+    // "to oldest"/"to newest" sao minusculas e nao colidem com
+    // "Oldest"/"Newest", que sao maiusculas (o regex e case-sensitive).
+    "to oldest": "primeiro",
+    "to newest": "primeiro",
+    "Newest": "Mais recentes",
+    "Oldest": "Mais antigas",
     "Amount": "Valor",
     "Remove": "Remover",
     "Report": "Denunciar",
@@ -421,6 +476,11 @@
     "Post": "Publicar",
     "Back": "Voltar",
     "Pin": "Fixar",
+    // Chip da gorjeta: "Added&nbsp;<span>$1.23</span>&nbsp;tip" — 2 nos de
+    // texto. "Added" TEM de estar aqui em baixo, senao partia
+    // "Added to cart" (bloco do carrinho).
+    "Added": "Adicionada gorjeta de",
+    "tip": "",
     // "$10.00 + $2.30 tax". As variantes compostas ("plus tax",
     // "inc. tax/vat", "Taxes/VAT") ja correram bem antes desta.
     "tax": "de imposto",
@@ -450,12 +510,25 @@
       "Search": "Pesquisar",
       "From": "De",
       "To": "Até",
-      "Qty": "Qtd"
+      "Qty": "Qtd",
+      "Write a message...": "Escreve uma mensagem...",
+      "Write a comment...": "Escreve um comentário...",
+      "Name or nickname": "Nome ou alcunha",
+      "Name or username": "Nome ou nome de utilizador",
+      "Email": "E-mail",
+      "Password": "Palavra-passe",
+      "Current password": "Palavra-passe atual",
+      "New password": "Nova palavra-passe",
+      "Confirm new password": "Confirma a nova palavra-passe",
+      "Leave a message or ask a question": "Deixa uma mensagem ou faz uma pergunta",
+      "Promo code": "Código promocional"
     }},
     { sel: '[aria-label]', attr: 'aria-label', map: {
       "Close": "Fechar",
       "Open": "Abrir",
       "Search": "Pesquisar",
+      "Like": "Gosto",
+      "Comment": "Comentar",
       "Open menu": "Abrir menu",
       "Close menu": "Fechar menu",
       "Close search": "Fechar pesquisa",
@@ -468,7 +541,37 @@
     }},
     { sel: '[title]', attr: 'title', map: {
       "Your account": "A tua conta",
-      "Go to cart": "Ir para o carrinho"
+      "Go to cart": "Ir para o carrinho",
+      "Messages": "Mensagens",
+      "Back": "Voltar",
+      "minumim 4 characters, only alphanumeric characters, space, hyphen, dot, apostrophe and/or underscore, with no whitespace around": "mínimo 4 caracteres; só letras, números, espaço, hífen, ponto, apóstrofo e/ou underscore, sem espaços no início ou no fim"
+    }},
+    { sel: '[data-disable-with]', attr: 'data-disable-with', map: {
+      "Save": "Guardar"
+    }},
+    // O editor de comentarios (Quill) pinta o placeholder por CSS a
+    // partir de data-placeholder; o valor Stimulus e a fonte que o
+    // controller reaplica, por isso traduzem-se os dois.
+    { sel: '[data-placeholder]', attr: 'data-placeholder', map: {
+      "Write a comment...": "Escreve um comentário...",
+      "Write a message...": "Escreve uma mensagem...",
+      "Write a reply...": "Escreve uma resposta..."
+    }},
+    { sel: '[data-comment-form-placeholder-value]', attr: 'data-comment-form-placeholder-value', map: {
+      "Write a comment...": "Escreve um comentário...",
+      "Write a message...": "Escreve uma mensagem...",
+      "Write a reply...": "Escreve uma resposta..."
+    }},
+    { sel: '[data-tippy-content]', attr: 'data-tippy-content', map: {
+      "Add emoji": "Adicionar emoji",
+      "Add image": "Adicionar imagem",
+      "Add tip": "Adicionar gorjeta"
+    }},
+    { sel: '[data-confirm]', attr: 'data-confirm', map: {
+      "Are you sure you want to hide this section?": "Tens a certeza que queres ocultar esta secção?"
+    }},
+    { sel: '[data-confirm-label]', attr: 'data-confirm-label', map: {
+      "Hide": "Ocultar"
     }}
   ];
 
@@ -484,14 +587,58 @@
     '.post__section--column > span': ' ou '
   };
 
-  // Zonas de alta-rotacao a ignorar (mutam frequentemente sem texto traduzivel)
-  const SKIP_ZONES = '[class*="countdown"]';
+  // Zonas de alta-rotacao a ignorar (mutam frequentemente sem texto
+  // traduzivel). Os leitores de media disparam mutacoes continuas.
+  const SKIP_ZONES = '[class*="countdown"],mux-player,[class*="video__progress"],[class*="audio-player__controls"]';
 
   function isPTActive() {
     const c = document.cookie.match(/googtrans=\/[^\/]+\/(\w+)/);
     if (!c) return true;
     return c[1] === 'pt';
   }
+
+  // ============================================================
+  // DATAS RELATIVAS ("10 days ago", "about 2 months ago")
+  // Nao dava para resolver com o mapa literal: em PT o "há" vai
+  // ANTES do numero e o "ago" esta DEPOIS. Estas regras correm
+  // antes das chaves literais, dentro do translateNode.
+  // ============================================================
+  const REL_UNITS = {
+    second: ['segundo', 'segundos', 'um'],
+    minute: ['minuto', 'minutos', 'um'],
+    hour:   ['hora',    'horas',    'uma'],
+    day:    ['dia',     'dias',     'um'],
+    week:   ['semana',  'semanas',  'uma'],
+    month:  ['mês',     'meses',    'um'],
+    year:   ['ano',     'anos',     'um']
+  };
+
+  const REL_RE = /\b(about\s+)?(an?|\d+)\s+(second|minute|hour|day|week|month|year)s?\s+ago\b/g;
+
+  function relDate(match, about, qty, unit) {
+    const u = REL_UNITS[unit];
+    if (!u) return match;
+    const isArticle = (qty === 'a' || qty === 'an');
+    const n = isArticle ? 1 : parseInt(qty, 10);
+    if (!isArticle && !(n > 0)) return match;
+    const word = (n === 1) ? u[0] : u[1];
+    const value = isArticle ? u[2] : n;
+    return (about ? 'há cerca de ' : 'há ') + value + ' ' + word;
+  }
+
+  const REGEX_RULES = [
+    { re: REL_RE, pt: relDate },
+    { re: /\bjust now\b/g, pt: 'agora mesmo' },
+    // "1 video" / "12 videos" no banner das series
+    { re: /\b(\d+)\s+videos?\b/g, pt: function(m, n){ return n + (n === '1' ? ' vídeo' : ' vídeos'); } },
+    // "$4.99 / mo" e "$44.91 / year" do checkout. Regex porque o \b nao
+    // funciona a seguir a "/" (dois caracteres nao-palavra seguidos).
+    { re: /\/\s*mo\b/g, pt: '/mês' },
+    { re: /\/\s*year\b/g, pt: '/ano' },
+    // "Save 25% if you pay annually": tem de correr antes da chave
+    // literal "Save" (botao), que aqui daria "Guardar 25% if you...".
+    { re: /\bSave\s+(\d+)\s*%\s+if you pay annually\b/g, pt: 'Poupa $1% se pagares anualmente' }
+  ];
 
   function escapeRegex(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -533,7 +680,9 @@
     if(!isPTActive()||!root) return;
     if(root.nodeType===Node.TEXT_NODE) root=root.parentElement;
     if(!root||root.nodeType!==Node.ELEMENT_NODE) return;
-    const SEL='.post-tile__date,.post__meta';
+    // time[data-local] cobre emblemas, perfil, faturacao e historico de
+    // pagamentos. As horas ("5:35 pm") dao Invalid Date e sao ignoradas.
+    const SEL='.post-tile__date,.post__meta,.video-page__meta,time[data-local]';
     const els=new Set();
     const hit=root.closest&&root.closest(SEL);
     if(hit) els.add(hit);
@@ -604,6 +753,15 @@
   function translateNode(node) {
     let text = node.nodeValue;
     let changed = false;
+    // Regex primeiro: reordena as datas relativas antes que chaves
+    // literais curtas lhes toquem.
+    for (let i = 0; i < REGEX_RULES.length; i++) {
+      const newText = text.replace(REGEX_RULES[i].re, REGEX_RULES[i].pt);
+      if (newText !== text) {
+        text = newText;
+        changed = true;
+      }
+    }
     for (let i = 0; i < COMPILED.length; i++) {
       const newText = text.replace(COMPILED[i].re, COMPILED[i].pt);
       if (newText !== text) {
@@ -680,15 +838,21 @@ const observer = new MutationObserver((mutations) => {
     }
   }
   if (!pending.length) return;
-  if (mutScheduled) cancel(mutScheduled);
-  mutScheduled = schedule(() => {
-    const batch = pending;
-    pending = [];
-    mutScheduled = null;
-    batch.forEach(node => {
-       if (node.isConnected) { processNode(node); }
+  // THROTTLE (nao debounce): a 1a mutacao agenda, as seguintes so
+  // acumulam em pending. Com debounce (cancel+reschedule), qualquer
+  // churn continuo no DOM — mux-player, barras de progresso, turbo
+  // frames — cancelava a execucao para sempre e o conteudo novo so
+  // era traduzido depois de um reload.
+  if (!mutScheduled) {
+    mutScheduled = schedule(() => {
+      const batch = pending;
+      pending = [];
+      mutScheduled = null;
+      batch.forEach(node => {
+         if (node.isConnected) { processNode(node); }
+      });
     });
-  });
+  }
 });
 observer.observe(document.body, { childList: true, subtree: true, characterData: true });
   // Detectar quando o gtranslate muda de lingua e re-aplicar PT-FILL.
