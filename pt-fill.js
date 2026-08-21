@@ -208,6 +208,13 @@
     "Showing posts with": "A mostrar publicações com",
     "Showing videos with": "A mostrar vídeos com",
     "Content missing": "Conteúdo em falta",
+    // Estados vazios do feed. O termo pesquisado vem a seguir, entre
+    // plicas, por isso a chave para antes dele.
+    "There are no posts matching term": "Não há publicações que correspondam a",
+    "There are no videos matching term": "Não há vídeos que correspondam a",
+    "These filters have no posts": "Estes filtros não têm publicações",
+    "These filters have no videos": "Estes filtros não têm vídeos",
+    "Reset filters": "Repor filtros",
     "Content type": "Tipo de conteúdo",
     "Apply filters": "Aplicar filtros",
     "Last 24 hours": "Últimas 24 horas",
@@ -626,7 +633,22 @@
     return (about ? 'há cerca de ' : 'há ') + value + ' ' + word;
   }
 
+  // Datas EN dentro de frases ("...a partir de Aug 28, 2026"). O
+  // localizeDates so chega a elementos proprios; estas estao no meio
+  // de texto corrido, logo tem de ser aqui.
+  const MONTHS_EN = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+  const MONTHS_PT = ['janeiro','fevereiro','março','abril','maio','junho',
+                     'julho','agosto','setembro','outubro','novembro','dezembro'];
+  const DATE_RE = /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+(\d{1,2}),\s*(\d{4})\b/g;
+
+  function inlineDate(match, mon, day, year) {
+    const i = MONTHS_EN.indexOf(mon.toLowerCase());
+    if (i < 0) return match;
+    return day + ' de ' + MONTHS_PT[i] + ' de ' + year;
+  }
+
   const REGEX_RULES = [
+    { re: DATE_RE, pt: inlineDate },
     { re: REL_RE, pt: relDate },
     { re: /\bjust now\b/g, pt: 'agora mesmo' },
     // "1 video" / "12 videos" no banner das series
@@ -855,6 +877,19 @@ const observer = new MutationObserver((mutations) => {
   }
 });
 observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+
+  // TOOLTIPS (tippy): o controller le data-tippy-content quando liga —
+  // antes do pt-fill, que corre em defer + idle — e guarda o texto EN
+  // em cache. Traduzir o atributo depois disso nao muda o balao ja
+  // criado, dai so funcionar depois de um refresh. Aqui apanhamos o
+  // balao ja renderizado ([data-tippy-root], anexado ao body) sem
+  // esperar pelo idle callback do observer.
+  document.addEventListener('pointerover', function () {
+    requestAnimationFrame(function () {
+      const tips = document.querySelectorAll('[data-tippy-root]');
+      for (let i = 0; i < tips.length; i++) processNode(tips[i]);
+    });
+  }, true);
   // Detectar quando o gtranslate muda de lingua e re-aplicar PT-FILL.
   // O gtranslate alterna translated-ltr no html ao mudar de estado;
   // observar essa mudanca cobre o caso "EN -> PT volta a mostrar original".
