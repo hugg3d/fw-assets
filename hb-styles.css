@@ -245,13 +245,10 @@ body:has(.sticky-add-to-cart.is-visible) .gtranslate_wrapper {
 }
 
 
-/* ------------------------------------------------------------
-   CHECKOUT P.M.: esconde o cartão do plano mensal no checkout.
-   Par do auto-click anual no script PLANOS (que ficou no header).
-   ------------------------------------------------------------ */
-.plan-cards > a:first-child {
-  display: none !important;
-}
+/* CHECKOUT P.M.
+   Ancorado no data-testid — a FW ja mudou a arvore uma vez
+   (acrescentou .plan-cards__container) e partiu a versao posicional. */
+.plan-cards [data-testid="Checkout.PlanCard.Monthly"] { display: none !important; }
 
 
 /* ------------------------------------------------------------
@@ -410,6 +407,20 @@ body[data-no-translate-page] .gtranslate_wrapper {
 
 /* FOCUS RING: anel verified-blue no foco por teclado (a11y + "verificado"). */
 :focus-visible { outline: 2px solid var(--verified-blue); outline-offset: 2px; }
+
+/* ...nos campos de texto, desenha no wrapper e nao no <input>: o input
+   tem dimensoes e border-radius diferentes da caixa visivel. */
+.input__field:focus-visible,
+.input-field__input:focus-visible,
+.search-header__input:focus-visible { outline: none; }
+
+.input:has(.input__field:focus-visible),
+.input-field:has(.input-field__input:focus-visible),
+.search-header__form:has(.search-header__input:focus-visible) {
+  outline: 2px solid var(--verified-blue);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
 
 /* CARET: cursor de escrita digital nos campos de texto. */
 input, textarea, [contenteditable] { caret-color: var(--color-primary); }
