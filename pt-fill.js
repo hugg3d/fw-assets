@@ -153,6 +153,13 @@
     "Unlock now": "Desbloquear agora",
     "Add tip": "Adicionar gorjeta",
 
+    // Notificacoes push (PWA — so aparece em mobile)
+    "Get notified about new posts and comment replies": "Recebe notificações de novas publicações e respostas aos comentários",
+    "Please turn on notifications": "Ativa as notificações",
+    "Turn on notifications": "Ativar notificações",
+    "Enable notifications": "Ativar notificações",
+    "Not now": "Agora não",
+
     // Feed / publicações
     "Share a preview of a locked post": "Partilha uma pré-visualização de uma publicação bloqueada",
     "Start a conversation by sending a message below": "Começa uma conversa enviando uma mensagem abaixo",
@@ -207,6 +214,13 @@
     "See history": "Ver histórico",
     "Showing posts with": "A mostrar publicações com",
     "Showing videos with": "A mostrar vídeos com",
+    // Pop-up das notificacoes push (PWA / browser)
+    "Get notified about new posts and comment replies": "Recebe avisos de novas publicações e de respostas aos teus comentários",
+    "Please turn on notifications": "Ativa as notificações",
+    "Turn on notifications": "Ativar notificações",
+    "Enable notifications": "Ativar notificações",
+    "Not now": "Agora não",
+    "Maybe later": "Talvez mais tarde",
     "Content missing": "Conteúdo em falta",
     // Estados vazios do feed. O termo pesquisado vem a seguir, entre
     // plicas, por isso a chave para antes dele.
@@ -659,6 +673,10 @@
 
   const REGEX_RULES = [
     { re: DATE_RE, pt: inlineDate },
+    // TEM de vir antes do REL_RE: esse apanha o "a minute ago" e
+    // deixava "less than há um minuto".
+    { re: /\bless than a minute ago\b/g, pt: 'há menos de um minuto' },
+    { re: /\bless than an hour ago\b/g, pt: 'há menos de uma hora' },
     { re: REL_RE, pt: relDate },
     { re: /\bjust now\b/g, pt: 'agora mesmo' },
     // "1 video" / "12 videos" no banner das series
