@@ -400,10 +400,11 @@ body[data-no-translate-page] .gtranslate_wrapper {
    no :root acima. Verificados contra conflitos com header/footer.
    ============================================================ */
 
-/* "No badges": e' um ::before gerado no :empty pelo CSS da FW, logo
-   fora do alcance do pt-fill. #id para ganhar a especificidade deles. */
-#hidden.badges__list-items:empty::before,
-#visible.badges__list-items:empty::before { content: "Sem emblemas" !important; }
+/* "No badges": ::before gerado pela FW com :not(:has(.badges__list-item)) */
+#hidden.badges__list-items:not(:has(.badges__list-item))::before,
+#visible.badges__list-items:not(:has(.badges__list-item))::before {
+  content: "Sem emblemas" !important;
+}
 
 /* ::SELECTION: seleção de texto = marcador highlighter-pen (brand). */
 ::selection { background-color: var(--highlighter-pen); color: var(--redacted-black); }
