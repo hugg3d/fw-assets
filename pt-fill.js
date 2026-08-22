@@ -126,13 +126,13 @@
     "Free for 7 days": "Grátis durante 7 dias",
     "You will be charged": "Vai ser-te cobrado",
     "It may take a while": "Pode demorar um pouco",
-    "Billed monthly": "Faturado mensalmente",
-    "billed annually": "faturado anualmente",
+    "Billed monthly": "Cobrado mensalmente",
+    "billed annually": "cobrado anualmente",
     "Total to pay": "Total a pagar",
     "Promo code": "Código promocional",
     "Taxes/VAT": "Impostos/IVA",
     "inc. tax/vat": "inc. impostos/IVA",
-    "Billed": "Faturado",
+    "Billed": "Cobrado",
 
     // Gorjetas
     "By making this purchase you agree to Refund Policy": "Ao fazeres esta compra, aceitas a Política de Reembolso",
@@ -556,6 +556,16 @@
     { sel: '[data-disable-with]', attr: 'data-disable-with', map: {
       "Save": "Guardar"
     }},
+    // O botao da pagina de password e <input type="submit" value="Enter">
+    // — o texto esta no atributo, dai nunca ter sido traduzido.
+    // So type=submit: mexer no value de outros inputs alterava os dados
+    // enviados no formulario.
+    { sel: 'input[type="submit"]', attr: 'value', map: {
+      "Enter": "Entrar",
+      "Submit": "Enviar",
+      "Save": "Guardar",
+      "Search": "Pesquisar"
+    }},
     // O editor de comentarios (Quill) pinta o placeholder por CSS a
     // partir de data-placeholder; o valor Stimulus e a fonte que o
     // controller reaplica, por isso traduzem-se os dois.
@@ -839,8 +849,13 @@
   } else {
     runFull();
   }
-  document.addEventListener('turbo:load', runFull);
-  document.addEventListener('turbo:frame-load', runFull);
+  // Turbo: alem da navegacao normal, os turbo-streams substituem
+  // conteudo sem disparar turbo:frame-load (ex.: o sidebar do checkout
+  // quando se muda o valor em "Escolhe quanto pagas"). Sem estes
+  // eventos, essas zonas voltavam a ingles e nada as reprocessava.
+  ['turbo:load','turbo:frame-load','turbo:render','turbo:frame-render',
+   'turbo:before-stream-render','turbo:submit-end','turbo:morph']
+    .forEach(function (ev) { document.addEventListener(ev, runFull); });
 
   // OBSERVER: processa nodos novos E texto alterado in-place; ignora zonas churn
 let pending = [];
@@ -870,9 +885,14 @@ const observer = new MutationObserver((mutations) => {
       const batch = pending;
       pending = [];
       mutScheduled = null;
+      let stale = false;
       batch.forEach(node => {
          if (node.isConnected) { processNode(node); }
+         // Nó já substituído (tipico de turbo-stream): perdiamos a
+         // traducao dessa zona para sempre. Marca para passagem geral.
+         else { stale = true; }
       });
+      if (stale) processNode(document.body);
     });
   }
 });
