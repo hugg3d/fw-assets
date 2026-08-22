@@ -416,19 +416,19 @@ body[data-no-translate-page] .gtranslate_wrapper {
 /* ...mas nos campos de texto desenha-se no WRAPPER, nao no input: o
    input tem dimensoes e border-radius diferentes da caixa visivel, e o
    anel ficava desalinhado (e deixava botoes irmaos de fora). */
-.input__field:focus, .input__field:focus-visible,
-.input-field__input:focus, .input-field__input:focus-visible,
-.search-header__input:focus, .search-header__input:focus-visible,
-.search-bar__input:focus, .search-bar__input:focus-visible,
-.textarea__field:focus, .textarea__field:focus-visible,
-.ql-editor:focus, .ql-editor:focus-visible { outline: none; }
+.input__field:focus, .input-field__input:focus,
+.search-header__input:focus, .search-bar__input:focus,
+.textarea__field:focus, .ql-editor:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
 
-.input:has(.input__field:focus-visible),
-.input-field:has(.input-field__input:focus-visible),
-.search-header__form:has(.search-header__input:focus-visible),
-.search-bar__form:has(.search-bar__input:focus-visible),
-.textarea:has(.textarea__field:focus-visible),
-.ql-container:has(.ql-editor:focus-visible) {
+.input:focus-within,
+.input-field:focus-within,
+.search-header__form:focus-within,
+.search-bar__form:focus-within,
+.textarea:focus-within,
+.ql-container:focus-within {
   outline: 2px solid var(--verified-blue);
   outline-offset: 2px;
   border-radius: 6px;
