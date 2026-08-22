@@ -400,7 +400,9 @@ body[data-no-translate-page] .gtranslate_wrapper {
    no :root acima. Verificados contra conflitos com header/footer.
    ============================================================ */
 
-/* "No badges": ::before gerado pela FW com :not(:has(.badges__list-item)) */
+/* "No badges": ::before gerado pela FW com :not(:has(.badges__list-item)).
+   Nao usar :empty — o <ul> tem espacos em branco e nunca casa.
+   #id para ganhar a especificidade deles. */
 #hidden.badges__list-items:not(:has(.badges__list-item))::before,
 #visible.badges__list-items:not(:has(.badges__list-item))::before {
   content: "Sem emblemas" !important;
