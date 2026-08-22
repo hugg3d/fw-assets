@@ -244,11 +244,15 @@ body:has(.sticky-add-to-cart.is-visible) .gtranslate_wrapper {
   transition: bottom 0.3s ease 0s;
 }
 
-
-/* CHECKOUT P.M.
-   Ancorado no data-testid — a FW ja mudou a arvore uma vez
-   (acrescentou .plan-cards__container) e partiu a versao posicional. */
+/* ------------------------------------------------------------
+   CHECKOUT P.M.: esconde o cartao do plano mensal e centra o anual.
+   Ancorado no data-testid — a FW acrescentou .plan-cards__container
+   e a versao posicional (> a:first-child) deixou de casar.
+   Par do auto-click anual no script PLANOS (header).
+   ------------------------------------------------------------ */
 .plan-cards [data-testid="Checkout.PlanCard.Monthly"] { display: none !important; }
+.plan-cards__container { display: flex !important; justify-content: center; }
+.plan-cards [data-testid="Checkout.PlanCard.Annual"] { flex: 0 1 320px; }
 
 
 /* ------------------------------------------------------------
@@ -391,15 +395,15 @@ body[data-no-translate-page] .gtranslate_wrapper {
   transform: rotate(180deg) !important;
 }
 
-
 /* ============================================================
    BRAND POLISH (todos CSS, sem JS). Dependem dos BRAND TOKENS
    no :root acima. Verificados contra conflitos com header/footer.
    ============================================================ */
 
-/* "No badges" e' :empty + content no CSS da FW — so' CSS o resolve */
-.badges__list-items:empty::before,
-.badges__list-items:empty::after { content: "Sem emblemas" !important; }
+/* "No badges": e' um ::before gerado no :empty pelo CSS da FW, logo
+   fora do alcance do pt-fill. #id para ganhar a especificidade deles. */
+#hidden.badges__list-items:empty::before,
+#visible.badges__list-items:empty::before { content: "Sem emblemas" !important; }
 
 /* ::SELECTION: seleção de texto = marcador highlighter-pen (brand). */
 ::selection { background-color: var(--highlighter-pen); color: var(--redacted-black); }
@@ -408,15 +412,22 @@ body[data-no-translate-page] .gtranslate_wrapper {
 /* FOCUS RING: anel verified-blue no foco por teclado (a11y + "verificado"). */
 :focus-visible { outline: 2px solid var(--verified-blue); outline-offset: 2px; }
 
-/* ...nos campos de texto, desenha no wrapper e nao no <input>: o input
-   tem dimensoes e border-radius diferentes da caixa visivel. */
-.input__field:focus-visible,
-.input-field__input:focus-visible,
-.search-header__input:focus-visible { outline: none; }
+/* ...mas nos campos de texto desenha-se no WRAPPER, nao no input: o
+   input tem dimensoes e border-radius diferentes da caixa visivel, e o
+   anel ficava desalinhado (e deixava botoes irmaos de fora). */
+.input__field:focus, .input__field:focus-visible,
+.input-field__input:focus, .input-field__input:focus-visible,
+.search-header__input:focus, .search-header__input:focus-visible,
+.search-bar__input:focus, .search-bar__input:focus-visible,
+.textarea__field:focus, .textarea__field:focus-visible,
+.ql-editor:focus, .ql-editor:focus-visible { outline: none; }
 
 .input:has(.input__field:focus-visible),
 .input-field:has(.input-field__input:focus-visible),
-.search-header__form:has(.search-header__input:focus-visible) {
+.search-header__form:has(.search-header__input:focus-visible),
+.search-bar__form:has(.search-bar__input:focus-visible),
+.textarea:has(.textarea__field:focus-visible),
+.ql-container:has(.ql-editor:focus-visible) {
   outline: 2px solid var(--verified-blue);
   outline-offset: 2px;
   border-radius: 6px;
