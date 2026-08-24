@@ -235,13 +235,13 @@ body::before {
    está visível; reaparece só depois de o CTA sair.
    (O visual do widget está mais abaixo, em GTRANSLATE.)
    ------------------------------------------------------------ */
-.gtranslate_wrapper {
-  transition: bottom 0.3s ease 0s;
-}
-body:has(.sticky-add-to-cart.is-visible) .gtranslate_wrapper {
-  bottom: -100px;
-  pointer-events: none;
-  transition: bottom 0.3s ease 0s;
+@media (max-width: 639px) {
+  body:has(.sticky-add-to-cart.is-visible) .gtranslate_wrapper,
+  body:has(.sticky-bar) .gtranslate_wrapper {
+    bottom: -100px;
+    pointer-events: none;
+    transition: bottom 0.3s ease 0s;
+  }
 }
 
 /* ------------------------------------------------------------
