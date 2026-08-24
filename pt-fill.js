@@ -845,9 +845,11 @@
   }
 
   // Scheduler: idle callback se disponivel, senao setTimeout
+  // Timeout curto: 500ms era tempo suficiente para se ver o ingles em
+  // conteudo injectado depois da carga (tooltips, streams, modais).
   const schedule = window.requestIdleCallback
-    ? (fn) => requestIdleCallback(fn, { timeout: 500 })
-    : (fn) => setTimeout(fn, 200);
+    ? (fn) => requestIdleCallback(fn, { timeout: 150 })
+    : (fn) => setTimeout(fn, 50);
   const cancel = window.cancelIdleCallback
     ? (h) => { try { cancelIdleCallback(h); } catch(e) { clearTimeout(h); } }
     : (h) => clearTimeout(h);
@@ -867,10 +869,14 @@
   } else {
     runFull();
   }
+
   // Turbo: alem da navegacao normal, os turbo-streams substituem
   // conteudo sem disparar turbo:frame-load (ex.: o sidebar do checkout
   // quando se muda o valor em "Escolhe quanto pagas"). Sem estes
   // eventos, essas zonas voltavam a ingles e nada as reprocessava.
+  // Todos passam pelo scheduler: o turbo:morph dispara a MEIO do morph
+  // e traduzir sincronamente ai arriscava o Turbo comparar contra um
+  // DOM ja alterado.
   ['turbo:load','turbo:frame-load','turbo:render','turbo:frame-render',
    'turbo:before-stream-render','turbo:submit-end','turbo:morph']
     .forEach(function (ev) { document.addEventListener(ev, runFull); });
