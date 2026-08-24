@@ -844,12 +844,13 @@
     fillNode(node);
   }
 
-  // Scheduler: idle callback se disponivel, senao setTimeout
-  // Timeout curto: 500ms era tempo suficiente para se ver o ingles em
-  // conteudo injectado depois da carga (tooltips, streams, modais).
+  // Scheduler: idle callback se disponivel, senao setTimeout.
+  // Timeout de 500ms de proposito: com valores curtos (~150ms) o
+  // callback e' forcado mesmo com o browser ocupado, e durante o
+  // scroll isso competia com o rendering e atrasava o lazy-load.
   const schedule = window.requestIdleCallback
-    ? (fn) => requestIdleCallback(fn, { timeout: 150 })
-    : (fn) => setTimeout(fn, 50);
+    ? (fn) => requestIdleCallback(fn, { timeout: 500 })
+    : (fn) => setTimeout(fn, 200);
   const cancel = window.cancelIdleCallback
     ? (h) => { try { cancelIdleCallback(h); } catch(e) { clearTimeout(h); } }
     : (h) => clearTimeout(h);
