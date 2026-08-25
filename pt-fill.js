@@ -354,6 +354,7 @@
     "Page not found": "Página em Branco, literalmente 😀",
     "Join for free to access": "Regista-te grátis para aceder",
     "Join to access": "Subscreve para aceder",
+    "Upgrade to access": "Faz upgrade para aceder",
     "Join or purchase": "Subscreve ou compra",
     "Continue reading": "Continua a ler",
     "Go Back Home": "Volta ao início",
