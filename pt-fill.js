@@ -16,6 +16,10 @@
 
     // Autenticação
     "This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply": "Este site é protegido por reCAPTCHA, aplicando-se a Política de Privacidade e os Termos de Serviço da Google",
+    // A frase acima fica partida por dois links, por isso raramente
+    // casa. Este prefixo apanha o 1o no; o "and" e o "apply." sao
+    // tratados pelas regras ancoradas em REGEX_RULES.
+    "This site is protected by reCAPTCHA and the Google": "Este site é protegido por reCAPTCHA. Aplicam-se a",
     "Enter your email address to reset your password": "Introduz o teu e-mail para repores a palavra-passe",
     "An email with instructions on how to reset your password has been sent to": "Foi enviado um e-mail com instruções para repores a palavra-passe para",
     "Email or password not recognized. Please try again": "E-mail ou palavra-passe não reconhecidos. Tenta novamente",
@@ -88,8 +92,10 @@
     "Change payment method": "Alterar método de pagamento",
     "Next payment of": "Próximo pagamento de",
     "scheduled on": "agendado para",
+    "Set up payment method": "Configurar método de pagamento",
     "Payment method": "Método de pagamento",
     "Payment history": "Histórico de pagamentos",
+    "Upgrade or purchase": "Faz upgrade ou compra",
     "Upgrade account": "Fazer upgrade da conta",
     "Billing address": "Morada de faturação",
     "Postal code": "Código postal",
@@ -123,6 +129,8 @@
     "Return to": "Voltar para",
     "Enter promo code": "Introduzir código promocional",
     "Start free Trial": "Começar teste gratuito",
+    "Start free trial": "Começar teste gratuito",
+    "Coupon code": "Código promocional",
     "Free for 7 days": "Grátis durante 7 dias",
     "You will be charged": "Vai ser-te cobrado",
     "It may take a while": "Pode demorar um pouco",
@@ -150,21 +158,16 @@
     "Terms of Service": "Termos de Serviço",
     "Tip amount": "Valor da gorjeta",
     "Pay & Unlock": "Pagar e Desbloquear",
+    "Pay & Subscribe": "Pagar e Subscrever",
     "Unlock now": "Desbloquear agora",
     "Add tip": "Adicionar gorjeta",
-
-    // Notificacoes push (PWA — so aparece em mobile)
-    "Get notified about new posts and comment replies": "Recebe notificações de novas publicações e respostas aos comentários",
-    "Please turn on notifications": "Ativa as notificações",
-    "Turn on notifications": "Ativar notificações",
-    "Enable notifications": "Ativar notificações",
-    "Not now": "Agora não",
 
     // Feed / publicações
     "Share a preview of a locked post": "Partilha uma pré-visualização de uma publicação bloqueada",
     "Start a conversation by sending a message below": "Começa uma conversa enviando uma mensagem abaixo",
     "Join now to unlock exclusive": "Junta-te agora para desbloquear conteúdo exclusivo de",
     "You haven't sent": "Ainda não enviaste nenhuma mensagem a",
+    "This post is available in the following plans": "Esta publicação está disponível nos seguintes planos",
     "Unlock exclusive content": "Desbloqueia conteúdo exclusivo",
     "Please enter a valid donation amount": "Introduz um valor de doação válido",
     "Start with a membership tier": "Começa por escolher um nível",
@@ -292,7 +295,10 @@
     "Complete your payment in the open Google Pay window, or close Google Pay to continue paying another way": "Conclui o pagamento na janela aberta do Google Pay, ou fecha o Google Pay para pagares de outra forma",
     "Are you sure you want to remove": "Tens a certeza que queres remover",
     "from your cart": "do teu carrinho",
-    "This product is available for members only": "Este produto está disponível apenas para membros",
+    // Texto adaptado, nao traduzido a letra: o original diz so
+    // "members", mas contas gratuitas nao tem acesso a estes
+    // produtos — convem ser explicito antes do clique.
+    "This product is available for members only": "Este produto está disponível apenas para membros com subscrição ativa",
     "Your Shopping Cart is Empty": "O teu carrinho está vazio",
     "in your cart for": "no teu carrinho por",
     "Cart Subtotal": "Subtotal do carrinho",
@@ -438,6 +444,17 @@
     // ============================================================
     "Livestream": "Transmissão em direto",
     "Membership": "Subscrição",
+    // TEM de estar aqui em baixo: o texto longo do modal de cookies
+    // contem "Privacy Policy" e era partido por esta chave, deixando
+    // o paragrafo inteiro por traduzir.
+    "Privacy Policy": "Política de Privacidade",
+    // Depois de "Unlock for", "Unlock now", "Unlock message for" e
+    // "Unlock exclusive content"
+    "Unlock": "Desbloqueia",
+    // Depois de "Pay & Subscribe"
+    "Subscribe": "Subscrever",
+    // Depois de "Upgrade account" e "Upgrade or purchase"
+    "Upgrade": "Fazer upgrade",
     // Depois de "Join for free to access" (bloco de navegacao), senao
     // dava "Junta-te grátis to access".
     "Join for free": "Junta-te grátis",
@@ -677,6 +694,11 @@
     // deixava "less than há um minuto".
     { re: /\bless than a minute ago\b/g, pt: 'há menos de um minuto' },
     { re: /\bless than an hour ago\b/g, pt: 'há menos de uma hora' },
+    // Fragmentos do aviso do reCAPTCHA, que fica partido por dois
+    // links. Estas regras usam ^...$ e so casam quando o NO INTEIRO
+    // e' aquela palavra — "and" como chave global seria desastroso.
+    { re: /^(\s*)and(\s*)$/, pt: '$1e os$2' },
+    { re: /^(\s*)apply\.?(\s*)$/, pt: '$1da Google.$2' },
     { re: REL_RE, pt: relDate },
     { re: /\bjust now\b/g, pt: 'agora mesmo' },
     // "1 video" / "12 videos" no banner das series
@@ -844,7 +866,10 @@
     fillNode(node);
   }
 
-  // Scheduler: idle callback se disponivel, senao setTimeout
+  // Scheduler: idle callback se disponivel, senao setTimeout.
+  // Timeout de 500ms de proposito: com valores curtos (~150ms) o
+  // callback e' forcado mesmo com o browser ocupado, e durante o
+  // scroll isso competia com o rendering e atrasava o lazy-load.
   const schedule = window.requestIdleCallback
     ? (fn) => requestIdleCallback(fn, { timeout: 500 })
     : (fn) => setTimeout(fn, 200);
@@ -867,10 +892,14 @@
   } else {
     runFull();
   }
+
   // Turbo: alem da navegacao normal, os turbo-streams substituem
   // conteudo sem disparar turbo:frame-load (ex.: o sidebar do checkout
   // quando se muda o valor em "Escolhe quanto pagas"). Sem estes
   // eventos, essas zonas voltavam a ingles e nada as reprocessava.
+  // Todos passam pelo scheduler: o turbo:morph dispara a MEIO do morph
+  // e traduzir sincronamente ai arriscava o Turbo comparar contra um
+  // DOM ja alterado.
   ['turbo:load','turbo:frame-load','turbo:render','turbo:frame-render',
    'turbo:before-stream-render','turbo:submit-end','turbo:morph']
     .forEach(function (ev) { document.addEventListener(ev, runFull); });
