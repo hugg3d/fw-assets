@@ -844,10 +844,7 @@
     fillNode(node);
   }
 
-  // Scheduler: idle callback se disponivel, senao setTimeout.
-  // Timeout de 500ms de proposito: com valores curtos (~150ms) o
-  // callback e' forcado mesmo com o browser ocupado, e durante o
-  // scroll isso competia com o rendering e atrasava o lazy-load.
+  // Scheduler: idle callback se disponivel, senao setTimeout
   const schedule = window.requestIdleCallback
     ? (fn) => requestIdleCallback(fn, { timeout: 500 })
     : (fn) => setTimeout(fn, 200);
@@ -870,14 +867,10 @@
   } else {
     runFull();
   }
-
   // Turbo: alem da navegacao normal, os turbo-streams substituem
   // conteudo sem disparar turbo:frame-load (ex.: o sidebar do checkout
   // quando se muda o valor em "Escolhe quanto pagas"). Sem estes
   // eventos, essas zonas voltavam a ingles e nada as reprocessava.
-  // Todos passam pelo scheduler: o turbo:morph dispara a MEIO do morph
-  // e traduzir sincronamente ai arriscava o Turbo comparar contra um
-  // DOM ja alterado.
   ['turbo:load','turbo:frame-load','turbo:render','turbo:frame-render',
    'turbo:before-stream-render','turbo:submit-end','turbo:morph']
     .forEach(function (ev) { document.addEventListener(ev, runFull); });
