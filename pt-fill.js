@@ -778,12 +778,14 @@
     { re: ONLY_FOR_RE, pt: onlyForTier },
     { re: CHANGE_TITLE_RE, pt: 'Tens a certeza que queres mudar de $1 para $2?' },
     { re: CHANGE_BODY_RE, pt: 'Não haverá cobrança até o teu $1 expirar em $2. A partir daí, serão cobrados $3 pelo teu $4.' },
-    // Quando os nomes dos niveis estao em elementos proprios, a frase
-    // parte-se e o meio fica sozinho num no. ^...$ garante que so casa
-    // esse no completo — chaves soltas como "for your" partiriam
-    // frases como "Thank you for your order".
-    { re: /^(\s*)expires on (.+?), after which you['\u2019]ll be charged (.+?) for your(\s*)$/,
-      pt: '$1expirar em $2, e depois serão cobrados $3 pelo teu$4' },
+    // A frase parte-se a volta da data (que vive num elemento proprio).
+    // Confirmado no DOM: 2 nos de texto, um antes e outro depois.
+    // ^...$ garante que so casam esses nos completos — fragmentos
+    // soltos como "for your" partiriam "Thank you for your order".
+    { re: /^(\s*)You won['\u2019]t be charged until your (.+?) expires on(\s*)$/,
+      pt: '$1Não haverá cobrança até o teu $2 expirar em$3' },
+    { re: /^(\s*),\s*after which you['\u2019]ll be charged (.+?) for your (.+?)\s*\.(\s*)$/,
+      pt: '$1, e depois serão cobrados $2 pelo teu $3.$4' },
     { re: WD_DATE_RE, pt: function (m, wd, mon, day) {
         const i = MONTHS_EN.indexOf(mon.toLowerCase());
         if (i < 0) return m;
