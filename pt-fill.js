@@ -109,6 +109,7 @@
     "Membership streak badge": "Emblema de subscrição contínua",
     "Members-only perks": "Vantagens exclusivas para membros",
     "Confirm cancellation": "Confirmar cancelamento",
+    "Confirm change": "Confirmar alteração",
     "Keep my membership": "Manter a minha subscrição",
     "You'll lose access to": "Vais perder o acesso a",
     "Exclusive content": "Conteúdo exclusivo",
@@ -751,8 +752,33 @@
   // "Unused time on Tier 1 (349 days)"
   const UNUSED_RE = /\bUnused time on (.+?) \((\d+) days?\)/g;
 
+  // Modal de mudanca de plano (upgrade/downgrade). Quatro variaveis
+  // interpoladas. O original tem um bug da FW ("change your from X"),
+  // com uma palavra em falta; em PT escreve-se a frase correcta.
+  const CHANGE_TITLE_RE = /\bAre you sure you want to change your\s*(?:.*?)from (.+?) to (.+?)\?/g;
+  const CHANGE_BODY_RE = /\bYou won['\u2019]t be charged until your (.+?) expires on (.+?), after which you['\u2019]ll be charged (.+?) for your (.+?)\s*\./g;
+
+  // Datas com dia da semana e ordinal ("Tuesday, Aug 10th"), usadas
+  // neste modal. Corre DEPOIS do CHANGE_BODY_RE, sobre a data que
+  // este devolveu intacta no grupo 2.
+  const WEEKDAYS_EN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const WEEKDAYS_PT = ['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+  const WD_DATE_RE = /\b(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday),\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+(\d{1,2})(?:st|nd|rd|th)\b/g;
+  const ORD_DATE_RE = /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+(\d{1,2})(?:st|nd|rd|th)\b/g;
+
   const REGEX_RULES = [
     { re: ONLY_FOR_RE, pt: onlyForTier },
+    { re: CHANGE_TITLE_RE, pt: 'Tens a certeza que queres mudar de $1 para $2?' },
+    { re: CHANGE_BODY_RE, pt: 'Não haverá cobrança até o teu $1 expirar em $2. A partir daí, serão cobrados $3 pelo teu $4.' },
+    { re: WD_DATE_RE, pt: function (m, wd, mon, day) {
+        const i = MONTHS_EN.indexOf(mon.toLowerCase());
+        if (i < 0) return m;
+        return WEEKDAYS_PT[WEEKDAYS_EN.indexOf(wd)] + ', ' + day + ' de ' + MONTHS_PT[i];
+      } },
+    { re: ORD_DATE_RE, pt: function (m, mon, day) {
+        const i = MONTHS_EN.indexOf(mon.toLowerCase());
+        return i < 0 ? m : day + ' de ' + MONTHS_PT[i];
+      } },
     { re: UNUSED_RE, pt: function (m, tier, d) {
         return 'Tempo não utilizado em ' + tier + ' (' + d + (d === '1' ? ' dia)' : ' dias)');
       } },
