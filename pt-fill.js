@@ -416,6 +416,9 @@
     "Share on Facebook": "Partilhar no Facebook",
     "Share on X": "Partilhar no X",
     "Download video": "Transferir vídeo",
+    "Download audio": "Transferir áudio",
+    "Download image": "Transferir imagem",
+    "Download file": "Transferir ficheiro",
 
     // GPSR — labels da plataforma (os VALORES mudas na dashboard, ver nota)
     "EU GPSR Product Information": "Informação de produto GPSR (UE)",
