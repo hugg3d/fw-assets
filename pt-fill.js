@@ -133,6 +133,11 @@
     "Start free trial": "Começar teste gratuito",
     "Coupon code": "Código promocional",
     "Free for 7 days": "Grátis durante 7 dias",
+    // Modal de mudanca de plano. O 1o no acaba aqui; o resto da frase
+    // esta num unico no, tratado por regex ancorada em REGEX_RULES
+    // (fragmentos como "for your" ou "expires on" soltos no mapa
+    // partiam frases como "Thank you for your order").
+    "You won't be charged until your": "Não haverá cobrança até o teu",
     "You will be charged": "Vai ser-te cobrado",
     "It may take a while": "Pode demorar um pouco",
     // Descontos de primeiro periodo. "For first year" e "First year
@@ -773,6 +778,12 @@
     { re: ONLY_FOR_RE, pt: onlyForTier },
     { re: CHANGE_TITLE_RE, pt: 'Tens a certeza que queres mudar de $1 para $2?' },
     { re: CHANGE_BODY_RE, pt: 'Não haverá cobrança até o teu $1 expirar em $2. A partir daí, serão cobrados $3 pelo teu $4.' },
+    // Quando os nomes dos niveis estao em elementos proprios, a frase
+    // parte-se e o meio fica sozinho num no. ^...$ garante que so casa
+    // esse no completo — chaves soltas como "for your" partiriam
+    // frases como "Thank you for your order".
+    { re: /^(\s*)expires on (.+?), after which you['\u2019]ll be charged (.+?) for your(\s*)$/,
+      pt: '$1expirar em $2, e depois serão cobrados $3 pelo teu$4' },
     { re: WD_DATE_RE, pt: function (m, wd, mon, day) {
         const i = MONTHS_EN.indexOf(mon.toLowerCase());
         if (i < 0) return m;
