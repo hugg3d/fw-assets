@@ -699,7 +699,24 @@
     return day + ' de ' + MONTHS_PT[i] + ' de ' + year;
   }
 
+  // Restricao por nivel: o nome do tier vem interpolado no meio
+  // ("This product is only available for "Tier 2" members"), por isso
+  // nao da para chave fixa. Capturar e' tambem mais seguro do que
+  // mapear "members" -> "", que partiria dezenas de frases.
+  const ONLY_FOR_NOUNS = {
+    product: 'Este produto', post: 'Esta publicação',
+    video: 'Este vídeo', page: 'Esta página', content: 'Este conteúdo'
+  };
+  const ONLY_FOR_RE = /\bThis (product|post|video|page|content) is only available for (.+?) members\b/g;
+
+  function onlyForTier(match, noun, tier) {
+    const pt = ONLY_FOR_NOUNS[noun];
+    if (!pt) return match;
+    return pt + ' está disponível apenas para membros do nível ' + tier;
+  }
+
   const REGEX_RULES = [
+    { re: ONLY_FOR_RE, pt: onlyForTier },
     { re: DATE_RE, pt: inlineDate },
     // TEM de vir antes do REL_RE: esse apanha o "a minute ago" e
     // deixava "less than há um minuto".
