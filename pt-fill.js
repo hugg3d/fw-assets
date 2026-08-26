@@ -340,6 +340,8 @@
     "Bundle includes": "O conjunto inclui",
 
     // Cartao-presente — pagina de consulta de saldo
+    "Redeem your gift": "Resgata o teu presente",
+    "Redeem gift card": "Resgatar cartão-presente",
     "You can apply your gift card in checkout using the code below": "Podes usar o teu cartão-presente no checkout com o código abaixo",
     "Gift card balance check": "Consulta de saldo do cartão-presente",
     "Original gift card value": "Valor original do cartão-presente",
@@ -742,11 +744,33 @@
     return pt + ' está disponível apenas para membros do nível ' + tier;
   }
 
+  // Datas relativas compactas do feed ("4m ago", "1h ago", "3d ago")
+  const COMPACT_UNITS = { s: 's', m: 'min', h: 'h', d: 'd', w: 'sem', y: 'a' };
+
+  // Credito do tempo nao usado ao mudar de plano:
+  // "Unused time on Tier 1 (349 days)"
+  const UNUSED_RE = /\bUnused time on (.+?) \((\d+) days?\)/g;
+
   const REGEX_RULES = [
     { re: ONLY_FOR_RE, pt: onlyForTier },
+    { re: UNUSED_RE, pt: function (m, tier, d) {
+        return 'Tempo não utilizado em ' + tier + ' (' + d + (d === '1' ? ' dia)' : ' dias)');
+      } },
     // Contagem de membros nos cartoes de nivel ("4 members", "1 member").
     // DEPOIS do ONLY_FOR_RE, que ja consumiu a frase da restricao.
     { re: /\b(\d+)\s+members?\b/g, pt: function (m, n) { return n + (n === '1' ? ' membro' : ' membros'); } },
+    // Sondagens: votos e tempo restante. A forma composta ("2d 22 hours
+    // left") tem de vir antes da simples, senao esta come-lhe metade.
+    { re: /\b(\d+)\s+votes?\b/g, pt: function (m, n) { return n + (n === '1' ? ' voto' : ' votos'); } },
+    { re: /\b(\d+)d\s+(\d+)\s+hours?\s+left\b/g, pt: 'faltam $1 d $2 h' },
+    { re: /\b(\d+)\s+days?\s+left\b/g, pt: function (m, n) { return (n === '1' ? 'falta ' : 'faltam ') + n + (n === '1' ? ' dia' : ' dias'); } },
+    { re: /\b(\d+)\s+hours?\s+left\b/g, pt: function (m, n) { return (n === '1' ? 'falta ' : 'faltam ') + n + (n === '1' ? ' hora' : ' horas'); } },
+    { re: /\b(\d+)\s+minutes?\s+left\b/g, pt: function (m, n) { return (n === '1' ? 'falta ' : 'faltam ') + n + (n === '1' ? ' minuto' : ' minutos'); } },
+    // Compactas: "4m ago" -> "há 4 min". Antes da REL_RE.
+    { re: /\b(\d+)([smhdwy])\s+ago\b/g, pt: function (m, n, u) {
+        const s = COMPACT_UNITS[u];
+        return s ? 'há ' + n + ' ' + s : m;
+      } },
     { re: DATE_RE, pt: inlineDate },
     // TEM de vir antes do REL_RE: esse apanha o "a minute ago" e
     // deixava "less than há um minuto".
@@ -758,6 +782,7 @@
     { re: /^(\s*)and(\s*)$/, pt: '$1e os$2' },
     { re: /^(\s*)apply\.?(\s*)$/, pt: '$1da Google.$2' },
     { re: REL_RE, pt: relDate },
+    { re: /\bJust now\b/g, pt: 'Agora mesmo' },
     { re: /\bjust now\b/g, pt: 'agora mesmo' },
     // "1 video" / "12 videos" no banner das series
     { re: /\b(\d+)\s+videos?\b/g, pt: function(m, n){ return n + (n === '1' ? ' vídeo' : ' vídeos'); } },
