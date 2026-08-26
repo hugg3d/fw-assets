@@ -331,6 +331,33 @@
     "Search results for": "Resultados de pesquisa para",
     "You may also like": "Também poderás gostar de",
     "All Products": "Todos os Produtos",
+    // "Featured Products" TEM de vir antes de "Featured" (bloco das
+    // palavras soltas), senao dava "Em destaque Products".
+    "Featured Products": "Produtos em Destaque",
+    // Bundles. "conjunto" em vez de "pack" (anglicismo) ou "leva no
+    // pacote" (coloquial). "Bundle includes" antes de "Bundle".
+    "Get in the bundle": "Disponível em conjunto",
+    "Bundle includes": "O conjunto inclui",
+
+    // Cartao-presente — pagina de consulta de saldo
+    "You can apply your gift card in checkout using the code below": "Podes usar o teu cartão-presente no checkout com o código abaixo",
+    "Gift card balance check": "Consulta de saldo do cartão-presente",
+    "Original gift card value": "Valor original do cartão-presente",
+    "Copy gift card code": "Copiar código do cartão-presente",
+    "Current balance": "Saldo atual",
+    "Gift card code": "Código do cartão-presente",
+    "Click to reveal": "Clica para revelar",
+
+    // Cartao-presente — descricao (acordeao "More Details").
+    // NOTA: isto pode ser conteudo editavel na dashboard da FW; se
+    // for, e' mais robusto traduzir la do que aqui.
+    "The card balance is stored and redeemed in US dollars (USD). Purchases made in other currencies are converted to US dollars and deducted from your gift card balance in USD": "O saldo do cartão é guardado e usado em dólares americanos (USD). As compras noutras moedas são convertidas para dólares e deduzidas do saldo do cartão em USD",
+    "Use this gift card on multiple orders until the balance is fully spent": "Usa este cartão-presente em várias encomendas até esgotares o saldo",
+    "Your gift card balance does not expire. Use it anytime": "O saldo do teu cartão-presente não expira. Usa-o quando quiseres",
+    "Balance stored and redeemed in USD": "Saldo guardado e usado em USD",
+    "Gift card never expires": "O cartão-presente nunca expira",
+    "Reusable across orders": "Reutilizável em várias encomendas",
+    "More Details": "Mais detalhes",
     "Start 7-day free trial": "Começa com teste gratuito de 7 dias",
     "Members Only": "Exclusivo Membros",
     "Join now": "Junta-te agora!",
@@ -717,6 +744,9 @@
 
   const REGEX_RULES = [
     { re: ONLY_FOR_RE, pt: onlyForTier },
+    // Contagem de membros nos cartoes de nivel ("4 members", "1 member").
+    // DEPOIS do ONLY_FOR_RE, que ja consumiu a frase da restricao.
+    { re: /\b(\d+)\s+members?\b/g, pt: function (m, n) { return n + (n === '1' ? ' membro' : ' membros'); } },
     { re: DATE_RE, pt: inlineDate },
     // TEM de vir antes do REL_RE: esse apanha o "a minute ago" e
     // deixava "less than há um minuto".
