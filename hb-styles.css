@@ -400,6 +400,18 @@ body[data-no-translate-page] .gtranslate_wrapper {
    no :root acima. Verificados contra conflitos com header/footer.
    ============================================================ */
 
+/* Modal de cancelamento: os dois paineis medem 364px num ecra de 360
+   e empurram o conteudo para fora. Ja empilham correctamente — falta
+   so nao ultrapassarem a largura disponivel. */
+@media (max-width: 639px) {
+  .subscription-cancel-modal__left,
+  .subscription-cancel-modal__right {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+  }
+}
+
 /* "No badges": ::before gerado pela FW com :not(:has(.badges__list-item)).
    Nao usar :empty — o <ul> tem espacos em branco e nunca casa.
    #id para ganhar a especificidade deles. */
