@@ -134,7 +134,15 @@
     "Free for 7 days": "Grátis durante 7 dias",
     "You will be charged": "Vai ser-te cobrado",
     "It may take a while": "Pode demorar um pouco",
+    // Descontos de primeiro periodo. "For first year" e "First year
+    // discount" TEM de vir antes da chave "year" (bloco das palavras
+    // soltas), senao dava "For first por ano".
+    "For first month": "No primeiro mês",
+    "For first year": "No primeiro ano",
+    "First month discount": "Desconto do primeiro mês",
+    "First year discount": "Desconto do primeiro ano",
     "Billed monthly": "Cobrado mensalmente",
+    "billed monthly": "cobrado mensalmente",
     "billed annually": "cobrado anualmente",
     "Total to pay": "Total a pagar",
     "Promo code": "Código promocional",
@@ -445,6 +453,8 @@
     // ============================================================
     "Livestream": "Transmissão em direto",
     "Membership": "Subscrição",
+    // "Then €8.50 billed monthly" -> "Depois, €8.50 cobrado mensalmente"
+    "Then": "Depois,",
     // TEM de estar aqui em baixo: o texto longo do modal de cookies
     // contem "Privacy Policy" e era partido por esta chave, deixando
     // o paragrafo inteiro por traduzir.
