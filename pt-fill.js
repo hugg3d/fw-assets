@@ -577,10 +577,13 @@
     //   -> "Junta-te agora para desbloquear conteúdo exclusivo de <LOJA>"
     // "You haven't sent <LOJA> any messages yet"
     //   -> "Ainda não enviaste nenhuma mensagem a <LOJA>"
-    // "...for the "Tier 1" tier" -> "...do nível "Tier 1""
+    // NOTA: "tier" JA NAO esta aqui. Como chave cega apagava a palavra
+    // em todo o lado — inclusive no modal de mudanca de plano, onde
+    // "change your tier from X" ficava "change your from X" e parecia
+    // um bug da Fourthwall. O "tier" a mais e' agora consumido pelas
+    // regras de regex, que so o tiram no contexto certo.
     "any messages yet": "",
     "content": "",
-    "tier": "",
   };
 
   // Atributos (não são nós de texto, logo o fillNode não lhes toca).
@@ -761,10 +764,10 @@
   const UNUSED_RE = /\bUnused time on (.+?) \((\d+) days?\)/g;
 
   // Modal de mudanca de plano (upgrade/downgrade). Quatro variaveis
-  // interpoladas. O original tem um bug da FW ("change your from X"),
-  // com uma palavra em falta; em PT escreve-se a frase correcta.
-  const CHANGE_TITLE_RE = /\bAre you sure you want to change your\s*(?:.*?)from (.+?) to (.+?)\?/g;
-  const CHANGE_BODY_RE = /\bYou won['\u2019]t be charged until your (.+?) expires on (.+?), after which you['\u2019]ll be charged (.+?) for your (.+?)\s*\./g;
+  // interpoladas. O original diz "change your tier from X to Y"; o
+  // "tier" e' consumido aqui porque em PT a frase nao o leva.
+  const CHANGE_TITLE_RE = /\bAre you sure you want to change your(?:\s+tier)?\s*from (.+?) to (.+?)\?/g;
+  const CHANGE_BODY_RE = /\bYou won['\u2019]t be charged until your (.+?)(?: tier)? expires on (.+?), after which you['\u2019]ll be charged (.+?) for your (.+?)(?: tier)?\s*\./g;
 
   // Datas com dia da semana e ordinal ("Tuesday, Aug 10th"), usadas
   // neste modal. Corre DEPOIS do CHANGE_BODY_RE, sobre a data que
@@ -777,15 +780,20 @@
   const REGEX_RULES = [
     { re: ONLY_FOR_RE, pt: onlyForTier },
     { re: CHANGE_TITLE_RE, pt: 'Tens a certeza que queres mudar de $1 para $2?' },
-    { re: CHANGE_BODY_RE, pt: 'Não haverá cobrança até o teu $1 expirar em $2. A partir daí, serão cobrados $3 pelo teu $4.' },
+    { re: CHANGE_BODY_RE, pt: 'Não haverá cobrança até o teu nível $1 expirar em $2. A partir daí, serão cobrados $3 pelo teu nível $4.' },
     // A frase parte-se a volta da data (que vive num elemento proprio).
     // Confirmado no DOM: 2 nos de texto, um antes e outro depois.
     // ^...$ garante que so casam esses nos completos — fragmentos
     // soltos como "for your" partiriam "Thank you for your order".
-    { re: /^(\s*)You won['\u2019]t be charged until your (.+?) expires on(\s*)$/,
-      pt: '$1Não haverá cobrança até o teu $2 expirar em$3' },
-    { re: /^(\s*),\s*after which you['\u2019]ll be charged (.+?) for your (.+?)\s*\.(\s*)$/,
-      pt: '$1, e depois serão cobrados $2 pelo teu $3.$4' },
+    // O " tier" a seguir ao nome do nivel e' consumido aqui: em PT
+    // diz-se "o teu nivel Tier 1", nao "o teu Tier 1 nivel".
+    { re: /^(\s*)You won['\u2019]t be charged until your (.+?)(?: tier)? expires on(\s*)$/,
+      pt: '$1Não haverá cobrança até o teu nível $2 expirar em$3' },
+    { re: /^(\s*),\s*after which you['\u2019]ll be charged (.+?) for your (.+?)(?: tier)?\s*\.(\s*)$/,
+      pt: '$1, e depois serão cobrados $2 pelo teu nível $3.$4' },
+    // Vantagens: "...for the "Tier 1" tier" -> "...do nivel "Tier 1""
+    { re: /\bYou unlocked access to members-only posts for the (.+?) tier\b/g,
+      pt: 'Desbloqueaste o acesso às publicações exclusivas do nível $1' },
     { re: WD_DATE_RE, pt: function (m, wd, mon, day) {
         const i = MONTHS_EN.indexOf(mon.toLowerCase());
         if (i < 0) return m;
