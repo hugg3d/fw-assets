@@ -236,7 +236,7 @@
     "Please turn on notifications": "Ativa as notificações",
     "Turn on notifications": "Ativar notificações",
     "Enable notifications": "Ativar notificações",
-    "Final results": "Resultados finais",
+    "Final results": "Resultado final",
     "Not now": "Agora não",
     "Maybe later": "Talvez mais tarde",
     "Content missing": "Conteúdo em falta",
