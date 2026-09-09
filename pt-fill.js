@@ -698,7 +698,12 @@
   // widget (dwf.js), por isso a versao anterior desta funcao devolvia
   // sempre true e o pt-fill reescrevia para PT o ingles que o
   // gtranslate acabara de produzir: ping-pong.
-  function isPTActive() {
+   function isPTActive() {
+    // A classe translated-* e' escrita pela lib do gtranslate e e' o
+    // sinal mais fiavel: o Turbo repoe o lang do <html> na navegacao
+    // (visto: lang="en-US" com a pagina em espanhol), o lang sozinho
+    // mente. Se ha traducao activa, o pt-fill fica quieto.
+    if (document.documentElement.className.indexOf('translated-') !== -1) return false;
     const lang = (document.documentElement.getAttribute('lang') || 'pt').toLowerCase();
     return lang.startsWith('pt');
   }
