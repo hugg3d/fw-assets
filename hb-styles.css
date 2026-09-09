@@ -380,14 +380,15 @@ body:has(.sticky-bar) .gtranslate_wrapper {
 }
 @media (max-width: 768px) {
   .gtranslate_wrapper {
-    right: auto;
-    left: 50%;
-    transform: translateX(-50%);
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    width: fit-content;
     bottom: 6px;
-    width: auto;
     justify-content: center;
   }
-body:has(.sticky-bar) .gtranslate_wrapper {
+
+  body:has(.sticky-bar) .gtranslate_wrapper {
     bottom: 79px;
   }
 }
