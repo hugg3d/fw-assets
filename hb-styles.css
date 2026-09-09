@@ -343,6 +343,12 @@ body:has(.sticky-bar) .gtranslate_wrapper {
 }
 
 .gtranslate_wrapper .gt_switcher {
+  /* position + z-index explicitos: o filter/backdrop-filter abaixo cria
+     um contexto de empilhamento proprio. Com position:static esse
+     contexto era pintado como conteudo em fluxo e o widget ficava por
+     baixo de elementos da pagina, apesar do z-index 9999 do wrapper. */
+  position: relative;
+  z-index: 1;
   font-family: inherit !important;
   font-size: inherit !important;
   background-color: rgba(var(--color-background-rgb), var(--header-blur-opacity, 0.03)) !important;
@@ -391,7 +397,18 @@ body:has(.sticky-bar) .gtranslate_wrapper {
   body:has(.sticky-bar) .gtranslate_wrapper {
     bottom: 79px;
   }
+   
+/* ------------------------------------------------------------
+   GTRANSLATE vs DRAWER (mobile)
+   O widget e' fixed com z-index alto, logo flutuava por cima do
+   menu lateral e tapava o CTA. O FW poe .scroll-lock no <html>
+   enquanto o drawer esta aberto — usamos isso para o esconder.
+   ------------------------------------------------------------ */
+html.scroll-lock .gtranslate_wrapper {
+  opacity: 0;
+  pointer-events: none;
 }
+
 body[data-no-translate-page] .gtranslate_wrapper {
   display: none !important;
 }
