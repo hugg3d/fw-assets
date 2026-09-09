@@ -236,8 +236,7 @@ body::before {
    (O visual do widget está mais abaixo, em GTRANSLATE.)
    ------------------------------------------------------------ */
 @media (max-width: 639px) {
-  body:has(.sticky-add-to-cart.is-visible) .gtranslate_wrapper,
-  body:has(.sticky-bar) .gtranslate_wrapper {
+  body:has(.sticky-add-to-cart.is-visible) .gtranslate_wrapper {
     bottom: -100px;
     pointer-events: none;
     transition: bottom 0.3s ease 0s;
@@ -343,7 +342,7 @@ body:has(.sticky-bar) .gtranslate_wrapper {
 }
 
 .gtranslate_wrapper .gt_switcher {
-  /* position + z-index explicitos: o filter/backdrop-filter abaixo cria
+  /* position + z-index explicitos: defensivo o filter/backdrop-filter abaixo cria
      um contexto de empilhamento proprio. Com position:static esse
      contexto era pintado como conteudo em fluxo e o widget ficava por
      baixo de elementos da pagina, apesar do z-index 9999 do wrapper. */
@@ -394,10 +393,6 @@ body:has(.sticky-bar) .gtranslate_wrapper {
     justify-content: center;
   }
 
-  body:has(.sticky-bar) .gtranslate_wrapper {
-    bottom: 79px;
-  }
-   
 /* ------------------------------------------------------------
    GTRANSLATE vs DRAWER (mobile)
    O widget e' fixed com z-index alto, logo flutuava por cima do
