@@ -692,10 +692,15 @@
   // traduzivel). Os leitores de media disparam mutacoes continuas.
   const SKIP_ZONES = '[class*="countdown"],mux-player,[class*="video__progress"],[class*="audio-player__controls"]';
 
+  // O gtranslate poe lang="en" (e a classe translated-ltr) no <html>
+  // quando traduz a pagina — e' o unico sinal fiavel do estado.
+  // O cookie googtrans NAO e' escrito nem lido por esta versao do
+  // widget (dwf.js), por isso a versao anterior desta funcao devolvia
+  // sempre true e o pt-fill reescrevia para PT o ingles que o
+  // gtranslate acabara de produzir: ping-pong.
   function isPTActive() {
-    const c = document.cookie.match(/googtrans=\/[^\/]+\/(\w+)/);
-    if (!c) return true;
-    return c[1] === 'pt';
+    const lang = (document.documentElement.getAttribute('lang') || 'pt').toLowerCase();
+    return lang.startsWith('pt');
   }
 
   // ============================================================
@@ -1091,11 +1096,19 @@ observer.observe(document.body, { childList: true, subtree: true, characterData:
       for (let i = 0; i < tips.length; i++) processNode(tips[i]);
     });
   }, true);
-  // Detectar quando o gtranslate muda de lingua e re-aplicar PT-FILL.
-  // O gtranslate alterna translated-ltr no html ao mudar de estado;
-  // observar essa mudanca cobre o caso "EN -> PT volta a mostrar original".
+  // Re-aplicar PT-FILL quando o utilizador VOLTA a PT. O gtranslate
+  // repoe o DOM original (o ingles do Fourthwall) e so o pt-fill o
+  // traduz. Comparamos o lang anterior para nao disparar em cada
+  // mudanca de classe, e repetimos uma vez porque a reposicao do
+  // gtranslate acontece depois de ele mexer no lang.
+  let lastLang = (document.documentElement.getAttribute('lang') || 'pt').toLowerCase();
   const stateObserver = new MutationObserver(() => {
+    const now = (document.documentElement.getAttribute('lang') || 'pt').toLowerCase();
+    if (now === lastLang) return;
+    lastLang = now;
+    if (!now.startsWith('pt')) return;
     runFull();
+    setTimeout(runFull, 400);
   });
   stateObserver.observe(document.documentElement, {
     attributes: true,
