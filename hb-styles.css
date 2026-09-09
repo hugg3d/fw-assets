@@ -327,6 +327,21 @@ body.scroll-animate .is-visible {
   align-items: center;
   font-size: 11px;
 }
+
+/* ------------------------------------------------------------
+   GTRANSLATE vs STICKY BAR (/supporters, deslogado)
+   Ambos sao position:fixed no canto inferior esquerdo, logo a
+   barra tapava o widget. A barra so existe para quem nao tem
+   sessao iniciada e e' irma do wrapper no <body>, por isso o
+   :has() cobre exactamente esse caso — sem JS, sem medir alturas.
+   79px = 73 da barra + os mesmos 6 de folga que o widget tem ao
+   fundo do ecra quando esta sozinho. Com sessao iniciada a barra
+   nao existe, a regra nao casa, e o widget volta aos 6px.
+   ------------------------------------------------------------ */
+body:has(.sticky-bar) .gtranslate_wrapper {
+  bottom: 79px;
+}
+
 .gtranslate_wrapper .gt_switcher {
   font-family: inherit !important;
   font-size: inherit !important;
@@ -372,11 +387,13 @@ body.scroll-animate .is-visible {
     width: auto;
     justify-content: center;
   }
+body:has(.sticky-bar) .gtranslate_wrapper {
+    bottom: 79px;
+  }
 }
 body[data-no-translate-page] .gtranslate_wrapper {
   display: none !important;
 }
-
 
 /* ------------------------------------------------------------
    GT ARROW: substitui a seta do gtranslate pelo chevron nativo
