@@ -603,8 +603,10 @@
     // NOTA: "tier", "content", "any messages yet" e "tip" JA NAO estao
     // aqui. Como chaves cegas apagavam a palavra em TODO o lado — o
     // "change your tier from X" ficava "change your from X" e parecia
-    // um bug da Fourthwall. Sao agora consumidos por regras ancoradas
-    // em REGEX_RULES, que so os tiram no contexto certo.
+    // um bug da Fourthwall. Sao agora consumidos em REGEX_RULES: por
+    // captura da frase quando a FW serve tudo num no ("content",
+    // "any messages yet", "tier"), por ancoramento ^...$ quando a frase
+    // vem partida em nos ("tip").
   };
 
   // Atributos (não são nós de texto, logo o fillNode não lhes toca).
@@ -863,15 +865,20 @@
     // e' aquela palavra — "and" como chave global seria desastroso.
     { re: /^(\s*)and(\s*)$/, pt: '$1e os$2' },
     { re: /^(\s*)apply\.?(\s*)$/, pt: '$1da Google.$2' },
-    // Nos que sobram DEPOIS do nome da loja e que em PT nao levam nada.
-    // Ancorados em ^...$ pela mesma razao das duas regras acima: como
-    // chaves literais apagavam a palavra em qualquer frase EN que ainda
-    // sobrasse — o erro que ja tinha sido corrigido no "tier".
-    //   "Join now to unlock exclusive <LOJA> content"
-    //   "You haven't sent <LOJA> any messages yet"
-    //   "Added&nbsp;<VALOR>&nbsp;tip"  (o &nbsp; e' apanhado pelo \s)
-    { re: /^(\s*)content(\s*)$/, pt: '' },
-    { re: /^(\s*)any messages yet(\s*)$/, pt: '' },
+    // Frases com o nome da loja interpolado no meio. CONFIRMADO no ecra:
+    // a FW serve isto num UNICO no de texto, nao partido por elemento —
+    // por isso tem de ser captura da frase inteira. A versao ancorada em
+    // ^...$ nunca casava e deixava o "content" no ecra.
+    // Capturar (e nao mapear "content" -> "" as cegas) e' o mesmo padrao
+    // do ONLY_FOR_RE: so tira a palavra no contexto certo, e nao apaga
+    // "content" de qualquer frase EN que a FW venha a mostrar.
+    { re: /\bJoin now to unlock exclusive (.+?) content\b/g,
+      pt: 'Junta-te agora para desbloquear conteúdo exclusivo de $1' },
+    { re: /\bYou haven['\u2019]t sent (.+?) any messages yet\b/g,
+      pt: 'Ainda não enviaste nenhuma mensagem a $1' },
+    // Chip da gorjeta: "Added&nbsp;<VALOR>&nbsp;tip" — aqui sao mesmo 2
+    // nos de texto (confirmado no DOM), logo o ^...$ casa e chega.
+    // O &nbsp; e' apanhado pelo \s.
     { re: /^(\s*)tip(\s*)$/, pt: '' },
     { re: REL_RE, pt: relDate },
     { re: /\bJust now\b/g, pt: 'Agora mesmo' },
@@ -999,6 +1006,10 @@
 
   function translateNode(node) {
     let text = node.nodeValue;
+    // Nos sem uma unica letra latina — indentacao, quebras de linha,
+    // pontuacao solta — sao a maioria da arvore e nunca casam com nada.
+    // Sem esta guarda pagavam as ~460 regexes do mesmo jeito.
+    if (!text || !/[A-Za-z]/.test(text)) return;
     let changed = false;
     // Regex primeiro: reordena as datas relativas antes que chaves
     // literais curtas lhes toquem.
