@@ -76,9 +76,10 @@ html {
 }
 ::-webkit-scrollbar-corner { background: var(--color-background); }
 
-
-/* HEADER: blur subtil + hover. Os valores do blur estao no :root
-   (BRAND TOKENS) porque sao partilhados com o switcher de lingua. */
+/* ------------------------------------------------------------
+   HEADER: blur subtil + hover. Os valores do blur estao no :root
+   (BRAND TOKENS) porque sao partilhados com o switcher de lingua.
+   ------------------------------------------------------------ */
 .header {
   border-color: transparent !important;
   transition: background-color 0.2s ease, border-color 0.2s ease;
