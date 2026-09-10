@@ -228,21 +228,6 @@ body::before {
   font-family: var(--font-family-heading) !important;
 }
 
-
-/* ------------------------------------------------------------
-   SWITCHER DE LÍNGUA (comportamento): desliza de baixo (sem fade),
-   sem mexer no transform do widget. Esconde enquanto o CTA sticky
-   está visível; reaparece só depois de o CTA sair.
-   (O visual do widget está mais abaixo, em GTRANSLATE.)
-   ------------------------------------------------------------ */
-@media (max-width: 639px) {
-  body:has(.sticky-add-to-cart.is-visible) .gtranslate_wrapper {
-    bottom: -100px;
-    pointer-events: none;
-    transition: bottom 0.3s ease 0s;
-  }
-}
-
 /* ------------------------------------------------------------
    STICKY BAR (/supporters, deslogado)
    A barra é grid e a FW dava-lhe 2 colunas iguais (~159px cada
@@ -389,6 +374,19 @@ body.scroll-animate .is-visible {
    ------------------------------------------------------------ */
 body:has(.sticky-bar) .gtranslate_wrapper {
   bottom: 79px;
+}
+
+/* ------------------------------------------------------------
+   SWITCHER DE LÍNGUA (comportamento): desliza de baixo (sem fade),
+   sem mexer no transform do widget. Esconde enquanto o CTA sticky
+   está visível; reaparece só depois de o CTA sair.
+   ------------------------------------------------------------ */
+@media (max-width: 639px) {
+  body:has(.sticky-add-to-cart.is-visible) .gtranslate_wrapper {
+    bottom: -100px;
+    pointer-events: none;
+    transition: bottom 0.3s ease 0s;
+  }
 }
 
 .gtranslate_wrapper .gt_switcher {
