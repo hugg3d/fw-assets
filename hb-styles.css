@@ -244,6 +244,56 @@ body::before {
 }
 
 /* ------------------------------------------------------------
+   STICKY BAR (/supporters, deslogado)
+   A barra é grid e a FW dava-lhe 2 colunas iguais (~159px cada
+   num ecrã de 370px). O botão ficava espremido, quebrava em 2
+   linhas e era ELE a ditar a altura da barra.
+   1fr auto -> o botão ocupa só o que precisa, o resto vai para o texto.
+   ------------------------------------------------------------ */
+@media (max-width: 639px) {
+  .sticky-bar {
+    grid-template-columns: 1fr auto !important;
+    align-items: center !important;
+  }
+  .sticky-bar > .button { white-space: nowrap !important; }
+}
+
+/* Texto a 2 linhas com reticências.
+   ÂMBITO IMPORTANTE: só o span curto (.hidden@sm) e só em mobile,
+   onde ele é o visível. O -webkit-line-clamp obriga a mexer no
+   display, e a FW usa display:none para alternar os dois spans —
+   aplicar isto a ambos fazia aparecer o texto longo em mobile.
+   O @ da classe tem de ser escapado: .hidden\@sm
+   ------------------------------------------------------------ */
+@media (max-width: 639px) {
+  .sticky-bar > span.hidden\@sm {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    overflow-wrap: anywhere !important;
+    min-width: 0 !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   STICKY ADD TO CART (desktop): passa de barra full-width a card
+   ancorado à direita, com slide de baixo.
+   ------------------------------------------------------------ */
+@media (min-width: 640px) {
+  .sticky-add-to-cart {
+    display: block !important;
+    width: auto !important;
+    max-width: 480px !important;
+    left: auto !important;
+    right: 24px !important;
+    bottom: -120px;
+    transition: bottom 0.3s ease-in-out !important;
+  }
+  .sticky-add-to-cart.is-visible { bottom: 6px !important; }
+}
+
+/* ------------------------------------------------------------
    CHECKOUT P.M.: esconde o cartao do plano mensal e centra o anual.
    Ancorado no data-testid — a FW acrescentou .plan-cards__container
    e a versao posicional (> a:first-child) deixou de casar.
@@ -383,6 +433,7 @@ body:has(.sticky-bar) .gtranslate_wrapper {
 .gtranslate_wrapper .gt_options a:hover {
   background-color: rgba(var(--color-on-background-rgb), 0.01) !important;
 }
+
 @media (max-width: 768px) {
   .gtranslate_wrapper {
     right: 0;
@@ -393,21 +444,21 @@ body:has(.sticky-bar) .gtranslate_wrapper {
     justify-content: center;
   }
 
-/* ------------------------------------------------------------
-   GTRANSLATE vs DRAWER (mobile)
-   O widget e' fixed com z-index alto, logo flutuava por cima do
-   menu lateral e tapava o CTA. O FW poe .scroll-lock no <html>
-   enquanto o drawer esta aberto — usamos isso para o esconder.
-   ------------------------------------------------------------ */
-html.scroll-lock .gtranslate_wrapper {
-  opacity: 0;
-  pointer-events: none;
+  /* ------------------------------------------------------------
+     GTRANSLATE vs DRAWER (mobile)
+     O widget e' fixed com z-index alto, logo flutuava por cima do
+     menu lateral e tapava o CTA. O FW poe .scroll-lock no <html>
+     enquanto o drawer esta aberto — usamos isso para o esconder.
+     ------------------------------------------------------------ */
+  html.scroll-lock .gtranslate_wrapper {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 body[data-no-translate-page] .gtranslate_wrapper {
   display: none !important;
 }
-
 /* ------------------------------------------------------------
    GT ARROW: substitui a seta do gtranslate pelo chevron nativo
    do FW (path copiado do DOM do header) via mask, pintado
@@ -456,6 +507,15 @@ body[data-no-translate-page] .gtranslate_wrapper {
 
 /* FOCUS RING: anel verified-blue no foco por teclado (a11y + "verificado"). */
 :focus-visible { outline: 2px solid var(--verified-blue); outline-offset: 2px; }
+
+/* Toggle de tema: o .header__link do tema pinta o :focus com cinzento,
+   e o ícone ficava acinzentado depois do clique até se clicar fora.
+   Foco de rato não precisa de indicação; foco de teclado usa o anel
+   :focus-visible global (bloco FOCUS RING acima). */
+#hb-scheme-toggle:focus:not(:focus-visible),
+#scheme-toggle:focus:not(:focus-visible) {
+  color: inherit;
+}
 
 /* ...mas nos campos de texto desenha-se no WRAPPER, nao no input: o
    input tem dimensoes e border-radius diferentes da caixa visivel, e o
