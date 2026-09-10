@@ -38,6 +38,11 @@ h6 { font-weight: 200; }
   --highlighter-pen: #e3ff04;
   /* Utilitário (fora do brandbook) */
   --paper-border: #d0c9b8;
+  /* Blur partilhado: header (FW) + switcher do gtranslate. Vivem no
+     :root e nao no .header porque o wrapper do widget e' montado no
+     <body> — fora do header, nao herdava dali. */
+  --header-blur-amount: 24px;
+  --header-blur-opacity: 0.03;   
 }
 
 
@@ -72,14 +77,9 @@ html {
 ::-webkit-scrollbar-corner { background: var(--color-background); }
 
 
-/* ------------------------------------------------------------
-   HEADER: blur subtil (3% opacity) + hover.
-   As vars --header-blur-* são reutilizadas pelo widget gtranslate
-   mais abaixo — se mexeres aqui, o switcher acompanha.
-   ------------------------------------------------------------ */
+/* HEADER: blur subtil + hover. Os valores do blur estao no :root
+   (BRAND TOKENS) porque sao partilhados com o switcher de lingua. */
 .header {
-  --header-blur-amount: 24px;
-  --header-blur-opacity: 0.03;
   border-color: transparent !important;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
@@ -364,7 +364,7 @@ body.scroll-animate .is-visible {
    nativo do FW. Reutiliza --header-blur-amount + --header-blur-opacity
    para ficar sincronizado com qualquer ajuste ao header floating.
    Universal selector força theme-aware color (sobrepõe o color
-   inline #fdfbf1 das settings do widget no footer) — SEM este
+   inline #fdfbf1 das settings do widget no header) — SEM este
    bloco, o texto do switcher fica branco sobre fundo claro.
    ------------------------------------------------------------ */
 .gtranslate_wrapper {
@@ -456,9 +456,12 @@ body:has(.sticky-bar) .gtranslate_wrapper {
   }
 }
 
+/* Par do EXCLUDED_PATHS (TRANSLATE PROTECTION, header): esconde o
+   switcher nas paginas onde o gtranslate esta desligado. */
 body[data-no-translate-page] .gtranslate_wrapper {
   display: none !important;
 }
+
 /* ------------------------------------------------------------
    GT ARROW: substitui a seta do gtranslate pelo chevron nativo
    do FW (path copiado do DOM do header) via mask, pintado
