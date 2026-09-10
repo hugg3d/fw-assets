@@ -100,8 +100,8 @@
     "Billing address": "Morada de faturação",
     "Postal code": "Código postal",
     "Charged for": "Cobrado por",
-    "Current tier": "Nível atual",
-    "Change tier": "Alterar nível",
+    "Current tier": "Plano atual",
+    "Change tier": "Alterar plano",
 
     // Cancelamento
     "Even if you cancel, you'll keep access until": "Mesmo que canceles, manténs o acesso até",
@@ -117,7 +117,7 @@
 
     // Checkout
     "Prices do not include tax. It's calculated at the payment step": "Os preços não incluem IVA. É calculado no passo do pagamento",
-    "The minimum price for this tier is": "O preço mínimo deste nível é",
+    "The minimum price for this tier is": "O preço mínimo deste plano é",
     "Leave a message or ask a question": "Deixa uma mensagem ou faz uma pergunta",
     "Your payment is being processed": "O teu pagamento está a ser processado",
     "off as long as subscription is active": "de desconto enquanto a subscrição estiver ativa",
@@ -185,7 +185,7 @@
     "This post is available in the following plans": "Esta publicação está disponível nos seguintes planos",
     "Unlock exclusive content": "Desbloqueia conteúdo exclusivo",
     "Please enter a valid donation amount": "Introduz um valor de doação válido",
-    "Start with a membership tier": "Começa por escolher um nível",
+    "Start with a membership tier": "Começa por escolher um plano",
     "Hide recommendation": "Ocultar recomendação",
     "Highlighted reply": "Resposta destacada",
     "Share this post": "Partilha esta publicação",
@@ -268,7 +268,7 @@
 
     // Vantagens (perks)
     "Paste this link into your favorite podcast player to listen to the members only audio feed": "Cola este link no teu leitor de podcasts para ouvires o feed de áudio exclusivo para membros",
-    "You unlocked access to members-only posts for the": "Desbloqueaste o acesso às publicações exclusivas do nível",
+    "You unlocked access to members-only posts for the": "Desbloqueaste o acesso às publicações exclusivas do plano",
     "You’ll receive email updates when new posts are added": "Vais receber e-mails quando forem publicados novos conteúdos",
     "Your members will see their private RSS link here": "Os teus membros vão ver aqui o link RSS privado",
     "Chat on members-only Discord with other members": "Conversa com outros membros no Discord exclusivo",
@@ -752,7 +752,7 @@
     return day + ' de ' + MONTHS_PT[i] + ' de ' + year;
   }
 
-  // Restricao por nivel: o nome do tier vem interpolado no meio
+  // Restricao por plano: o nome do tier vem interpolado no meio
   // ("This product is only available for "Tier 2" members"), por isso
   // nao da para chave fixa. Capturar e' tambem mais seguro do que
   // mapear "members" -> "", que partiria dezenas de frases.
@@ -765,7 +765,7 @@
   function onlyForTier(match, noun, tier) {
     const pt = ONLY_FOR_NOUNS[noun];
     if (!pt) return match;
-    return pt + ' está disponível apenas para membros do nível ' + tier;
+    return pt + ' está disponível apenas para membros do plano ' + tier;
   }
 
   // Datas relativas compactas do feed ("4m ago", "1h ago", "3d ago")
@@ -792,20 +792,20 @@
   const REGEX_RULES = [
     { re: ONLY_FOR_RE, pt: onlyForTier },
     { re: CHANGE_TITLE_RE, pt: 'Tens a certeza que queres mudar de $1 para $2?' },
-    { re: CHANGE_BODY_RE, pt: 'Não haverá cobrança até o teu nível $1 expirar em $2. A partir daí, serão cobrados $3 pelo teu nível $4.' },
+    { re: CHANGE_BODY_RE, pt: 'Não haverá cobrança até o teu plano $1 expirar em $2. A partir daí, serão cobrados $3 pelo teu plano $4.' },
     // A frase parte-se a volta da data (que vive num elemento proprio).
     // Confirmado no DOM: 2 nos de texto, um antes e outro depois.
     // ^...$ garante que so casam esses nos completos — fragmentos
     // soltos como "for your" partiriam "Thank you for your order".
-    // O " tier" a seguir ao nome do nivel e' consumido aqui: em PT
-    // diz-se "o teu nivel Tier 1", nao "o teu Tier 1 nivel".
+    // O " tier" a seguir ao nome do plano e' consumido aqui: em PT
+    // diz-se "o teu plano Tier 1", nao "o teu Tier 1 plano".
     { re: /^(\s*)You won['\u2019]t be charged until your (.+?)(?: tier)? expires on(\s*)$/,
-      pt: '$1Não haverá cobrança até o teu nível $2 expirar em$3' },
+      pt: '$1Não haverá cobrança até o teu plano $2 expirar em$3' },
     { re: /^(\s*),\s*after which you['\u2019]ll be charged (.+?) for your (.+?)(?: tier)?\s*\.(\s*)$/,
-      pt: '$1, e depois serão cobrados $2 pelo teu nível $3.$4' },
-    // Vantagens: "...for the "Tier 1" tier" -> "...do nivel "Tier 1""
+      pt: '$1, e depois serão cobrados $2 pelo teu plano $3.$4' },
+    // Vantagens: "...for the "Tier 1" tier" -> "...do plano "Tier 1""
     { re: /\bYou unlocked access to members-only posts for the (.+?) tier\b/g,
-      pt: 'Desbloqueaste o acesso às publicações exclusivas do nível $1' },
+      pt: 'Desbloqueaste o acesso às publicações exclusivas do plano $1' },
     { re: WD_DATE_RE, pt: function (m, wd, mon, day) {
         const i = MONTHS_EN.indexOf(mon.toLowerCase());
         if (i < 0) return m;
@@ -818,7 +818,7 @@
     { re: UNUSED_RE, pt: function (m, tier, d) {
         return 'Tempo não utilizado em ' + tier + ' (' + d + (d === '1' ? ' dia)' : ' dias)');
       } },
-    // Contagem de membros nos cartoes de nivel ("4 members", "1 member").
+    // Contagem de membros nos cartoes de plano ("4 members", "1 member").
     // DEPOIS do ONLY_FOR_RE, que ja consumiu a frase da restricao.
     { re: /\b(\d+)\s+members?\b/g, pt: function (m, n) { return n + (n === '1' ? ' membro' : ' membros'); } },
     // Sondagens: votos e tempo restante. A forma composta ("2d 22 hours
