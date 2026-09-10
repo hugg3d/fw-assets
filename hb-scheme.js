@@ -53,6 +53,9 @@
     // Guarda: sem isto o innerHTML era reescrito a cada evento do Turbo
     // mesmo sem mudanca de tema — 4 eventos por navegacao, 2 toggles na
     // loja. Mesmo erro que estava no redacted do footer.
+    // A guarda por dataset e segura AQUI (e nao no localizeDates, onde
+    // foi tirada): o atributo e o icone vivem no mesmo no e viajam
+    // juntos, logo o Turbo nunca repoe um sem o outro.
     if (btn.dataset.hbMode === mode) return;
     btn.dataset.hbMode = mode;
     var label = mode === 'light' ? 'Ativar Modo Escuro' : 'Ativar Modo Claro';
