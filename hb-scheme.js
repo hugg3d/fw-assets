@@ -50,6 +50,11 @@
 
   function paint(btn) {
     var mode = getMode();
+    // Guarda: sem isto o innerHTML era reescrito a cada evento do Turbo
+    // mesmo sem mudanca de tema — 4 eventos por navegacao, 2 toggles na
+    // loja. Mesmo erro que estava no redacted do footer.
+    if (btn.dataset.hbMode === mode) return;
+    btn.dataset.hbMode = mode;
     var label = mode === 'light' ? 'Ativar Modo Escuro' : 'Ativar Modo Claro';
     btn.innerHTML = icon(mode === 'light' ? 'moon' : 'sun', btn.dataset.hbSize || 24);
     btn.setAttribute('title', label);
