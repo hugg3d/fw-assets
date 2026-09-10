@@ -512,8 +512,7 @@ body[data-no-translate-page] .gtranslate_wrapper {
    e o ícone ficava acinzentado depois do clique até se clicar fora.
    Foco de rato não precisa de indicação; foco de teclado usa o anel
    :focus-visible global (bloco FOCUS RING acima). */
-#hb-scheme-toggle:focus:not(:focus-visible),
-#scheme-toggle:focus:not(:focus-visible) {
+.hb-scheme-toggle:focus:not(:focus-visible) {
   color: inherit;
 }
 
