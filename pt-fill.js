@@ -1,4 +1,27 @@
 (function () {
+  // ============================================================
+  // GLOSSARIO — decisoes de vocabulario ja tomadas. Consultar antes
+  // de acrescentar chaves novas: e' aqui que a coerencia se perde.
+  //   tier        -> plano      (nao "nivel": arrasta ranking/
+  //                              gamificacao, e o utilizador ja le
+  //                              "plano" na pagina de precos da FW)
+  //   membership  -> subscricao (uma subscricao tem um plano)
+  //   post        -> publicacao
+  //   tip         -> gorjeta
+  //   perks       -> vantagens
+  //   badge       -> emblema
+  //   password    -> palavra-passe
+  //   bundle      -> conjunto   (nao "pack", anglicismo)
+  // REGISTO: tratamento por tu em todo o lado, e o verbo muda com a
+  // superficie — nao e' incoerencia, e' de proposito:
+  //   participacao (comentar, avaliar, perguntar, mandar mensagem)
+  //     -> imperativo, mais acolhedor: "Escreve uma avaliacao",
+  //        "Faz uma pergunta", "Envia mensagem"
+  //   accao de sistema (conta, faturacao, moderacao, formularios)
+  //     -> infinitivo, mais neutro: "Guardar alteracoes", "Remover
+  //        metodo de pagamento", "Enviar denuncia"
+  // Na duvida numa chave nova, pergunta de que lado esta o ecra.
+  // ============================================================
   const TRANSLATIONS = {
     // Barra de promoção — segmentada à volta dos valores dinâmicos (%, €)
     "off for Twitch Subs": "de desconto para subscritores da Twitch",
@@ -88,7 +111,7 @@
     // "Remove payment method" TEM de vir antes de "Remove" (bloco das
     // palavras soltas), senao dava "Remover payment method".
     "Remove payment method": "Remover método de pagamento",
-    "Removing payment method": "Remover método de pagamento",
+    "Removing payment method": "A remover método de pagamento",
     "Change payment method": "Alterar método de pagamento",
     "Next payment of": "Próximo pagamento de",
     "scheduled on": "agendado para",
@@ -165,8 +188,8 @@
     "Tips are supported in USD only": "As gorjetas só são suportadas em USD",
     "Tips are non-refundable": "As gorjetas não são reembolsáveis",
     "By sending this tip you agree to our": "Ao enviares esta gorjeta, aceitas a nossa",
-    "Send a message with tip": "Enviar mensagem com gorjeta",
-    "Send message": "Enviar mensagem",
+    "Send a message with tip": "Envia mensagem com gorjeta",
+    "Send message": "Envia mensagem",
     "Add a tip to message": "Adicionar gorjeta à mensagem",
     "Unlock message for": "Desbloquear mensagem de",
     "Refund Policy": "Política de Reembolso",
@@ -298,13 +321,16 @@
     "Ask a question": "Faz uma pergunta",
     "Write your question": "Escreve a tua pergunta",
     "Submit review": "Envia avaliação",
-    "Send question": "Envia a pergunta",
+    "Send question": "Envia pergunta",
     "Your email": "O teu e-mail",
     "Reviews": "Avaliações",
     "reviews": "avaliações",
     "out of": "de",
     "Questions": "Perguntas",
     "Close": "Fechar",
+    // "Anular" e nao "Cancelar": este botao fecha modais e formularios.
+    // "Cancelar" seria lido como cancelar a SUBSCRICAO, que tem o seu
+    // proprio vocabulario no bloco do Cancelamento la em cima.
     "Cancel": "Anular",
 
     // Cart / checkout
@@ -359,8 +385,8 @@
     "Click to reveal": "Clica para revelar",
 
     // Cartao-presente — descricao (acordeao "More Details").
-    // NOTA: isto pode ser conteudo editavel na dashboard da FW; se
-    // for, e' mais robusto traduzir la do que aqui.
+    // CONFIRMADO: nao ha forma de editar este texto na dashboard da
+    // FW, por isso tem mesmo de ser traduzido aqui.
     "The card balance is stored and redeemed in US dollars (USD). Purchases made in other currencies are converted to US dollars and deducted from your gift card balance in USD": "O saldo do cartão é guardado e usado em dólares americanos (USD). As compras noutras moedas são convertidas para dólares e deduzidas do saldo do cartão em USD",
     "Use this gift card on multiple orders until the balance is fully spent": "Usa este cartão-presente em várias encomendas até esgotares o saldo",
     "Your gift card balance does not expire. Use it anytime": "O saldo do teu cartão-presente não expira. Usa-o quando quiseres",
@@ -427,7 +453,8 @@
     "Download image": "Transferir imagem",
     "Download file": "Transferir ficheiro",
 
-    // GPSR — labels da plataforma (os VALORES mudas na dashboard, ver nota)
+    // GPSR — labels da plataforma. Os VALORES (contactos e morada do
+    // fabricante) vem da dashboard da FW e editam-se la, nao aqui.
     "EU GPSR Product Information": "Informação de produto GPSR (UE)",
     "Manufacturer contact information": "Contactos do fabricante",
     "Postal address": "Morada postal",
@@ -569,23 +596,15 @@
     // texto. "Added" TEM de estar aqui em baixo, senao partia
     // "Added to cart" (bloco do carrinho).
     "Added": "Adicionada gorjeta de",
-    "tip": "",
     // "$10.00 + $2.30 tax". As variantes compostas ("plus tax",
     // "inc. tax/vat", "Taxes/VAT") ja correram bem antes desta.
     "tax": "de imposto",
 
-    // Removidas para PT ficar com a ordem correta. Ex.:
-    // "Join now to unlock exclusive <LOJA> content"
-    //   -> "Junta-te agora para desbloquear conteúdo exclusivo de <LOJA>"
-    // "You haven't sent <LOJA> any messages yet"
-    //   -> "Ainda não enviaste nenhuma mensagem a <LOJA>"
-    // NOTA: "tier" JA NAO esta aqui. Como chave cega apagava a palavra
-    // em todo o lado — inclusive no modal de mudanca de plano, onde
+    // NOTA: "tier", "content", "any messages yet" e "tip" JA NAO estao
+    // aqui. Como chaves cegas apagavam a palavra em TODO o lado — o
     // "change your tier from X" ficava "change your from X" e parecia
-    // um bug da Fourthwall. O "tier" a mais e' agora consumido pelas
-    // regras de regex, que so o tiram no contexto certo.
-    "any messages yet": "",
-    "content": "",
+    // um bug da Fourthwall. Sao agora consumidos por regras ancoradas
+    // em REGEX_RULES, que so os tiram no contexto certo.
   };
 
   // Atributos (não são nós de texto, logo o fillNode não lhes toca).
@@ -693,17 +712,18 @@
   // traduzivel). Os leitores de media disparam mutacoes continuas.
   const SKIP_ZONES = '[class*="countdown"],mux-player,[class*="video__progress"],[class*="audio-player__controls"]';
 
-  // O gtranslate poe lang="en" (e a classe translated-ltr) no <html>
-  // quando traduz a pagina — e' o unico sinal fiavel do estado.
-  // O cookie googtrans NAO e' escrito nem lido por esta versao do
-  // widget (dwf.js), por isso a versao anterior desta funcao devolvia
-  // sempre true e o pt-fill reescrevia para PT o ingles que o
-  // gtranslate acabara de produzir: ping-pong.
-   function isPTActive() {
-    // A classe translated-* e' escrita pela lib do gtranslate e e' o
-    // sinal mais fiavel: o Turbo repoe o lang do <html> na navegacao
-    // (visto: lang="en-US" com a pagina em espanhol), o lang sozinho
-    // mente. Se ha traducao activa, o pt-fill fica quieto.
+  // Estado da traducao. Dois factos que custaram a descobrir:
+  // 1. O cookie googtrans NAO e' escrito nem lido por esta versao do
+  //    dwf.js. Uma versao anterior desta funcao contava com ele,
+  //    devolvia sempre true, e o pt-fill reescrevia para PT o ingles
+  //    que o gtranslate acabara de produzir: ping-pong. E' tambem por
+  //    isto que o footer deixou de ter o pre-seed do googtrans — era
+  //    codigo morto, removido depois desta descoberta.
+  // 2. A classe translated-* do <html>, escrita pela lib do gtranslate,
+  //    e' o unico sinal fiavel. O lang sozinho mente: o Turbo repoe-o
+  //    na navegacao (visto: lang="en-US" com a pagina em espanhol).
+  function isPTActive() {
+    // Se ha traducao do gtranslate activa, o pt-fill fica quieto.
     if (document.documentElement.className.indexOf('translated-') !== -1) return false;
     const lang = (document.documentElement.getAttribute('lang') || 'pt').toLowerCase();
     return lang.startsWith('pt');
@@ -843,6 +863,16 @@
     // e' aquela palavra — "and" como chave global seria desastroso.
     { re: /^(\s*)and(\s*)$/, pt: '$1e os$2' },
     { re: /^(\s*)apply\.?(\s*)$/, pt: '$1da Google.$2' },
+    // Nos que sobram DEPOIS do nome da loja e que em PT nao levam nada.
+    // Ancorados em ^...$ pela mesma razao das duas regras acima: como
+    // chaves literais apagavam a palavra em qualquer frase EN que ainda
+    // sobrasse — o erro que ja tinha sido corrigido no "tier".
+    //   "Join now to unlock exclusive <LOJA> content"
+    //   "You haven't sent <LOJA> any messages yet"
+    //   "Added&nbsp;<VALOR>&nbsp;tip"  (o &nbsp; e' apanhado pelo \s)
+    { re: /^(\s*)content(\s*)$/, pt: '' },
+    { re: /^(\s*)any messages yet(\s*)$/, pt: '' },
+    { re: /^(\s*)tip(\s*)$/, pt: '' },
     { re: REL_RE, pt: relDate },
     { re: /\bJust now\b/g, pt: 'Agora mesmo' },
     { re: /\bjust now\b/g, pt: 'agora mesmo' },
