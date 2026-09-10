@@ -101,6 +101,7 @@
     "Postal code": "Código postal",
     "Charged for": "Cobrado por",
     "Current tier": "Nível atual",
+    "Change tier": "Alterar nível",
 
     // Cancelamento
     "Even if you cancel, you'll keep access until": "Mesmo que canceles, manténs o acesso até",
