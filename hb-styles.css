@@ -79,16 +79,20 @@ html {
 /* ------------------------------------------------------------
    HEADER: blur subtil + hover. Os valores do blur estao no :root
    (BRAND TOKENS) porque sao partilhados com o switcher de lingua.
+   DOIS SELECTORES no hover: o #fw-section-header nao existe no
+   portal (confirmado: 0 ocorrencias), logo a versao com id so
+   servia a loja. Na loja continua a ganhar o do id — as
+   declaracoes sao iguais, nao ha conflito.
    ------------------------------------------------------------ */
 .header {
   border-color: transparent !important;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
-#fw-section-header .header:hover {
+#fw-section-header .header:hover,
+.header:hover {
   background-color: rgba(var(--color-on-background-rgb), 0.05) !important;
   border-color: rgba(var(--color-on-background-rgb), 0.15) !important;
 }
-
 
 /* ------------------------------------------------------------
    GRID BG: padrão de grelha subtil (6% opacity) em toda a página.
@@ -109,33 +113,35 @@ body::before {
   opacity: 0.06;
 }
 
-
 /* ------------------------------------------------------------
    HYPERLINKS DE CONTEÚDO: verified-blue + underline.
    Interage com o sistema .redacted (cor invertida no reveal).
+   DOIS WRAPPERS, um por superfície: a loja serve o rich text em
+   .html-formatter, o portal em .post__content — confirmado na
+   consola (.html-formatter não existe no /supporters). Selector
+   de uma falha em silêncio na outra, daí o :is().
    ------------------------------------------------------------ */
-.html-formatter a {
+:is(.html-formatter, .post__content) a {
   color: var(--verified-blue);
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 2px;
   transition: opacity 0.2s ease, text-decoration-thickness 0.2s ease;
 }
-.html-formatter a:hover,
-.html-formatter a:focus {
+:is(.html-formatter, .post__content) a:hover,
+:is(.html-formatter, .post__content) a:focus {
   opacity: 0.7;
   text-decoration-thickness: 4px;
   text-shadow: 0.02em 0 0 currentColor, -0.02em 0 0 currentColor;
 }
-.html-formatter .redacted.revealed a {
+:is(.html-formatter, .post__content) .redacted.revealed a {
   color: var(--color-on-primary);
 }
 @media (hover: hover) {
-  .html-formatter .redacted.revealed:hover a {
+  :is(.html-formatter, .post__content) .redacted.revealed:hover a {
     color: var(--verified-blue);
   }
 }
-
 
 /* ------------------------------------------------------------
    BACKLIGHT: gradiente radial que segue o cursor (desktop only).
