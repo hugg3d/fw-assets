@@ -10,7 +10,10 @@ Ficheiros servidos por jsDelivr para o site Fourthwall **hugobran.co**
 | `hb-scheme.js` | Toggle light/dark, nas duas superfícies |
 
 O resto vive no **custom code** da Fourthwall: o header (que corre nas duas
-superfícies) e o footer (que **não** corre no `/supporters`).
+superfícies) e o footer (que **não** corre no `/supporters`). O gtranslate
+vive só no header — settings, seed do `lang` e carregamento do `dwf.js` numa
+única cópia. Nunca voltar a pôr um `.gtranslate_wrapper` no markup do footer:
+o `dwf.js` injecta um switcher em todos os wrappers que encontre.
 
 **Ciclo de edição:** commit → purge em `jsdelivr.com/tools/purge` →
 hard-refresh no site. As URLs usam `@main`, por isso qualquer commit entra em
