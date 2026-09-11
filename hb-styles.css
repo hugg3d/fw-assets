@@ -7,8 +7,12 @@
    FONTS: aplica "auger-mono" + feature ss01 (Angular Forms).
    O <link> do Typekit continua no header (tem de lá estar);
    este bloco só consome a font que ele carrega.
+   html body (0-0-2) e nao body (0-0-1): a FW declara este mesmo token
+   ao nivel do body, e num empate de especificidade ganha quem vem
+   depois no documento. No portal a folha deles fica depois da nossa e
+   os headings caiam para a Space Mono do tema.
    ------------------------------------------------------------ */
-body {
+html body {
   --font-family-heading: "auger-mono", monospace;
   font-feature-settings: "ss01" on !important;
 }
@@ -22,7 +26,6 @@ h3 { font-weight: 500; }
 h4 { font-weight: 400; }
 h5 { font-weight: 300; }
 h6 { font-weight: 200; }
-
 
 /* ------------------------------------------------------------
    BRAND TOKENS: paleta oficial do brandbook (FIXA, não muda com
