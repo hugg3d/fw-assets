@@ -125,6 +125,34 @@ gtranslate é montado no `<body>`, fora do header. Declaradas no `.header`, o
 switcher caía sempre no valor de fallback — os valores coincidiam, por isso
 nunca se notou, mas ficariam dessincronizados na primeira alteração.
 
+### O wrapper do conteúdo editável muda com a superfície
+
+A loja serve rich text em `.html-formatter`; o portal serve-o em `.rich-text`,
+dentro de `.post__body` (feed e posts) ou `.video-page__description` (vídeos).
+Ancorar no wrapper exterior obriga a descobrir um novo de cada vez — foi assim
+três vezes seguidas antes de se ancorar no `.rich-text`, que é comum a todos.
+
+Cuidado com o `.post__content`: apesar do nome, é o **cartão inteiro** (data,
+título, ações, comentários), não o texto. Ancorar aí pintou de azul a data, o
+título e os botões de desbloqueio.
+
+O `#fw-section-header` **não existe no portal** — regras ancoradas nele só
+servem a loja. No caso do hover do header isso é agora intencional: o portal
+fica sólido, para se distinguir da loja. No anti-FOUC inline o id é
+obrigatório, pela especificidade; lá não casar no portal é inofensivo.
+
+### O seed do `lang` tem de correr antes dos scripts `defer`
+
+Os `defer` executam **antes** do `DOMContentLoaded`, e o `pt-fill` agenda aí a
+primeira passagem. Se nessa altura o `<html>` ainda disser `lang="en"`, o
+`isPTActive()` devolve `false` e a página fica por traduzir até ao evento
+Turbo seguinte. Por isso o `setLang()` do bloco gtranslate é chamado
+imediatamente, e não dentro do `run()`.
+
+O seed também não pode ser cego: forçar `lang="pt"` sempre — como fazia o
+inline do footer — provocava um flash de PT antes de o gtranslate repor o EM
+escolhido pelo utilizador. A versão actual respeita o `__GT_TRANSLATE_LANGS`.
+
 ---
 
 ## Convenções
