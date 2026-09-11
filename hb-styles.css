@@ -116,29 +116,31 @@ body::before {
 /* ------------------------------------------------------------
    HYPERLINKS DE CONTEÚDO: verified-blue + underline.
    Interage com o sistema .redacted (cor invertida no reveal).
-   DOIS WRAPPERS, um por superfície: a loja serve o rich text em
-   .html-formatter, o portal em .post__content — confirmado na
-   consola (.html-formatter não existe no /supporters). Selector
-   de uma falha em silêncio na outra, daí o :is().
+   ANCORADO em .rich-text, a classe que a FW poe no conteudo
+   editavel: o wrapper exterior muda com a superficie
+   (.html-formatter na loja, .post__body no feed,
+   .video-page__description nos videos) e ancorar nele obrigava a
+   descobrir um novo de cada vez. O .html-formatter fica na mesma:
+   na loja ha rich text que nao leva .rich-text.
    ------------------------------------------------------------ */
-:is(.html-formatter, .post__body) a {
+:is(.html-formatter, .rich-text) a {
   color: var(--verified-blue);
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 2px;
   transition: opacity 0.2s ease, text-decoration-thickness 0.2s ease;
 }
-:is(.html-formatter, .post__body) a:hover,
-:is(.html-formatter, .post__body) a:focus {
+:is(.html-formatter, .rich-text) a:hover,
+:is(.html-formatter, .rich-text) a:focus {
   opacity: 0.7;
   text-decoration-thickness: 4px;
   text-shadow: 0.02em 0 0 currentColor, -0.02em 0 0 currentColor;
 }
-:is(.html-formatter, .post__body) .redacted.revealed a {
+:is(.html-formatter, .rich-text) .redacted.revealed a {
   color: var(--color-on-primary);
 }
 @media (hover: hover) {
-  :is(.html-formatter, .post__body) .redacted.revealed:hover a {
+  :is(.html-formatter, .rich-text) .redacted.revealed:hover a {
     color: var(--verified-blue);
   }
 }
