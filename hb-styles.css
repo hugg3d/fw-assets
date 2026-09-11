@@ -121,24 +121,24 @@ body::before {
    consola (.html-formatter não existe no /supporters). Selector
    de uma falha em silêncio na outra, daí o :is().
    ------------------------------------------------------------ */
-:is(.html-formatter, .post__content) a {
+:is(.html-formatter, .post__body) a {
   color: var(--verified-blue);
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 2px;
   transition: opacity 0.2s ease, text-decoration-thickness 0.2s ease;
 }
-:is(.html-formatter, .post__content) a:hover,
-:is(.html-formatter, .post__content) a:focus {
+:is(.html-formatter, .post__body) a:hover,
+:is(.html-formatter, .post__body) a:focus {
   opacity: 0.7;
   text-decoration-thickness: 4px;
   text-shadow: 0.02em 0 0 currentColor, -0.02em 0 0 currentColor;
 }
-:is(.html-formatter, .post__content) .redacted.revealed a {
+:is(.html-formatter, .post__body) .redacted.revealed a {
   color: var(--color-on-primary);
 }
 @media (hover: hover) {
-  :is(.html-formatter, .post__content) .redacted.revealed:hover a {
+  :is(.html-formatter, .post__body) .redacted.revealed:hover a {
     color: var(--verified-blue);
   }
 }
