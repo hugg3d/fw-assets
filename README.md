@@ -101,8 +101,16 @@ com o rendering e atrasava o lazy-load. Já foi revertido uma vez.
 
 Atribuir `innerHTML` destrói e recria a subárvore, mesmo quando o conteúdo não
 muda — mata listeners e enche o `pt-fill` de mutações inúteis. Acontecia no
-redacted (sobre todos os elementos-folha da página, a cada evento do Turbo) e
-no `paint()` do toggle de tema. Ambos têm agora guarda.
+`paint()` do toggle de tema, que tem agora guarda, e no redacted, que varria
+todos os elementos-folha da página a cada evento do Turbo.
+
+O redacted foi reescrito: percorre nós de **texto** com um `TreeWalker` e
+substitui só o nó onde há mesmo `[r]`, em vez de reatribuir o `innerHTML` do
+elemento. Sobra um único `innerHTML`, no fallback para marcação que atravessa
+elementos (`[r]texto <a>link</a>[/r]`), onde o `[r]` e o `[/r]` caem em nós
+diferentes. Nesse caso delega-se o bloco inteiro ao fallback, pares completos
+incluídos: fazê-lo só quando não havia nenhum par completo deixava um `[r]`
+pendurado em texto cru no ecrã.
 
 Ler `innerHTML` só para procurar uma substring também é caro: serializa HTML.
 Usar `textContent` quando o que se procura é texto.
@@ -150,7 +158,7 @@ Turbo seguinte. Por isso o `setLang()` do bloco gtranslate é chamado
 imediatamente, e não dentro do `run()`.
 
 O seed também não pode ser cego: forçar `lang="pt"` sempre — como fazia o
-inline do footer — provocava um flash de PT antes de o gtranslate repor o EM
+inline do footer — provocava um flash de PT antes de o gtranslate repor o EN
 escolhido pelo utilizador. A versão actual respeita o `__GT_TRANSLATE_LANGS`.
 
 ---
