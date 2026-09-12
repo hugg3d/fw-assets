@@ -40,6 +40,14 @@ switcher — resultado, dois ou três switchers lado a lado.
 **Testado:** sem o `MutationObserver` que poda o wrapper no momento da
 injecção, volta a duplicar. A flag sozinha não resolve.
 
+O `dwf.js` tem ainda um bug próprio: regista a função `load_tlib`
+directamente como listener de `pointerenter`/`focusin`, e o browser passa-lhe
+o objecto do evento como primeiro argumento — que a função trata como se
+fosse um callback. A partir do segundo hover, dá `TypeError: callback is not
+a function` na consola. É inofensivo (serve só para pré-carregar a biblioteca
+de tradução, coisa que o primeiro hover já fez) e não há forma de o corrigir
+de fora.
+
 ### O Turbo restaura wrappers de snapshot sem handlers
 
 Nós restaurados de um snapshot são clones. Um switcher que venha daí está no
@@ -97,6 +105,9 @@ O `timeout` de 500 ms do `requestIdleCallback` também é deliberado: com ~150 m
 o callback é forçado mesmo com o browser ocupado, e durante o scroll competia
 com o rendering e atrasava o lazy-load. Já foi revertido uma vez.
 
+O mesmo padrão está agora no redacted, que passou a correr nas duas
+superfícies.
+
 ### `innerHTML` reatribuído sem guarda é caro
 
 Atribuir `innerHTML` destrói e recria a subárvore, mesmo quando o conteúdo não
@@ -104,16 +115,39 @@ muda — mata listeners e enche o `pt-fill` de mutações inúteis. Acontecia no
 `paint()` do toggle de tema, que tem agora guarda, e no redacted, que varria
 todos os elementos-folha da página a cada evento do Turbo.
 
-O redacted foi reescrito: percorre nós de **texto** com um `TreeWalker` e
-substitui só o nó onde há mesmo `[r]`, em vez de reatribuir o `innerHTML` do
-elemento. Sobra um único `innerHTML`, no fallback para marcação que atravessa
-elementos (`[r]texto <a>link</a>[/r]`), onde o `[r]` e o `[/r]` caem em nós
-diferentes. Nesse caso delega-se o bloco inteiro ao fallback, pares completos
-incluídos: fazê-lo só quando não havia nenhum par completo deixava um `[r]`
-pendurado em texto cru no ecrã.
-
 Ler `innerHTML` só para procurar uma substring também é caro: serializa HTML.
 Usar `textContent` quando o que se procura é texto.
+
+### O redacted: `TreeWalker` sobre nós de texto, e fora do conteúdo alheio
+
+O redacted foi reescrito: percorre nós de **texto** com um `TreeWalker` e
+substitui só o nó onde há mesmo `[r]`, com `createTextNode` e `textContent`.
+A versão anterior lia `textContent` de todos os elementos-folha — o que
+percorre a mesma subárvore várias vezes na mesma passagem — e reatribuía
+`innerHTML` a cada um.
+
+Sobra um único `innerHTML`, no fallback para marcação que atravessa elementos
+(`[r]texto <a>link</a>[/r]`), onde o `[r]` e o `[/r]` caem em nós diferentes.
+Nesse caso delega-se o bloco inteiro ao fallback, pares completos incluídos:
+delegar só quando **não** havia nenhum par completo deixava um `[r]` pendurado
+em texto cru no ecrã, a seguir a um par já fechado.
+
+**Zonas de terceiros estão excluídas** (`UNTRUSTED`: comentários, mensagens,
+editor, `[contenteditable]`), por duas razões independentes e ambas
+suficientes. Primeira: o `[r]` é marcação **nossa**, para conteúdo **nosso** —
+sem a exclusão, qualquer membro pintava o próprio comentário com as cores da
+marca. Segunda: o fallback reatribui `innerHTML`, e sobre texto de outra
+pessoa isso é vector de mutation XSS — o `innerHTML` devolve o markup que a
+Fourthwall escapou, e reatribuí-lo volta a interpretá-lo como HTML. Testado
+que a FW escapa `<a>` em comentários, mas isso cobre o caminho rápido, não o
+fallback, e pode mudar num release futuro.
+
+O `/supporters/messages` é saltado **pelo path**, além do selector: a classe
+do contentor é só `messages`, genérica de mais para se confiar nela quando o
+que está do outro lado é texto de terceiros. Custo aceite: perde-se o
+highlight nas mensagens que nós próprios escrevemos. Distinguir o autor
+obrigaria a ancorar numa classe do tipo "mensagem do criador", e se essa
+falhasse falhava do lado inseguro.
 
 ### As vars do tema têm uma única fonte
 
@@ -149,6 +183,32 @@ servem a loja. No caso do hover do header isso é agora intencional: o portal
 fica sólido, para se distinguir da loja. No anti-FOUC inline o id é
 obrigatório, pela especificidade; lá não casar no portal é inofensivo.
 
+### A Fourthwall declara `a:hover` e ganha
+
+Os links de conteúdo tinham a cor certa em repouso e no hover saltavam para a
+cor do texto (branco no tema escuro, preto no claro) — uma regra `a:hover` da
+plataforma a ganhar em especificidade. Daí o `!important` na cor do hover, que
+cai dentro da convenção de o usar só para sobrepor a Fourthwall. O `opacity:
+0.7` que lá estava também saiu: sobre fundo escuro lavava o azul e lia-se como
+cinzento.
+
+### O highlight do redacted é permanente no portal
+
+No `/supporters` o conteúdo é para quem já pagou, e o aparecer-e-desaparecer
+com o scroll só atrapalha a leitura — o highlight fica sempre visível, via
+classe `hb-redacted-static` no `<body>`, posta pelo JS **a partir do path**.
+Por `:has()` falharia nas secções do portal sem posts. O observer continua a
+correr e a pôr `.revealed`; o CSS do portal simplesmente não depende dela.
+
+Consequência que obriga a duplicar selectores: as regras do link dentro de um
+redacted precisam das duas variantes (`.redacted.revealed a` para a loja,
+`body.hb-redacted-static .redacted a` para o portal). Sem a segunda, o link
+mudava de cor sozinho ao entrar e sair da zona do observer, mesmo com o
+highlight permanente por cima.
+
+O `toggle` da classe tem de correr **antes** do `return` que salta o
+`/messages`, senão a classe fica com o valor da página anterior.
+
 ### O seed do `lang` tem de correr antes dos scripts `defer`
 
 Os `defer` executam **antes** do `DOMContentLoaded`, e o `pt-fill` agenda aí a
@@ -167,12 +227,18 @@ escolhido pelo utilizador. A versão actual respeita o `__GT_TRANSLATE_LANGS`.
 
 - **CSS vive no `hb-styles.css`.** Misturar `<style>` inline no header com o
   ficheiro já causou duplicações silenciosas.
-- **`!important` só** para sobrepor estilos inline da Fourthwall.
+- **`!important` só** para sobrepor estilos inline **ou regras** da Fourthwall.
 - **Tudo idempotente e turbo-aware.** O portal corre Turbo Drive com morph.
 - **Ancorar em `data-testid`**, não em posição. As versões posicionais
   partiram-se todas as vezes que a Fourthwall mexeu na árvore.
 - **Falha segura:** se o CSS não carregar, o site deve degradar para o estado
   da Fourthwall, não para um estado partido. Ver as notas do logo e do scroll
   reveal no `hb-styles.css`.
+- **Comentários longos vivem aqui, não no custom code.** O header tem limite
+  de 25 000 caracteres; o porquê de cada guarda fica no README e no código
+  fica uma linha a apontar para cá.
+- **Nada de marcação nossa sobre texto de terceiros.** Ver a secção do
+  redacted: comentários, mensagens e editores ficam de fora, por segurança e
+  por coerência de marca.
 - **Glossário e registo de voz** estão no topo do `pt-fill.js`. Consultar antes
   de acrescentar chaves.
