@@ -131,17 +131,24 @@ body::before {
 }
 :is(.html-formatter, .rich-text) a:hover,
 :is(.html-formatter, .rich-text) a:focus {
-  color: var(--verified-blue);
+  color: var(--verified-blue) !important;
   opacity: 1;
   text-decoration-thickness: 4px;
   text-shadow: 0.02em 0 0 currentColor, -0.02em 0 0 currentColor;
 }
-:is(.html-formatter, .rich-text) .redacted.revealed a {
-  color: var(--color-on-primary);
+/* Link dentro de um redacted: sobre o fundo azul usa a cor de contraste.
+   Os dois selectores porque na loja o highlight vem de .revealed e no
+   portal da classe do body — sem o segundo, o link mudava de cor
+   sozinho ao entrar e sair da zona do observer. */
+:is(.html-formatter, .rich-text) .redacted.revealed a,
+body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
+  color: var(--color-on-primary) !important;
 }
+/* Hover apaga o highlight: o link volta ao azul. */
 @media (hover: hover) {
-  :is(.html-formatter, .rich-text) .redacted.revealed:hover a {
-    color: var(--verified-blue);
+  :is(.html-formatter, .rich-text) .redacted.revealed:hover a,
+  body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted:hover a {
+    color: var(--verified-blue) !important;
   }
 }
 
