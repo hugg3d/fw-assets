@@ -136,11 +136,11 @@ em texto cru no ecrã, a seguir a um par já fechado.
 editor, `[contenteditable]`), por duas razões independentes e ambas
 suficientes. Primeira: o `[r]` é marcação **nossa**, para conteúdo **nosso** —
 sem a exclusão, qualquer membro pintava o próprio comentário com as cores da
-marca. Segunda: o fallback reatribui `innerHTML`, e sobre texto de outra
-pessoa isso é vector de mutation XSS — o `innerHTML` devolve o markup que a
-Fourthwall escapou, e reatribuí-lo volta a interpretá-lo como HTML. Testado
-que a FW escapa `<a>` em comentários, mas isso cobre o caminho rápido, não o
-fallback, e pode mudar num release futuro.
+marca, incluindo no painel lateral do feed. Segunda: o fallback reatribui
+`innerHTML`, e sobre texto de outra pessoa isso é vector de mutation XSS — o
+`innerHTML` devolve o markup que a Fourthwall escapou, e reatribuí-lo volta a
+interpretá-lo como HTML. Testado que a FW escapa `<a>` em comentários, mas
+isso cobre o caminho rápido, não o fallback, e pode mudar num release futuro.
 
 O `/supporters/messages` é saltado **pelo path**, além do selector: a classe
 do contentor é só `messages`, genérica de mais para se confiar nela quando o
@@ -179,7 +179,7 @@ título, ações, comentários), não o texto. Ancorar aí pintou de azul a data
 título e os botões de desbloqueio.
 
 O `#fw-section-header` **não existe no portal** — regras ancoradas nele só
-servem a loja. No caso do hover do header isso é agora intencional: o portal
+servem a loja. É o caso do hover do header, e isso é intencional: no portal
 fica sólido, para se distinguir da loja. No anti-FOUC inline o id é
 obrigatório, pela especificidade; lá não casar no portal é inofensivo.
 
