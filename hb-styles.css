@@ -48,14 +48,12 @@ h6 { font-weight: 200; }
   --header-blur-opacity: 0.03;   
 }
 
-
 /* ------------------------------------------------------------
    COLOR-SCHEME: alinha widgets nativos do browser (popups de
    select, scrollbars nativas, etc.) com o tema ativo.
    ------------------------------------------------------------ */
 :root[data-scheme="dark"] { color-scheme: dark; }
 :root[data-scheme="light"] { color-scheme: light; }
-
 
 /* ------------------------------------------------------------
    SCROLLBARS: theme-aware. Thumb = primary (azul brand),
@@ -82,10 +80,8 @@ html {
 /* ------------------------------------------------------------
    HEADER: blur subtil + hover. Os valores do blur estao no :root
    (BRAND TOKENS) porque sao partilhados com o switcher de lingua.
-   DOIS SELECTORES no hover: o #fw-section-header nao existe no
-   portal (confirmado: 0 ocorrencias), logo a versao com id so
-   servia a loja. Na loja continua a ganhar o do id — as
-   declaracoes sao iguais, nao ha conflito.
+   O hover fica ancorado no #fw-section-header, que so existe na
+   loja: no portal o header fica solido, de proposito.
    ------------------------------------------------------------ */
 .header {
   border-color: transparent !important;
@@ -174,7 +170,6 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
 }
 @media (max-width: 768px) { .backlight { display: none; } }
 
-
 /* ------------------------------------------------------------
    MOBILE NAV (<=639px) + LOGO via CSS mask (adapta à cor do tema).
    ATENÇÃO: o opacity:0 da img e a máscara do ::after têm de viver
@@ -209,7 +204,6 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
   pointer-events: none;
 }
 
-
 /* ------------------------------------------------------------
    CHEVRONS: rodam 180° quando o dropdown está aberto
    (hover nos menus do site).
@@ -223,7 +217,6 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
   transform: rotate(180deg);
 }
 
-
 /* ------------------------------------------------------------
    UI: botões/tabs radius 6px + badge visible@sm força display.
    ------------------------------------------------------------ */
@@ -231,7 +224,6 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
 .plan-cards__card-badge.visible\@sm { display: inline-flex !important; }
 
 .plus-tax-label { font-size: 0.75em; opacity: 0.6; }
-
 
 /* ------------------------------------------------------------
    BADGES: cor primária + heading font + radius 4px.
@@ -304,7 +296,6 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
 .plan-cards__container { display: flex !important; justify-content: center; }
 .plan-cards [data-testid="Checkout.PlanCard.Annual"] { flex: 0 1 320px; }
 
-
 /* ------------------------------------------------------------
    REDACTED: highlight da marca com hover-reveal; a conversão de
    [r]...[/r] em spans e o IntersectionObserver estão no header.
@@ -369,7 +360,6 @@ body.scroll-animate .is-visible {
   .button--secondary:hover { color: var(--color-on-secondary); }
   .button, .tab { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
 }
-
 
 /* ------------------------------------------------------------
    GTRANSLATE (visual): widget floating-glass igual ao header
