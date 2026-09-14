@@ -550,6 +550,7 @@
     "Continue": "Continuar",
     "Optional": "Opcional",
     "Earned": "Conquistado",
+    "Subscription": "Subscrição",
     "Payment": "Pagamento",
     "Pinned": "Fixado",
     "Profile": "Perfil",
