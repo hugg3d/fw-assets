@@ -298,14 +298,18 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
 
 /* ------------------------------------------------------------
    PRECOS ANUALIZADOS: o .plan__price e' flex e cada <span> vira um
-   item rigido — o (+IVA) ficava orfao e o nowrap dava overflow em
-   cards estreitos. Em block o texto flui e parte como na loja
-   (.tiers__tier-price, que ja e' um <p> normal).
-   Scoped a [data-annualized]: so toca no que o script PLANOS escreveu.
+   item rigido — em block o texto flui e centra-se como na loja.
+   O riscado leva display:block porque a quebra natural e' gananciosa:
+   enche a 1a linha ate' ao fim e so' o (+IVA) e' que desce.
+   .plan__nominal-price so' existe na variante com intro offer, por
+   isso os restantes cards ficam intactos.
    ------------------------------------------------------------ */
 .plan__price[data-annualized] {
   display: block;
   text-align: center;
+}
+.plan__price[data-annualized] .plan__nominal-price {
+  display: block;
 }
 
 /* ------------------------------------------------------------
