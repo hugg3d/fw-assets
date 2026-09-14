@@ -187,6 +187,11 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
   .header__list.list.list--horizontal .list__item {
     padding: 0 2px !important;
   }
+  /* Portal: .header__right-nav e' grid-auto-flow:column com gap 24px
+     da FW. Com 4 itens sao 72px so' de espacamento e da scroll lateral.
+     Selector com o pai (0-2-0): no portal a folha da FW vem depois da
+     nossa e um empate 0-1-0 perdia. */
+  .header__section--right .header__right-nav { gap: 14px; }
 }
 .header__logo {
   position: relative;
