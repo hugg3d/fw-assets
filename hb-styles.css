@@ -198,13 +198,11 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
      Selector com o pai (0-2-0): no portal a folha da FW vem depois da
      nossa e um empate 0-1-0 perdia. */
   .header__section--right .header__right-nav { gap: 14px; }
-  /* Largura explícita (ver cabeçalho). Sem flex-shrink:0 de propósito:
-     o item encolhe sozinho quando o espaço aperta e a máscara acompanha. */
-  .header__section--middle .header__logo { width: 100px; }
 }
 .header__logo {
   position: relative;
   display: inline-block;
+  width: 100px;
 }
 .header__logo img { opacity: 0; }
 .header__logo::after {
