@@ -302,7 +302,11 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
    (+IVA) fica orfao na 1a linha. Scoped a [data-annualized]: so toca
    no que o script PLANOS (header) escreveu.
    ------------------------------------------------------------ */
-.plan__price[data-annualized] { flex-wrap: wrap; }
+.plan__price[data-annualized] {
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}
 .plan__price[data-annualized] > span { white-space: nowrap; }
 
 /* ------------------------------------------------------------
