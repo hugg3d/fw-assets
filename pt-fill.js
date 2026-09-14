@@ -397,6 +397,8 @@
     "Start 7-day free trial": "Começa com teste gratuito de 7 dias",
     "Members Only": "Exclusivo Membros",
     "Join now": "Junta-te agora!",
+    "first year": "no primeiro ano",
+    "first month": "no primeiro mês",
     "per year": "por ano",
     "plus tax": "+IVA",
     "Sold Out": "Artigo Esgotado",
