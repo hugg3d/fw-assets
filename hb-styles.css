@@ -297,6 +297,15 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
 .plan-cards [data-testid="Checkout.PlanCard.Annual"] { flex: 0 1 320px; }
 
 /* ------------------------------------------------------------
+   PRECOS ANUALIZADOS: a etiqueta e' um flex item independente — sem
+   isto encolhe e parte-se palavra a palavra em cards estreitos, e o
+   (+IVA) fica orfao na 1a linha. Scoped a [data-annualized]: so toca
+   no que o script PLANOS (header) escreveu.
+   ------------------------------------------------------------ */
+.plan__price[data-annualized] { flex-wrap: wrap; }
+.plan__price[data-annualized] > span { white-space: nowrap; }
+
+/* ------------------------------------------------------------
    REDACTED: highlight da marca com hover-reveal; a conversão de
    [r]...[/r] em spans e o IntersectionObserver estão no header.
    ------------------------------------------------------------ */
