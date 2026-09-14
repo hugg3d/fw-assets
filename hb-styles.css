@@ -176,6 +176,12 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
    SEMPRE no mesmo ficheiro. Separados, um cenário de falha parcial
    deixava o logo invisível; juntos, se este CSS não carregar, a
    img original reaparece — falha segura.
+   O ::after é inset:0, logo NÃO TEM CAIXA PRÓPRIA: herda a do <a>,
+   que por sua vez depende da <img> — e essa está a opacity:0. No
+   portal o .header__logo é item flex e colapsa a 0 de largura, pelo
+   que a máscara fica sem onde pintar e o logo desaparece (só no
+   portal; na loja a <img> dá largura). Daí a largura explícita
+   abaixo: sem ela o logo some-se e nada no CSS o denuncia.
    URL da máscara desduplicado via custom property (era o maior
    duplicado do header inteiro, ~1k de caracteres poupados).
    ------------------------------------------------------------ */
@@ -187,11 +193,14 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
   .header__list.list.list--horizontal .list__item {
     padding: 0 2px !important;
   }
-  /* Portal: .header__right-nav e' grid-auto-flow:column com gap 24px
-     da FW. Com 4 itens sao 72px so' de espacamento e da scroll lateral.
+  /* Portal: .header__right-nav é grid-auto-flow:column com gap 24px
+     da FW. Com 4 itens são 72px só de espaçamento e dá scroll lateral.
      Selector com o pai (0-2-0): no portal a folha da FW vem depois da
      nossa e um empate 0-1-0 perdia. */
   .header__section--right .header__right-nav { gap: 14px; }
+  /* Largura explícita (ver cabeçalho). Sem flex-shrink:0 de propósito:
+     o item encolhe sozinho quando o espaço aperta e a máscara acompanha. */
+  .header__section--middle .header__logo { width: 100px; }
 }
 .header__logo {
   position: relative;
