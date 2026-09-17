@@ -202,6 +202,12 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
 .header__logo {
   position: relative;
   display: inline-block;
+}
+/* Só no portal: lá o .header__logo é item flex e a <img> a opacity:0
+   não garante largura — colapsa a 0 e a máscara fica sem onde pintar.
+   Na loja a <img> dá largura e impor 100px encolhia o logo. */
+.header__section--left .header__logo,
+.header__section--middle .header__logo {
   width: 100px;
 }
 .header__logo img { opacity: 0; }
