@@ -46,6 +46,10 @@ h6 { font-weight: 200; }
      <body> — fora do header, nao herdava dali. */
   --header-blur-amount: 24px;
   --header-blur-opacity: 0.03;   
+  /* Máscara do logo: usada pelo .header__logo e pelo .checkout__logo.
+     No :root porque serve as duas superfícies. Atenção: o URL tem o
+     hash do ficheiro — muda a cada upload novo do logo. */
+  --hb-logo-mask: url('https://imgproxy.fourthwall.dev/QdavVw4tyIWNN3Errw93X_Y6ZCva-X9_RruCTwAA90Y/w:320/sm:1/enc/bYy-aLNmwGInKb95/9xiAzPYDFF-dLQpg/1B0v91UyJR21S40C/d5fk9ozza1UXlUmr/X1rqf482uWJTS05E/ZSqU4x42F8PDim8N/2_6u5mXDUdWonxGy/8lFBRk0wJCcf6Qzm/ZJXgGxEMO-ktRf7P/pLK997XkKdaOQUJS/y9POoRsrzNzwBOjx/CpE6k3HW61TZfrrB/0725Yk1EMIDbzCNT/ufbQG90OnBGttpXI/lDY-joAdOvv9TmQB/Onyo_P1O3z-gdJfd.svg') no-repeat center / contain; 
 }
 
 /* ------------------------------------------------------------
@@ -182,8 +186,9 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
    que a máscara fica sem onde pintar e o logo desaparece (só no
    portal; na loja a <img> dá largura). Daí a largura explícita
    abaixo: sem ela o logo some-se e nada no CSS o denuncia.
-   URL da máscara desduplicado via custom property (era o maior
-   duplicado do header inteiro, ~1k de caracteres poupados).
+   O URL da máscara está no :root (BRAND TOKENS) como --hb-logo-mask,
+   partilhado com o .checkout__logo. Tem o hash do ficheiro: muda a
+   cada upload novo do logo, e há um só sítio para o actualizar.
    ------------------------------------------------------------ */
 @media (max-width: 639px) {
   .header__list.list.list--horizontal {
@@ -212,7 +217,6 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
 }
 .header__logo img { opacity: 0; }
 .header__logo::after {
-  --hb-logo-mask: url('https://imgproxy.fourthwall.dev/QdavVw4tyIWNN3Errw93X_Y6ZCva-X9_RruCTwAA90Y/w:320/sm:1/enc/bYy-aLNmwGInKb95/9xiAzPYDFF-dLQpg/1B0v91UyJR21S40C/d5fk9ozza1UXlUmr/X1rqf482uWJTS05E/ZSqU4x42F8PDim8N/2_6u5mXDUdWonxGy/8lFBRk0wJCcf6Qzm/ZJXgGxEMO-ktRf7P/pLK997XkKdaOQUJS/y9POoRsrzNzwBOjx/CpE6k3HW61TZfrrB/0725Yk1EMIDbzCNT/ufbQG90OnBGttpXI/lDY-joAdOvv9TmQB/Onyo_P1O3z-gdJfd.svg') no-repeat center / contain;
   content: '';
   position: absolute;
   inset: 0;
@@ -313,6 +317,24 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
 .plan-cards [data-testid="Checkout.PlanCard.Monthly"] { display: none !important; }
 .plan-cards__container { display: flex !important; justify-content: center; }
 .plan-cards [data-testid="Checkout.PlanCard.Annual"] { flex: 0 1 320px; }
+
+/* ------------------------------------------------------------
+   CHECKOUT LOGO (planos): mesma mecânica do .header__logo — o SVG
+   servido tem fill branco fixo e desaparece em tema claro, por isso
+   esconde-se e pinta-se a máscara com a cor do tema.
+   Só o checkout de PLANOS: o de produtos corre noutra app, sem este CSS.
+   ------------------------------------------------------------ */
+.checkout__logo { position: relative; display: inline-block; }
+.checkout__logo img { opacity: 0; }
+.checkout__logo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-on-background);
+  -webkit-mask: var(--hb-logo-mask);
+  mask: var(--hb-logo-mask);
+  pointer-events: none;
+}
 
 /* ------------------------------------------------------------
    PRECOS ANUALIZADOS: o .plan__price e' flex e cada <span> vira um
