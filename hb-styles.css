@@ -212,7 +212,7 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
 }
 .header__logo img { opacity: 0; }
 .header__logo::after {
-  --hb-logo-mask: url('https://imgproxy.fourthwall.com/vQleOA7YJKYC-7JckiqfO5FwnSAumExCO8L7n7DgFrY/w:320/sm:1/enc/3Ruo-s4A0I-i4cd-/aLFsDCCNExPJiKMT/EAgRZJLRA6VSuphr/_2USqD0oAabDLGDX/qNX_VvURttrNt0Lm/Q3zjnT9Jj5Jxg2yg/E5RODZPtGGmSvsvA/iA8U7AQc466lHXUd/jLnMU7q85RWy877k/ta1fWwtye9LYF8xn/EZzuuvcYME8DTuSE/HdjCTRxEw_yDvgGZ/EA_gwz5evVpIyFEe/wlH62VS5-3pmmvY1/7k2NNvrm6IYvYz_O/XG_ob8Uq3NgXryKt') no-repeat center / contain;
+  --hb-logo-mask: url('https://imgproxy.fourthwall.dev/QdavVw4tyIWNN3Errw93X_Y6ZCva-X9_RruCTwAA90Y/w:320/sm:1/enc/bYy-aLNmwGInKb95/9xiAzPYDFF-dLQpg/1B0v91UyJR21S40C/d5fk9ozza1UXlUmr/X1rqf482uWJTS05E/ZSqU4x42F8PDim8N/2_6u5mXDUdWonxGy/8lFBRk0wJCcf6Qzm/ZJXgGxEMO-ktRf7P/pLK997XkKdaOQUJS/y9POoRsrzNzwBOjx/CpE6k3HW61TZfrrB/0725Yk1EMIDbzCNT/ufbQG90OnBGttpXI/lDY-joAdOvv9TmQB/Onyo_P1O3z-gdJfd.svg') no-repeat center / contain;
   content: '';
   position: absolute;
   inset: 0;
