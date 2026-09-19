@@ -324,7 +324,7 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
    esconde-se e pinta-se a máscara com a cor do tema.
    Só o checkout de PLANOS: o de produtos corre noutra app, sem este CSS.
    ------------------------------------------------------------ */
-.checkout__logo { position: relative; }
+.checkout__logo { position: relative; width: 100px; margin: 0 auto; }
 .checkout__logo img { opacity: 0; }
 .checkout__logo::after {
   content: '';
