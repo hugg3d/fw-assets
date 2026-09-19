@@ -204,19 +204,21 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
      nossa e um empate 0-1-0 perdia. */
   .header__section--right .header__right-nav { gap: 14px; }
 }
-.header__logo {
+/* Logo com máscara — todas as superfícies. A largura é o que muda
+   entre elas; o mecanismo é o mesmo. */
+.header__logo,
+.checkout__logo,
+.password__logo {
   position: relative;
-  display: inline-block;
 }
-/* Só no portal: lá o .header__logo é item flex e a <img> a opacity:0
-   não garante largura — colapsa a 0 e a máscara fica sem onde pintar.
-   Na loja a <img> dá largura e impor 100px encolhia o logo. */
-.header__section--left .header__logo,
-.header__section--middle .header__logo {
-  width: 100px;
+.header__logo img,
+.checkout__logo img,
+.password__logo img {
+  opacity: 0;
 }
-.header__logo img { opacity: 0; }
-.header__logo::after {
+.header__logo::after,
+.checkout__logo::after,
+.password__logo::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -224,6 +226,19 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
   -webkit-mask: var(--hb-logo-mask);
   mask: var(--hb-logo-mask);
   pointer-events: none;
+}
+/* Larguras: o ::after é inset:0 e não tem caixa própria (ver cabeçalho).
+   Header: só no portal, onde a <img> a opacity:0 não dá largura.
+   Checkout e password: o contentor é flex full-width e a máscara
+   esticava com ele. */
+.header__section--left .header__logo,
+.header__section--middle .header__logo {
+  width: 100px;
+}
+.checkout__logo,
+.password__logo {
+  width: 120px;
+  margin: 0 auto;
 }
 
 /* ------------------------------------------------------------
@@ -317,24 +332,6 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
 .plan-cards [data-testid="Checkout.PlanCard.Monthly"] { display: none !important; }
 .plan-cards__container { display: flex !important; justify-content: center; }
 .plan-cards [data-testid="Checkout.PlanCard.Annual"] { flex: 0 1 320px; }
-
-/* ------------------------------------------------------------
-   CHECKOUT LOGO (planos): mesma mecânica do .header__logo — o SVG
-   servido tem fill branco fixo e desaparece em tema claro, por isso
-   esconde-se e pinta-se a máscara com a cor do tema.
-   Só o checkout de PLANOS: o de produtos corre noutra app, sem este CSS.
-   ------------------------------------------------------------ */
-.checkout__logo { position: relative; width: 120px; margin: 0 auto; }
-.checkout__logo img { opacity: 0; }
-.checkout__logo::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-color: var(--color-on-background);
-  -webkit-mask: var(--hb-logo-mask);
-  mask: var(--hb-logo-mask);
-  pointer-events: none;
-}
 
 /* ------------------------------------------------------------
    PRECOS ANUALIZADOS: o .plan__price e' flex e cada <span> vira um
