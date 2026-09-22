@@ -46,9 +46,10 @@ h6 { font-weight: 200; }
      <body> — fora do header, nao herdava dali. */
   --header-blur-amount: 24px;
   --header-blur-opacity: 0.03;   
-  /* Máscara do logo: usada pelo .header__logo e pelo .checkout__logo.
-     No :root porque serve as duas superfícies. Atenção: o URL tem o
-     hash do ficheiro — muda a cada upload novo do logo. */
+    /* Máscara do logo: usada pelo .header__logo, .checkout__logo e
+     .password__logo. No :root porque serve as três superfícies.
+     Atenção: o URL tem o hash do ficheiro — muda a cada upload
+     novo do logo. */
   --hb-logo-mask: url('https://imgproxy.fourthwall.dev/QdavVw4tyIWNN3Errw93X_Y6ZCva-X9_RruCTwAA90Y/w:320/sm:1/enc/bYy-aLNmwGInKb95/9xiAzPYDFF-dLQpg/1B0v91UyJR21S40C/d5fk9ozza1UXlUmr/X1rqf482uWJTS05E/ZSqU4x42F8PDim8N/2_6u5mXDUdWonxGy/8lFBRk0wJCcf6Qzm/ZJXgGxEMO-ktRf7P/pLK997XkKdaOQUJS/y9POoRsrzNzwBOjx/CpE6k3HW61TZfrrB/0725Yk1EMIDbzCNT/ufbQG90OnBGttpXI/lDY-joAdOvv9TmQB/Onyo_P1O3z-gdJfd.svg') no-repeat center / contain; 
 }
 
@@ -180,15 +181,17 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
    SEMPRE no mesmo ficheiro. Separados, um cenário de falha parcial
    deixava o logo invisível; juntos, se este CSS não carregar, a
    img original reaparece — falha segura.
-   O ::after é inset:0, logo NÃO TEM CAIXA PRÓPRIA: herda a do <a>,
-   que por sua vez depende da <img> — e essa está a opacity:0. No
-   portal o .header__logo é item flex e colapsa a 0 de largura, pelo
-   que a máscara fica sem onde pintar e o logo desaparece (só no
-   portal; na loja a <img> dá largura). Daí a largura explícita
-   abaixo: sem ela o logo some-se e nada no CSS o denuncia.
+   O ::after é inset:0, logo NÃO TEM CAIXA PRÓPRIA: herda a do
+   contentor, que por sua vez depende da <img> — e essa está a
+   opacity:0. No portal o .header__logo é item flex e colapsa a 0 de
+   largura, pelo que a máscara fica sem onde pintar e o logo
+   desaparece (só no portal; na loja a <img> dá largura). Daí a
+   largura explícita abaixo: sem ela o logo some-se e nada no CSS o
+   denuncia.
    O URL da máscara está no :root (BRAND TOKENS) como --hb-logo-mask,
-   partilhado com o .checkout__logo. Tem o hash do ficheiro: muda a
-   cada upload novo do logo, e há um só sítio para o actualizar.
+   partilhado com o .checkout__logo e o .password__logo. Tem o hash
+   do ficheiro: muda a cada upload novo do logo, e há um só sítio
+   para o actualizar.
    ------------------------------------------------------------ */
 @media (max-width: 639px) {
   .header__list.list.list--horizontal {
