@@ -630,15 +630,15 @@ input, textarea, [contenteditable] { caret-color: var(--color-primary); }
 
 /* ------------------------------------------------------------
    SHAKE: abanão leve, para imagens e ícones.
-   - Desktop: no hover.
-   - Mobile (sem hover): quando o elemento entra no ecrã. Usa o
-     .is-visible do SCROLL REVEAL, no próprio elemento ou num
-     ancestral; o atraso deixa acabar o fade-up (0.6s) antes.
-     Onde o scroll reveal não marca nada, em mobile não abana.
+   - Com rato: no hover.
+   - Sem rato (mobile/tablet): sempre que o elemento chega à faixa
+     central do ecrã. A classe .hb-in-view vem do observer do REDACTED
+     (header), que a põe e tira — o abanão repete a cada passagem.
    Uso:
    - Custom HTML: class="hb-shake" no próprio elemento (a <img>).
-   - Blocos da FW (sem acesso ao markup): chama no painel do bloco,
-     com as classes do contentor e da imagem desse bloco.
+     O JS já vigia .hb-shake, não precisa de mais nada.
+   - Blocos da FW (sem acesso ao markup): o JS vigia também
+     .image-with-text__image; a chamada fica no painel do bloco.
      O @keyframes tem de viver aqui: o painel aninha tudo dentro do
      #fw-section-…, e um @keyframes aninhado é descartado.
    Intensidade: --hb-shake no elemento (default 4deg).
@@ -658,7 +658,6 @@ input, textarea, [contenteditable] { caret-color: var(--color-primary); }
     .hb-shake:hover { animation: hb-shake 0.6s ease-in-out; }
   }
   @media (hover: none) {
-    .is-visible .hb-shake,
-    .hb-shake.is-visible { animation: hb-shake 0.6s ease-in-out 0.6s; }
+    .hb-shake.hb-in-view { animation: hb-shake 0.6s ease-in-out; }
   }
 }
