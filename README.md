@@ -287,6 +287,27 @@ cada bloco que decide se a classe faz alguma coisa. É o que faz o abanão
 repetir em mobile a cada passagem — o `.is-visible` do scroll reveal é
 posto uma vez e o elemento deixa de ser observado, por isso não serve.
 
+### O widget de avaliações (EchoBrain) tem CSS próprio, fora do site
+
+O widget corre isolado e usa classes genéricas (`.header`, `.grid`,
+`.button`) que não tocam no resto do site — e, pela mesma razão, nem o
+`hb-styles.css` nem os painéis da Fourthwall lhe chegam. O CSS dele só
+tem efeito no campo de CSS personalizado **do painel do EchoBrain**.
+
+O `echobrain.css` neste repo é uma **cópia de segurança, não ligada ao
+site**: existe para não depender só da configuração deles (perda de
+config, mudança de conta) e para o histórico ficar no git. Ao mudar:
+primeiro no painel do EchoBrain, confirmar ao vivo, depois atualizar a
+cópia no mesmo dia.
+
+Regras atuais:
+
+- **Abas sem overflow horizontal** (`.tools`, `.tools__option`): quebram
+  linha em vez de empurrar a largura.
+- **Tablet (640–1023): resumo e lista numa só coluna.** O widget divide
+  25% / 75% a partir dos 640px, e o "0.0" é posicionado a 155px fixos,
+  ao lado das estrelas. Com ~150px de coluna num tablet, ficava por cima
+  do título. As 2 colunas só a partir dos 1024px, como o resto do site.
 ---
 
 ## Convenções
