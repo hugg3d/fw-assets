@@ -221,6 +221,34 @@ O seed também não pode ser cego: forçar `lang="pt"` sempre — como fazia o
 inline do footer — provocava um flash de PT antes de o gtranslate repor o EN
 escolhido pelo utilizador. A versão actual respeita o `__GT_TRANSLATE_LANGS`.
 
+### O painel de CSS de cada bloco aninha tudo no id da secção
+
+O "Add custom CSS code" de um bloco não é global: a Fourthwall serve-o em
+`custom sections.css` embrulhado em CSS nesting,
+`#fw-section-<id> { & .image-with-text { … } }`. Duas consequências:
+
+- **Chega à própria `<section>`**, porque o id é do wrapper exterior:
+  `.image-with-text` no painel apanha a secção, não só o que está dentro.
+- **`@keyframes` no painel é descartado sem erro.** Um `@keyframes` aninhado
+  é inválido, e o browser ignora-o: a regra que chama a animação aplica-se,
+  mas a animação não existe. Os keyframes vivem no `hb-styles.css` (ver
+  SHAKE) e o painel só os chama.
+
+### Um fundo opaco tapa a grelha e o backlight
+
+A grelha (`body::before`, z-index -999) e a `.backlight` (-111) estão atrás
+de tudo. Uma secção com fundo próprio tapa-as. A solução usada nos blocos:
+fundo da secção a `none` e a cor num `::before` com z-index -1000, abaixo
+dos dois efeitos. Três condições:
+
+- **"Customize colors" desligado** — pinta o fundo no wrapper, que o painel
+  não alcança, e volta a tapar tudo. As cores vão no CSS do painel.
+- **Nenhum ancestral pode criar stacking context** (z-index, transform,
+  filter). Se criar, o `::before` fica preso dentro dele, por cima da grelha,
+  e o resultado parece o de antes, sem erro nenhum.
+- **Os efeitos seguem o tema, não o bloco.** No tema claro as linhas e o
+  brilho são escuros: sobre um fundo escuro ou azul quase não se veem.
+
 ---
 
 ## Convenções
@@ -242,3 +270,6 @@ escolhido pelo utilizador. A versão actual respeita o `__GT_TRANSLATE_LANGS`.
   por coerência de marca.
 - **Glossário e registo de voz** estão no topo do `pt-fill.js`. Consultar antes
   de acrescentar chaves.
+- **Blocos simples personalizam-se no painel do próprio bloco.** O
+  `hb-styles.css` fica para o que é reutilizável (tokens, utilitários como
+  `.hb-shake`, `@keyframes`) ou para o que o painel não alcança.
