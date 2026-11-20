@@ -249,6 +249,44 @@ dos dois efeitos. Três condições:
 - **Os efeitos seguem o tema, não o bloco.** No tema claro as linhas e o
   brilho são escuros: sobre um fundo escuro ou azul quase não se veem.
 
+### Os breakpoints são os da Fourthwall: 640 e 1024
+
+A Fourthwall muda de layout em dois pontos, e o CSS nosso tem de usar os
+mesmos — nunca 768:
+
+- **640px (`@sm`)**: header, menus, barras e o cartão sticky do carrinho
+  passam a desktop (classes `hidden@sm` / `visible@sm`).
+- **1024px (`@md`)**: as grelhas passam a 2 colunas
+  (`col-grid--2-cols@md`, `col-grid--reversed@md`).
+
+Entre os dois há uma zona híbrida — header de desktop, conteúdo numa só
+coluna — onde aparecem quase todos os problemas de tablet. Cada regra
+segue o breakpoint do componente que afina: `max-width: 639px` /
+`min-width: 640px` para header e barras, `max-width: 1023px` /
+`min-width: 1024px` para blocos de conteúdo.
+
+### O painel de CSS passa por Sass
+
+O CSS do "Add custom CSS code" é compilado com Sass antes de ser servido.
+O que isso muda:
+
+- **`min()` / `max()` com `var()` dão erro de compilação** ("is not a number
+  for `min`"): o Sass tenta calcular o `min()` sozinho. Alternativa
+  equivalente: `width: 100%` + `max-width: var(--x)`.
+- **Funcionam sem problema:** `clamp()` com valores fixos (incluindo
+  `calc()` com `vw` e `px` misturados), `overflow: clip`, `@container`,
+  `@media` aninhados.
+- **`@keyframes` não** — ver a secção acima: é descartado por ficar aninhado.
+
+### O observer do redacted também marca imagens
+
+O mesmo `IntersectionObserver` dos redacted (header) vigia `.hb-shake` e
+`.image-with-text__image`, e põe/tira `.hb-in-view` quando entram/saem da
+faixa central do ecrã (`rootMargin -25%`). O JS só sinaliza; é o CSS de
+cada bloco que decide se a classe faz alguma coisa. É o que faz o abanão
+repetir em mobile a cada passagem — o `.is-visible` do scroll reveal é
+posto uma vez e o elemento deixa de ser observado, por isso não serve.
+
 ---
 
 ## Convenções
