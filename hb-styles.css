@@ -629,11 +629,16 @@ input, textarea, [contenteditable] { caret-color: var(--color-primary); }
 @keyframes hb-caret-blink { 50% { opacity: 0; } }
 
 /* ------------------------------------------------------------
-   SHAKE: abanão leve no hover, para imagens e ícones.
+   SHAKE: abanão leve, para imagens e ícones.
+   - Desktop: no hover.
+   - Mobile (sem hover): quando o elemento entra no ecrã. Usa o
+     .is-visible do SCROLL REVEAL, no próprio elemento ou num
+     ancestral; o atraso deixa acabar o fade-up (0.6s) antes.
+     Onde o scroll reveal não marca nada, em mobile não abana.
    Uso:
    - Custom HTML: class="hb-shake" no próprio elemento (a <img>).
    - Blocos da FW (sem acesso ao markup): chama no painel do bloco,
-       .contentor:hover img { animation: hb-shake 0.6s ease-in-out; }
+     com as classes do contentor e da imagem desse bloco.
      O @keyframes tem de viver aqui: o painel aninha tudo dentro do
      #fw-section-…, e um @keyframes aninhado é descartado.
    Intensidade: --hb-shake no elemento (default 4deg).
@@ -648,6 +653,12 @@ input, textarea, [contenteditable] { caret-color: var(--color-primary); }
   80% { transform: rotate(calc(var(--hb-shake, 4deg) * 0.25)); }
 }
 .hb-shake { transform-origin: 50% 60%; }
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .hb-shake:hover { animation: hb-shake 0.6s ease-in-out; }
+@media (prefers-reduced-motion: no-preference) {
+  @media (hover: hover) {
+    .hb-shake:hover { animation: hb-shake 0.6s ease-in-out; }
+  }
+  @media (hover: none) {
+    .is-visible .hb-shake,
+    .hb-shake.is-visible { animation: hb-shake 0.6s ease-in-out 0.6s; }
+  }
 }
