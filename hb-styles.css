@@ -194,9 +194,12 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
    para o actualizar.
    ------------------------------------------------------------ */
 @media (max-width: 639px) {
+  /* Ícones da direita (pesquisa, carrinho, tema) numa linha. Quando o
+     espaço aperta, encolhe primeiro o espaço ENTRE eles — 12px aos
+     400px de largura, 2px aos 320px — e só depois os próprios ícones. */
   .header__list.list.list--horizontal {
     flex-wrap: nowrap !important;
-    gap: 12px !important;
+    gap: clamp(2px, calc((100vw - 304px) / 8), 12px) !important;
   }
   .header__list.list.list--horizontal .list__item {
     padding: 0 2px !important;
