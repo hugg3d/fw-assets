@@ -662,6 +662,8 @@ input, textarea, [contenteditable] { caret-color: var(--color-primary); }
   }
   @media (hover: none) {
     .hb-shake.hb-in-view { animation: hb-shake 0.6s ease-in-out; }
+  }
+}
 
 /* ------------------------------------------------------------
    CARTÕES: forma do template — aba dobrada em baixo à direita +
@@ -778,8 +780,6 @@ input, textarea, [contenteditable] { caret-color: var(--color-primary); }
   .hb-card__dots { gap: 5px; }
   .hb-card__dot { width: 9px; height: 9px; }
   .hb-card__asterisk { font-size: 44px; }
-}
-  }
 }
 
 /* ------------------------------------------------------------
