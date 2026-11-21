@@ -249,6 +249,51 @@ dos dois efeitos. Três condições:
 - **Os efeitos seguem o tema, não o bloco.** No tema claro as linhas e o
   brilho são escuros: sobre um fundo escuro ou azul quase não se veem.
 
+### Bandas de contraste: `.hb-invert` troca o tema dentro da secção
+
+Há dois tipos de faixa de cor na homepage:
+
+- **Azul fixo** (cérebro, testemunho): fica azul nos dois temas. A paleta
+  é fixada no painel do próprio bloco, com tokens `--color-*` locais.
+- **Contraste invertido** (banda dos cartões, Clientes_): fica sempre com
+  o tema contrário ao da página — escura no claro, creme no escuro — para
+  continuar a ser uma faixa nos dois. É um Custom HTML com
+  `class="hb-invert"` no wrapper; a regra (BANDA INVERTIDA, no
+  `hb-styles.css`) encontra a secção com `:has()`.
+
+A `.hb-invert` não pinta só o fundo: redefine `--color-background`,
+`--color-on-background`, as variantes `-rgb`, `--color-primary` e
+`--color-on-primary` dentro da secção. Texto, botões, caret, `.redacted`
+e bordas dos cartões passam à paleta contrária sem regras próprias. A
+grelha do body tem a cor do tema e some-se na banda, por isso a banda
+desenha a sua, na cor contrária e alinhada com a do body (fixed, 20px).
+
+**Os valores do tema contrário estão escritos à mão na regra.** Se a
+paleta do tema na Fourthwall mudar, atualizar também a BANDA INVERTIDA.
+
+### O `clip-path` corta bordas e sombras
+
+Os cartões (`.hb-card`) e a imagem do hero (`.hb-shape`) têm a forma do
+template — aba dobrada em baixo à direita, canto cortado em baixo à
+esquerda — feita com `clip-path`. O recorte apanha tudo o que o elemento
+pinta, incluindo `border` e `box-shadow`. Por isso:
+
+- **Borda:** o cartão é pintado na cor da borda (`--hb-card-edge`, por
+  omissão a cor do texto do tema a 20%) e um `::before` 1px para dentro,
+  com `clip-path: inherit`, leva a cor do cartão (`--hb-card-bg`).
+- **Sombra ou espessura:** vai num invólucro sem recorte, com
+  `filter: drop-shadow()`, que segue a forma do filho. Os cartões de
+  Recursos usam 6 drop-shadows de 2px em cadeia para 12px de espessura.
+
+### O `<style>` de um Custom HTML é global
+
+Ao contrário do painel de CSS, um `<style>` dentro de um bloco Custom
+HTML aplica-se à página inteira. Cada bloco usa um prefixo próprio
+(`.hb-band`, `.hb-steps`, `.hb-clients`, `.hb-res`) e nada genérico.
+Para chegar à `<section>` da Fourthwall sem saber o id, usa-se
+`section.custom-html:has(.prefixo)`. O hero é uma secção Liquid e faz o
+mesmo com `.hero-{{ section.id }}`.
+
 ### Os breakpoints são os da Fourthwall: 640 e 1024
 
 A Fourthwall muda de layout em dois pontos, e o CSS nosso tem de usar os
@@ -258,6 +303,10 @@ mesmos — nunca 768:
   passam a desktop (classes `hidden@sm` / `visible@sm`).
 - **1024px (`@md`)**: as grelhas passam a 2 colunas
   (`col-grid--2-cols@md`, `col-grid--reversed@md`).
+- **Exceção deliberada: o widget de língua.** Fica centrado até aos 1023px,
+como o footer, que só passa a desktop aos 1024. Até aí também se esconde
+enquanto o cartão do carrinho está visível: a partir dos 640px esse cartão
+já está ancorado à direita, com até 480px, e passava por cima do widget.
 
 Entre os dois há uma zona híbrida — header de desktop, conteúdo numa só
 coluna — onde aparecem quase todos os problemas de tablet. Cada regra
@@ -308,7 +357,24 @@ Regras atuais:
   25% / 75% a partir dos 640px, e o "0.0" é posicionado a 155px fixos,
   ao lado das estrelas. Com ~150px de coluna num tablet, ficava por cima
   do título. As 2 colunas só a partir dos 1024px, como o resto do site.
+  
 ---
+
+## Blocos custom da homepage
+
+O código destes blocos vive na Fourthwall, não neste repo. O que é
+partilhado entre eles está no `hb-styles.css`.
+
+| Bloco | Tipo | Usa do hb-styles |
+|---|---|---|
+| Hero ("Segurança digital…") | Secção Liquid | `.hb-card`, `.hb-shape`, `.hb-caret` |
+| "Arruma a tua vida digital" + 01–03 | Custom HTML `.hb-steps` | — |
+| Banda dos cartões | Custom HTML `.hb-band` | `.hb-invert`, `.hb-card` |
+| Testemunho | Bloco da FW + painel | — |
+| Clientes_ | Custom HTML `.hb-clients` | `.hb-invert`, `.hb-caret` |
+| // Recursos | Custom HTML `.hb-res` | `.hb-card` |
+| Cérebro | image-with-text + painel | `hb-shake` |
+| Innovate with us | image-with-text + painel | — |
 
 ## Convenções
 
@@ -332,7 +398,7 @@ Regras atuais:
 - **Blocos simples personalizam-se no painel do próprio bloco.** O
   `hb-styles.css` fica para o que é reutilizável (tokens, utilitários como
   `.hb-shake`, `@keyframes`) ou para o que o painel não alcança.
-  - **Cartões (`.hb-card`, `.hb-shape`) vivem no hb-styles**, porque são
-  usados no hero e na banda de contraste. Os blocos só tratam da
-  disposição (largura, tamanho de letra, posição). Numa secção com
-  fundo próprio, a cor da borda redefine-se com `--hb-card-edge`.
+- **O que dois blocos partilham passa para o `hb-styles.css`.** Foi assim
+  com os cartões (`.hb-card`, `.hb-shape`) e com a banda invertida
+  (`.hb-invert`): os blocos ficam só com a disposição (largura, tamanho de
+  letra, posição).
