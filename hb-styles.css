@@ -266,7 +266,7 @@ body.hb-redacted-static :is(.html-formatter, .rich-text) .redacted a {
 .button, .tab { border-radius: 6px !important; }
 .plan-cards__card-badge.visible\@sm { display: inline-flex !important; }
 
-.plus-tax-label { font-size: 0.75em; opacity: 0.6; }
+.plus-tax-label, .price-tax { font-size: 0.75em; opacity: 0.6; }
 
 /* ------------------------------------------------------------
    BADGES: cor primária + heading font + radius 4px.
