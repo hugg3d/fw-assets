@@ -508,7 +508,7 @@ body:has(.sticky-bar) .gtranslate_wrapper {
   background-color: rgba(var(--color-on-background-rgb), 0.01) !important;
 }
 
-@media (max-width: 639px) {
+@media (max-width: 1023px) {
   .gtranslate_wrapper {
     right: 0;
     left: 0;
