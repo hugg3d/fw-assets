@@ -781,3 +781,52 @@ input, textarea, [contenteditable] { caret-color: var(--color-primary); }
 }
   }
 }
+
+/* ------------------------------------------------------------
+   BANDA INVERTIDA (.hb-invert): a secção fica com o tema contrário
+   ao da página — escura no tema claro, creme no tema escuro — para
+   ser sempre uma faixa de contraste. Usada na banda dos cartões e
+   em Clientes_.
+   - Troca os tokens do tema só dentro da secção: texto, botões,
+     caret, .redacted e bordas dos cartões passam a usar a paleta
+     contrária sem regras próprias.
+   - Fundo: a secção fica sem fundo e a cor vai para um ::before a
+     z-index -1000, abaixo da grelha do body (-999) e da .backlight
+     (-111). A grelha do body tem a cor do tema e some-se aqui; por
+     isso a banda desenha a sua, na cor contrária (fixed, 20px =
+     alinhada com a do body).
+   - Uso: class="hb-invert" no wrapper de um Custom HTML. O :has()
+     encontra a secção sem precisar do id.
+   ------------------------------------------------------------ */
+section.custom-html:has(.hb-invert) {
+  --color-background: var(--redacted-black);
+  --color-background-rgb: 5, 4, 15;
+  --color-on-background: var(--paper-white);
+  --color-on-background-rgb: 253, 251, 241;
+  --color-primary: var(--highlighter-pen);
+  --color-on-primary: var(--redacted-black);
+  position: relative;
+  background: none !important;
+  color: var(--color-on-background);
+}
+:root[data-scheme="dark"] section.custom-html:has(.hb-invert) {
+  --color-background: var(--paper-white);
+  --color-background-rgb: 253, 251, 241;
+  --color-on-background: var(--redacted-black);
+  --color-on-background-rgb: 5, 4, 15;
+  --color-primary: var(--digital-blue);
+  --color-on-primary: var(--paper-white);
+}
+section.custom-html:has(.hb-invert)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1000;
+  pointer-events: none;
+  background-color: var(--color-background);
+  background-image:
+    linear-gradient(to right, rgba(var(--color-on-background-rgb), 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(var(--color-on-background-rgb), 0.06) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-attachment: fixed;
+}
