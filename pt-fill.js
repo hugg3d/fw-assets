@@ -814,6 +814,13 @@
   const WD_DATE_RE = /\b(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday),\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+(\d{1,2})(?:st|nd|rd|th)\b/g;
   const ORD_DATE_RE = /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+(\d{1,2})(?:st|nd|rd|th)\b/g;
 
+  // Emblema de subscricao continua: "1-month member", "2-month member"…
+  // O numero muda, dai regex e nao chave fixa ("New member" e
+  // "Verified" sao chaves normais do TRANSLATIONS).
+  function monthMember(m, n) {
+    return 'Membro há ' + n + (n === '1' ? ' mês' : ' meses');
+  }
+
   const REGEX_RULES = [
     { re: ONLY_FOR_RE, pt: onlyForTier },
     { re: CHANGE_TITLE_RE, pt: 'Tens a certeza que queres mudar de $1 para $2?' },
@@ -843,6 +850,7 @@
     { re: UNUSED_RE, pt: function (m, tier, d) {
         return 'Tempo não utilizado em ' + tier + ' (' + d + (d === '1' ? ' dia)' : ' dias)');
       } },
+    { re: /\b(\d+)-month member\b/g, pt: monthMember },
     // Contagem de membros nos cartoes de plano ("4 members", "1 member").
     // DEPOIS do ONLY_FOR_RE, que ja consumiu a frase da restricao.
     { re: /\b(\d+)\s+members?\b/g, pt: function (m, n) { return n + (n === '1' ? ' membro' : ' membros'); } },
@@ -913,25 +921,14 @@
     return { re: new RegExp('\\b' + keySource(en) + '\\b', 'g'), pt: TRANSLATIONS[en] };
   });
 
-  const PRICE_SELECTORS =
-    '.tile__price--original,.product-info__price--original,.featured-product-info__price--original,.cart-totals__amount--subtotal,.cart-item__price-value,.inline-image__price,.product-drawer__subtotal-value';
-
-  function injectTax(root) {
-    if (!root) return;
-    if (root.nodeType === Node.TEXT_NODE) root = root.parentElement;
-    if (!root || root.nodeType !== Node.ELEMENT_NODE) return;
-    const els = new Set();
-    const hit = root.closest && root.closest(PRICE_SELECTORS);
-    if (hit) els.add(hit);
-    if (root.querySelectorAll) root.querySelectorAll(PRICE_SELECTORS).forEach(el => els.add(el));
-    els.forEach(el => {
-      if (el.querySelector('.plus-tax-label')) return;
-      const span = document.createElement('span');
-      span.className = 'plus-tax-label';
-      span.textContent = ' (plus tax)';
-      el.appendChild(span);
-    });
-  }
+  // "(plus tax)" nos precos: ja nao e' injetado aqui. Desde novembro
+  // de 2026 a FW mostra a sua propria etiqueta (span.price-tax,
+  // data-product="tax-note") nos cartoes, na pagina de produto e no
+  // carrinho, e sabe quais nao levam imposto: o cartao-presente nao a
+  // tem na pagina do produto, porque o imposto so e' cobrado quando e'
+  // usado. A chave "plus tax" -> "+IVA" continua no TRANSLATIONS para
+  // traduzir a da FW. O .plus-tax-label do hb-styles continua a ser
+  // usado pelo bloco PLANOS P.M. do header.
 
   function localizeDates(root){
     if(!isPTActive()||!root) return;
@@ -1048,7 +1045,6 @@
   }
 
   function processNode(node) {
-    injectTax(node);
     localizeDates(node);
     localizeAttrs(node);
     localizeBySelector(node);
