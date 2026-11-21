@@ -357,7 +357,37 @@ Regras atuais:
   25% / 75% a partir dos 640px, e o "0.0" é posicionado a 155px fixos,
   ao lado das estrelas. Com ~150px de coluna num tablet, ficava por cima
   do título. As 2 colunas só a partir dos 1024px, como o resto do site.
-  
+
+### O "(plus tax)" é da Fourthwall, não nosso
+
+O `pt-fill` injetava um "(plus tax)" nos preços. Desde novembro de 2026 a
+Fourthwall mostra o seu (`span.price-tax`, `data-product="tax-note"`) nos
+cartões, na página de produto e no carrinho, e o nosso aparecia em
+duplicado. O injetor foi removido: a FW sabe que produtos pagam imposto
+— o cartão-presente não paga na compra (vale multiuso: o IVA é cobrado
+quando é usado) e a página dele não tem etiqueta.
+
+- **Tradução:** a chave `"plus tax": "+IVA"` continua no `pt-fill`, para
+  traduzir a etiqueta da FW.
+- **Aspeto:** `.plus-tax-label, .price-tax` no hb-styles (letra mais
+  pequena e esbatida). O `.plus-tax-label` continua a ser usado pelo
+  bloco PLANOS P.M. do header, que reescreve o preço dos planos.
+- **Patch temporário no header:** a FW põe a etiqueta no cartão-presente
+  na listagem e no carrinho (erro deles, reportado). Até corrigirem, um
+  `<style>` logo a seguir ao link do hb-styles esconde-a pelo slug do
+  produto. Slugs cobertos: o prefixo `cartao-presente` (todos os
+  cartões-presente novos começam assim) e o antigo `new-gift-card-offer`.
+  Novos valores entram no mesmo produto, não precisam de slug novo.
+  Apagar o bloco quando a FW corrigir.
+
+### Emblemas com número: "N-month member"
+
+O emblema de subscrição contínua muda de nome todos os meses ("1-month
+member", "2-month member"…), por isso é uma regra em `REGEX_RULES` e não
+uma chave fixa: "Membro há 1 mês", "Membro há N meses", para qualquer
+número. Se a FW passar a usar anos ("1-year member"), junta-se uma regra
+igual.
+
 ---
 
 ## Blocos custom da homepage
