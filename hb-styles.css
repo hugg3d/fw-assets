@@ -662,5 +662,122 @@ input, textarea, [contenteditable] { caret-color: var(--color-primary); }
   }
   @media (hover: none) {
     .hb-shake.hb-in-view { animation: hb-shake 0.6s ease-in-out; }
+
+/* ------------------------------------------------------------
+   CARTÕES: forma do template — aba dobrada em baixo à direita +
+   canto cortado em baixo à esquerda (aba de 37px que começa a 36%
+   da altura, a 45°; canto de 38px). Usados no hero e na banda de
+   contraste; a forma vive aqui para mudar num só sítio.
+   - .hb-shape: só a forma (para imagens).
+   - .hb-card: forma + borda fina + tipografia. O clip-path corta
+     bordas normais, por isso o cartão é pintado na cor da borda e
+     um ::before 1px para dentro, com a mesma forma, leva a cor do
+     cartão (--hb-card-bg).
+   - --hb-card-edge: cor da borda. Por omissão, a cor do texto do
+     tema a 20% (contrasta com o fundo da página). Uma secção com
+     fundo próprio redefine-a nela (ex.: a banda invertida).
+   - Variantes, cores fixas nos dois temas: --note (papel creme),
+     --blue (azul), --dark (preto, com bolinhas e asterisco).
+   - Largura, tamanho de letra e posição ficam em cada bloco.
+   ------------------------------------------------------------ */
+.hb-shape,
+.hb-card {
+  --fold: 37px;
+  --fold-at: 36%;
+  --notch: 38px;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--fold)) 0,
+    calc(100% - var(--fold)) var(--fold-at),
+    100% calc(var(--fold-at) + var(--fold)),
+    100% 100%,
+    var(--notch) 100%,
+    0 calc(100% - var(--notch))
+  );
+}
+.hb-card {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  padding: clamp(20px, 2.6vw, 32px) calc(var(--fold) + clamp(18px, 2.6vw, 40px)) clamp(20px, 2.6vw, 32px) clamp(22px, 3.4vw, 48px);
+  background-color: var(--hb-card-edge, rgba(var(--color-on-background-rgb), 0.2));
+  font-family: var(--font-family-base, "Kumbh Sans", sans-serif);
+  line-height: 1.35;
+}
+.hb-card::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  background-color: var(--hb-card-bg);
+  clip-path: inherit;
+}
+.hb-card p { margin: 0; }
+.hb-card__mono {
+  font-family: var(--font-family-heading, "auger-mono", monospace);
+  font-weight: 700;
+}
+
+/* Papel creme. Tokens locais para o .redacted (highlight com
+   scroll-reveal) dar amarelo com texto preto, seja qual for o tema.
+   "// " pendurado: se a 1.ª linha partir, a continuação e a linha
+   seguinte alinham debaixo do texto, não do "//". */
+.hb-card--note {
+  --hb-card-bg: var(--paper-white);
+  --color-primary: var(--highlighter-pen);
+  --color-background: var(--redacted-black);   /* texto revelado */
+  --color-on-background: var(--redacted-black);
+  color: var(--redacted-black);
+}
+.hb-card--note p { padding-left: 1.6em; }
+.hb-card--note p:first-child { text-indent: -1.6em; }
+.hb-card--note .hb-card__mono { color: var(--digital-blue); }
+
+/* Azul: texto centrado (só na parte sem aba). */
+.hb-card--blue {
+  --hb-card-bg: var(--digital-blue);
+  color: var(--paper-white);
+  text-align: center;
+}
+.hb-card--blue .hb-card__mono { color: var(--highlighter-pen); }
+
+/* Preto, com bolinhas e asterisco à esquerda do texto. */
+.hb-card--dark {
+  --hb-card-bg: var(--redacted-black);
+  color: var(--paper-white);
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 20px);
+}
+.hb-card--dark .hb-card__mono {
+  color: var(--verified-blue);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.hb-card__dots {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.hb-card__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--paper-white);
+}
+.hb-card__asterisk {
+  font-family: var(--font-family-heading, "auger-mono", monospace);
+  font-weight: 700;
+  font-size: clamp(48px, 7vw, 88px);
+  line-height: 0.8;
+  color: var(--digital-blue);
+  flex-shrink: 0;
+}
+@media (max-width: 639px) {
+  .hb-card__dots { gap: 5px; }
+  .hb-card__dot { width: 9px; height: 9px; }
+  .hb-card__asterisk { font-size: 44px; }
+}
   }
 }
