@@ -332,3 +332,7 @@ Regras atuais:
 - **Blocos simples personalizam-se no painel do próprio bloco.** O
   `hb-styles.css` fica para o que é reutilizável (tokens, utilitários como
   `.hb-shake`, `@keyframes`) ou para o que o painel não alcança.
+  - **Cartões (`.hb-card`, `.hb-shape`) vivem no hb-styles**, porque são
+  usados no hero e na banda de contraste. Os blocos só tratam da
+  disposição (largura, tamanho de letra, posição). Numa secção com
+  fundo próprio, a cor da borda redefine-se com `--hb-card-edge`.
