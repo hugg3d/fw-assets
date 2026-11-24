@@ -1,0 +1,35 @@
+# Limpa a cache do jsDelivr sempre que um dos ficheiros que o site
+# carrega muda no main. Sem isto, o site pode continuar a receber a
+# versão antiga até a cache expirar.
+# - Corre sozinho a cada commit que mexa nestes ficheiros.
+# - Também dá para correr à mão: Actions → Purge jsDelivr → Run workflow.
+# Para acrescentar um ficheiro novo, junta-o nas duas listas (paths e FILES).
+name: Purge jsDelivr
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "hb-styles.css"
+      - "pt-fill.js"
+      - "hb-scheme.js"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Limpar a cache dos ficheiros
+        env:
+          FILES: "hb-styles.css pt-fill.js hb-scheme.js"
+        run: |
+          # Uns segundos para o GitHub ter o commit disponível.
+          sleep 10
+          for f in $FILES; do
+            echo "A limpar $f"
+            curl -fsS "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/$f"
+            echo
+          done
