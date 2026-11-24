@@ -1110,3 +1110,162 @@ section.custom-html:has(.hb-invert)::before {
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+
+/* ------------------------------------------------------------
+   CÍRCULO PIXELIZADO (.hb-pixel): moldura de imagem com contorno em
+   degraus, como as imagens dos templates (capa da apresentação,
+   posts "coming soon" e "sobre mim"). Até haver <img> mostra riscas
+   e o texto do <span>; a <img> cobre tudo. A largura fica em cada
+   bloco. Usado em "A série, em breve" e no cabeçalho das páginas.
+   ------------------------------------------------------------ */
+.hb-pixel {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(var(--color-on-background-rgb), 0.14) 0 12px,
+    rgba(var(--color-on-background-rgb), 0.05) 12px 24px
+  );
+  clip-path: polygon(
+    65% 0%, 65% 5%, 75% 5%, 75% 10%, 85% 10%, 85% 15%, 90% 15%, 90% 25%,
+    95% 25%, 95% 35%, 100% 35%, 100% 65%, 95% 65%, 95% 75%, 90% 75%,
+    90% 85%, 85% 85%, 85% 90%, 75% 90%, 75% 95%, 65% 95%, 65% 100%,
+    35% 100%, 35% 95%, 25% 95%, 25% 90%, 15% 90%, 15% 85%, 10% 85%,
+    10% 75%, 5% 75%, 5% 65%, 0% 65%, 0% 35%, 5% 35%, 5% 25%, 10% 25%,
+    10% 15%, 15% 15%, 15% 10%, 25% 10%, 25% 5%, 35% 5%, 35% 0%
+  );
+}
+.hb-pixel img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hb-pixel > span {
+  font-family: var(--font-family-heading, "auger-mono", monospace);
+  font-size: 13px;
+  color: rgba(var(--color-on-background-rgb), 0.6);
+}
+
+/* ------------------------------------------------------------
+   BANDA AZUL (.hb-blue): faixa azul fixa nos dois temas, como o
+   bloco do cérebro. Usada nas Dicas rápidas e na Hora H.
+   - Uso: class="hb-blue" no wrapper de um Custom HTML. O :has()
+     encontra a secção sem precisar do id.
+   - Tokens trocados só dentro da secção: texto creme, primária
+     amarela; o .redacted revela amarelo com texto preto.
+   - Fundo: a secção fica sem fundo e o azul vai para um ::before a
+     z-index -1000, como na banda invertida, com a grelha creme.
+   ------------------------------------------------------------ */
+section.custom-html:has(.hb-blue) {
+  --color-background: var(--redacted-black);   /* texto revelado do .redacted */
+  --color-on-background: var(--paper-white);
+  --color-on-background-rgb: 253, 251, 241;
+  --color-primary: var(--highlighter-pen);
+  --color-on-primary: var(--redacted-black);
+  position: relative;
+  background: none !important;
+  color: var(--paper-white);
+}
+section.custom-html:has(.hb-blue)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1000;
+  pointer-events: none;
+  background-color: var(--digital-blue);
+  background-image:
+    linear-gradient(to right, rgba(253, 251, 241, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(253, 251, 241, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-attachment: fixed;
+}
+
+/* ------------------------------------------------------------
+   CABEÇALHO DE PÁGINA (.hb-pagehead): capa da apresentação (slide
+   1). Vai com a .hb-invert, no topo de Serviços e Recursos.
+   Círculo pixelizado com asterisco azul e faixa amarela, título
+   grande, subtítulo numa caixa com contorno e uma linha de rodapé
+   com três textos. A partir de 1024: círculo à esquerda, título à
+   direita; abaixo, empilhado, círculo mais pequeno.
+   ------------------------------------------------------------ */
+.hb-pagehead {
+  display: grid;
+  gap: clamp(28px, 4vw, 48px);
+  padding: clamp(48px, 7vw, 96px) 0 clamp(24px, 3vw, 36px);
+}
+.hb-pagehead__main {
+  display: grid;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+.hb-pagehead__art {
+  position: relative;
+  width: clamp(150px, 22vw, 300px);
+}
+.hb-pagehead__art .hb-pixel { width: 100%; }
+.hb-pagehead__star {
+  position: absolute;
+  top: -0.35em;
+  left: -0.3em;
+  z-index: 1;
+  font-family: var(--font-family-heading, "auger-mono", monospace);
+  font-weight: 700;
+  font-size: clamp(56px, 6vw, 88px);
+  line-height: 1;
+  color: var(--digital-blue);
+  pointer-events: none;
+}
+.hb-pagehead__strip {
+  position: absolute;
+  left: -6%;
+  bottom: 4%;
+  z-index: 1;
+  width: 66%;
+  height: 13%;
+  background-color: var(--highlighter-pen);
+  transform: rotate(-9deg);
+  pointer-events: none;
+}
+.hb-pagehead__title {
+  margin: 0 0 clamp(18px, 2.4vw, 28px);
+  font-family: var(--font-family-heading, "auger-mono", monospace);
+  font-weight: 700;
+  font-size: clamp(40px, 7vw, 96px);
+  line-height: 1.05;
+  color: var(--color-on-background);
+}
+.hb-pagehead__box {
+  display: inline-block;
+  margin: 0;
+  padding: clamp(10px, 1.4vw, 16px) clamp(16px, 2vw, 24px);
+  border: 2px solid var(--color-on-background);
+  font-family: var(--font-family-heading, "auger-mono", monospace);
+  font-weight: 700;
+  font-size: clamp(15px, 1.4vw, 19px);
+  line-height: 1.3;
+  color: var(--color-on-background);
+}
+.hb-pagehead__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 24px;
+  margin: 0;
+  font-family: var(--font-family-base, "Kumbh Sans", sans-serif);
+  font-size: 13px;
+  color: rgba(var(--color-on-background-rgb), 0.8);
+}
+@media (max-width: 639px) {
+  .hb-pagehead__foot > :nth-child(2) { display: none; }   /* sem espaço para o do meio */
+}
+@media (min-width: 1024px) {
+  .hb-pagehead__main {
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: clamp(48px, 7vw, 120px);
+  }
+}
