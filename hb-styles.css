@@ -43,9 +43,11 @@ h6 { font-weight: 200; }
   --paper-border: #d0c9b8;
   /* Blur partilhado: header (FW) + switcher do gtranslate. Vivem no
      :root e nao no .header porque o wrapper do widget e' montado no
-     <body> — fora do header, nao herdava dali. */
+     <body> — fora do header, nao herdava dali.
+     0.4 = o mesmo valor que o FW poe no .header. Se mudares a
+     opacidade do header no tema, muda aqui tambem. */
   --header-blur-amount: 24px;
-  --header-blur-opacity: 0.03;   
+  --header-blur-opacity: 0.4;
     /* Máscara do logo: usada pelo .header__logo, .checkout__logo e
      .password__logo. No :root porque serve as três superfícies.
      Atenção: o URL tem o hash do ficheiro — muda a cada upload
@@ -100,17 +102,18 @@ html {
 ::-webkit-scrollbar-corner { background: var(--color-background); }
 
 /* ------------------------------------------------------------
-   HEADER: blur subtil + hover. Os valores do blur estao no :root
+   HEADER: blur subtil + contorno no hover. Os valores do blur estao no :root
    (BRAND TOKENS) porque sao partilhados com o switcher de lingua.
    O hover fica ancorado no #fw-section-header, que so existe na
    loja: no portal o header fica solido, de proposito.
    ------------------------------------------------------------ */
 .header {
   border-color: transparent !important;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: border-color 0.2s ease;
 }
+/* Hover: só aparece o contorno. O fundo não muda (antes ficava mais
+   transparente e o texto perdia-se por cima das bandas invertidas). */
 #fw-section-header .header:hover {
-  background-color: rgba(var(--color-on-background-rgb), 0.05) !important;
   border-color: rgba(var(--color-on-background-rgb), 0.15) !important;
 }
 
@@ -491,17 +494,18 @@ body:has(.sticky-bar) .gtranslate_wrapper {
   z-index: 1;
   font-family: inherit !important;
   font-size: inherit !important;
-  background-color: rgba(var(--color-background-rgb), var(--header-blur-opacity, 0.03)) !important;
-  border: 1px solid rgba(var(--color-on-background-rgb), var(--header-blur-opacity, 0.03)) !important;
+  background-color: rgba(var(--color-background-rgb), var(--header-blur-opacity, 0.4)) !important;
+  /* Contorno transparente em repouso, como o header. */
+  border: 1px solid transparent !important;
   border-radius: 4px;
   padding: 4px 8px;
   backdrop-filter: blur(var(--header-blur-amount, 24px));
   -webkit-backdrop-filter: blur(var(--header-blur-amount, 24px));
   filter: saturate(1.2);
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: border-color 0.2s ease;
 }
+/* Hover igual ao do header: só aparece o contorno, o fundo não muda. */
 .gtranslate_wrapper .gt_switcher:hover {
-  background-color: rgba(var(--color-on-background-rgb), 0.08) !important;
   border-color: rgba(var(--color-on-background-rgb), 0.15) !important;
 }
 /* Força cor do texto em tudo (sobrepõe inline color do gtranslate).
