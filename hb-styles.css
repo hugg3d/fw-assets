@@ -962,3 +962,151 @@ section.custom-html:has(.hb-invert)::before {
   font-size: 14px;
   color: rgba(var(--color-on-background-rgb), 0.55);
 }
+
+/* ------------------------------------------------------------
+   SEPARADOR (.hb-folder): cartão com aba, como uma divisória de
+   dossier (slide 3 do template de apresentação e post "testemunhos").
+   Numa das bordas, a partir de um ponto, o cartão recua em diagonal
+   e a aba fica nesse recorte, colada à borda.
+   - .hb-folder: aba no lado direito, a descer até ao fundo (Sobre).
+   - .hb-folder--top: aba em cima, a ir até ao canto direito
+     (Testemunhos).
+   - .hb-folder__tab: o texto da aba. No lado direito fica na
+     vertical; em cima, na horizontal.
+   - Cores: no tema claro, cartão branco com borda e aba pretas (como
+     no template); no escuro inverte (cartão escuro, borda e aba
+     creme), para a borda e a aba não desaparecerem no fundo.
+     --folder-fill muda a cor do cartão (ex.: igual ao fundo da página).
+   - Forma: o clip-path corta bordas normais, por isso o cartão é
+     pintado na cor da borda (a aba faz parte dessa camada) e um
+     ::before, recolhido pela espessura da borda e com o recorte mais
+     fundo, leva a cor do cartão.
+   - Variáveis: --folder-b borda, --folder-tab grossura da aba,
+     --folder-gap recuo da aba em relação à borda, --folder-at onde
+     começa a diagonal, --folder-r raio dos cantos, --folder-s
+     inclinação (px ao longo da borda por cada px para dentro).
+   - O padding fica em cada bloco: tem de deixar espaço para a aba
+     (--folder-gap + --folder-tab).
+   ------------------------------------------------------------ */
+.hb-folder {
+  --folder-b: 3px;
+  --folder-tab: 32px;
+  --folder-gap: 12px;
+  --folder-at: 38%;
+  --folder-r: 6px;
+  --folder-s: 0.6;
+  --folder-run: calc(var(--folder-gap) + var(--folder-tab) - var(--folder-b));
+  --folder-edge: var(--color-on-background);
+  --folder-fill: #ffffff;
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  border-radius: var(--folder-r);
+  background-color: var(--folder-edge);
+  color: var(--color-on-background);
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% var(--folder-at),
+    calc(100% - var(--folder-gap)) calc(var(--folder-at) + var(--folder-gap) * var(--folder-s)),
+    /* canto de baixo da aba, arredondado */
+    calc(100% - var(--folder-gap)) calc(100% - var(--folder-r)),
+    calc(100% - var(--folder-gap) - var(--folder-r) * 0.076) calc(100% - var(--folder-r) * 0.617),
+    calc(100% - var(--folder-gap) - var(--folder-r) * 0.293) calc(100% - var(--folder-r) * 0.293),
+    calc(100% - var(--folder-gap) - var(--folder-r) * 0.617) calc(100% - var(--folder-r) * 0.076),
+    calc(100% - var(--folder-gap) - var(--folder-r)) 100%,
+    0 100%
+  );
+}
+:root[data-scheme="dark"] .hb-folder { --folder-fill: var(--color-background); }
+.hb-folder::before {
+  content: "";
+  position: absolute;
+  inset: var(--folder-b);
+  z-index: -1;
+  border-radius: calc(var(--folder-r) - var(--folder-b));
+  background-color: var(--folder-fill);
+  /* Mesmo recorte, recuado para a diagonal ter a espessura da borda
+     e ir até à aba. */
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(var(--folder-at) - var(--folder-b) * 0.8),
+    calc(100% - var(--folder-run)) calc(var(--folder-at) - var(--folder-b) * 0.8 + var(--folder-run) * var(--folder-s)),
+    calc(100% - var(--folder-run)) 100%,
+    0 100%
+  );
+}
+.hb-folder__tab {
+  position: absolute;
+  top: calc(var(--folder-at) + (var(--folder-gap) + var(--folder-tab)) * var(--folder-s) + 14px);
+  right: var(--folder-gap);
+  width: calc(var(--folder-tab) - var(--folder-b));
+  writing-mode: vertical-rl;
+  line-height: calc(var(--folder-tab) - var(--folder-b));   /* centra a linha na aba */
+  font-family: var(--font-family-heading, "auger-mono", monospace);
+  font-size: 13px;
+  color: var(--color-background);
+  white-space: nowrap;
+}
+@media (min-width: 640px) {
+  .hb-folder { --folder-tab: 40px; --folder-gap: 20px; --folder-r: 8px; }
+  .hb-folder__tab { font-size: 14px; }
+}
+@media (min-width: 1024px) {
+  .hb-folder { --folder-b: 4px; --folder-tab: 48px; --folder-gap: 26px; --folder-r: 10px; }
+  .hb-folder__tab { font-size: 15px; }
+}
+
+/* Aba em cima: a mesma forma rodada. A borda de cima recua em
+   diagonal a partir de --folder-at (medido da esquerda) e a aba vai
+   até ao canto direito, com o canto de cima arredondado. Medidas
+   iguais em todas as larguras. */
+.hb-folder--top {
+  --folder-b: 3px;
+  --folder-tab: 34px;
+  --folder-gap: 14px;
+  --folder-at: 40%;
+  --folder-r: 8px;
+  --folder-s: 0.7;
+  clip-path: polygon(
+    0 0,
+    var(--folder-at) 0,
+    calc(var(--folder-at) + var(--folder-gap) * var(--folder-s)) var(--folder-gap),
+    /* canto de cima da aba, arredondado */
+    calc(100% - var(--folder-r)) var(--folder-gap),
+    calc(100% - var(--folder-r) * 0.617) calc(var(--folder-gap) + var(--folder-r) * 0.076),
+    calc(100% - var(--folder-r) * 0.293) calc(var(--folder-gap) + var(--folder-r) * 0.293),
+    calc(100% - var(--folder-r) * 0.076) calc(var(--folder-gap) + var(--folder-r) * 0.617),
+    100% calc(var(--folder-gap) + var(--folder-r)),
+    100% 100%,
+    0 100%
+  );
+}
+.hb-folder--top::before {
+  clip-path: polygon(
+    0 0,
+    calc(var(--folder-at) - var(--folder-b) * 0.8) 0,
+    calc(var(--folder-at) - var(--folder-b) * 0.8 + var(--folder-run) * var(--folder-s)) var(--folder-run),
+    100% var(--folder-run),
+    100% 100%,
+    0 100%
+  );
+}
+.hb-folder--top .hb-folder__tab {
+  top: var(--folder-gap);
+  right: 0;
+  left: calc(var(--folder-at) + (var(--folder-gap) + var(--folder-tab)) * var(--folder-s) + 6px);
+  width: auto;
+  height: calc(var(--folder-tab) - var(--folder-b));
+  padding: 0 12px;
+  overflow: hidden;
+  writing-mode: horizontal-tb;
+  line-height: calc(var(--folder-tab) - var(--folder-b));
+  text-align: center;
+  text-overflow: ellipsis;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
