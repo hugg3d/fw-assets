@@ -854,14 +854,12 @@
     { re: /\b(\d+)-month member\b/g, pt: monthMember },
     // Cartao de perfil do membro: "Joined" + <time> com a data (que o
     // localizeDates ja traduz). So quando o no INTEIRO e' "Joined":
-    // como chave global apanharia "Joined" noutras frases.
-    { re: /^(\s*)Joined(\s*)$/, pt: '$1Membro desde$2' },
-    // Data compacta dos comentarios sem "ago": "2mo" -> "há 2 meses".
-    // So "mo" e so no inteiro: "3d"/"5h" leem-se em PT, e um "5d"
-    // solto pode ser de uma contagem decrescente.
-    { re: /^(\s*)(\d+)mo(\s*)$/, pt: function (m, a, n, b) {
-        return a + 'há ' + n + (n === '1' ? ' mês' : ' meses') + b;
-      } },
+    // como chave global apanharia "Joined" noutras frases. "Desde" e
+    // nao "Membro desde": com a data por extenso, so assim cabe no
+    // cartao em mobile (o "Joined" tem o mesmo tamanho).
+    // As datas compactas dos comentarios ("5h", "3d", "2mo") ficam
+    // como a FW as escreve: traduzir so uma unidade partia a linha.
+    { re: /^(\s*)Joined(\s*)$/, pt: '$1Desde$2' },
     // Contagem de membros nos cartoes de plano ("4 members", "1 member").
     // DEPOIS do ONLY_FOR_RE, que ja consumiu a frase da restricao.
     { re: /\b(\d+)\s+members?\b/g, pt: function (m, n) { return n + (n === '1' ? ' membro' : ' membros'); } },
