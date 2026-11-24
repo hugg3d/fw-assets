@@ -223,6 +223,7 @@
     "Most relevant": "Mais relevantes",
     "Load replies": "Carregar respostas",
     "Load Replies": "Carregar respostas",
+    "Load more comments": "Carregar mais comentários",
     "Read more": "Ler mais",
     "Add spoiler": "Adicionar spoiler",
     "Remove spoiler": "Remover spoiler",
@@ -851,6 +852,16 @@
         return 'Tempo não utilizado em ' + tier + ' (' + d + (d === '1' ? ' dia)' : ' dias)');
       } },
     { re: /\b(\d+)-month member\b/g, pt: monthMember },
+    // Cartao de perfil do membro: "Joined" + <time> com a data (que o
+    // localizeDates ja traduz). So quando o no INTEIRO e' "Joined":
+    // como chave global apanharia "Joined" noutras frases.
+    { re: /^(\s*)Joined(\s*)$/, pt: '$1Membro desde$2' },
+    // Data compacta dos comentarios sem "ago": "2mo" -> "há 2 meses".
+    // So "mo" e so no inteiro: "3d"/"5h" leem-se em PT, e um "5d"
+    // solto pode ser de uma contagem decrescente.
+    { re: /^(\s*)(\d+)mo(\s*)$/, pt: function (m, a, n, b) {
+        return a + 'há ' + n + (n === '1' ? ' mês' : ' meses') + b;
+      } },
     // Contagem de membros nos cartoes de plano ("4 members", "1 member").
     // DEPOIS do ONLY_FOR_RE, que ja consumiu a frase da restricao.
     { re: /\b(\d+)\s+members?\b/g, pt: function (m, n) { return n + (n === '1' ? ' membro' : ' membros'); } },
